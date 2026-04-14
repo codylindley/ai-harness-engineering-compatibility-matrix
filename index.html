@@ -411,6 +411,80 @@
     border-radius: 4px;
   }
 
+  .explainer {
+    margin-bottom: 1.75rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-surface);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .explainer p {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .explainer .hierarchy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .hierarchy .tier {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .hierarchy .tier.prompt { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-tertiary) }
+  .hierarchy .tier.context { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary) }
+  .hierarchy .tier.harness { background: var(--accent-light); border: 1px solid var(--accent); color: var(--accent) }
+  .hierarchy .arrow { color: var(--text-tertiary); font-size: 0.75rem }
+  .hierarchy .tier-desc {
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    font-weight: 400;
+    margin-left: 2px;
+  }
+  .explainer .attribution {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+  }
+  .explainer .attribution a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .explainer .attribution a:hover { text-decoration: underline }
+
+  .legend-desc {
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  tr.cat .cat-type {
+    font-size: 0.5625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  tr.cat .cat-type.guide {
+    color: var(--yes);
+    background: var(--yes-bg);
+  }
+  tr.cat .cat-type.sensor {
+    color: var(--fallback);
+    background: var(--fallback-bg);
+  }
+
   footer {
     margin-top: 2rem;
     font-size: 0.75rem;
@@ -433,9 +507,21 @@
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
     <div class="date">Updated April 2026</div>
-    <h1>AI <del>agent config</del> <del>context</del> harness engineering compatibility matrix</h1>
-    <p>Which harness engineering configuration files are read by which AI coding tools. Tap the <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--border-strong);font-size:10px;font-style:italic;font-family:Georgia,serif;font-weight:600;color:var(--text-tertiary);vertical-align:middle">i</span> icon on any row to learn what it does and when to use it.</p>
+    <h1>AI harness engineering compatibility matrix</h1>
+    <p>Which config files are read by which AI coding tools — and what each one does. Tap <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--border-strong);font-size:10px;font-style:italic;font-family:Georgia,serif;font-weight:600;color:var(--text-tertiary);vertical-align:middle">i</span> on any row to learn more.</p>
   </header>
+
+  <div class="explainer">
+    <p>The harness is everything the model touches that <em>isn't</em> the model itself — tools, permissions, state management, verification loops, agents, hooks, and guardrails. These config files <em>are</em> the harness.</p>
+    <div class="hierarchy">
+      <span class="tier prompt">Prompt engineering <span class="tier-desc">what you ask</span></span>
+      <span class="arrow">→</span>
+      <span class="tier context">Context engineering <span class="tier-desc">what you send</span></span>
+      <span class="arrow">→</span>
+      <span class="tier harness">Harness engineering <span class="tier-desc">the whole system around the model</span></span>
+    </div>
+    <div class="attribution">Term coined by <a href="https://mitchellh.com" target="_blank" rel="noopener">Mitchell Hashimoto</a> (Feb 2026). Controls taxonomy from <a href="https://martinfowler.com/articles/exploring-gen-ai.html#memo-14" target="_blank" rel="noopener">Birgitta Böckeler / Thoughtworks</a>.</div>
+  </div>
 
   <div class="legend">
     <span class="legend-item"><span class="legend-dot yes"></span>Native support</span>
@@ -443,6 +529,7 @@
     <span class="legend-item"><span class="legend-dot oi"></span>Opt-in (requires setting)</span>
     <span class="legend-item"><span class="legend-dot no"></span>Not supported</span>
   </div>
+  <div class="legend-desc"><strong style="color:var(--text-secondary)">Native</strong> = tool reads this file by default. <strong style="color:var(--text-secondary)">Fallback</strong> = tool reads another tool's file as a secondary source. <strong style="color:var(--text-secondary)">Opt-in</strong> = supported but requires a setting to enable.</div>
 
   <div class="toggle-bar" id="toggles">
     <span class="label">Show:</span>
@@ -469,7 +556,7 @@
         </thead>
         <tbody>
 
-          <tr class="cat"><td colspan="7">Always-on instructions</td></tr>
+          <tr class="cat"><td colspan="7">Always-on instructions <span class="cat-type guide">guide</span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">AGENTS.md</span><span class="file-loc">root of repo</span></span><button class="info-btn" data-info="agents-md">i</button></div></td>
@@ -526,7 +613,7 @@
           </tr>
           <tr class="info-row" id="claude-rules"><td colspan="7"><div class="info-content"><strong>Claude Code's scoped instruction files.</strong> Equivalent of Copilot's <code>*.instructions.md</code>. Uses a <code>paths</code> array in frontmatter instead of <code>applyTo</code>. Defaults to <code>**</code> (all files) when omitted. VS Code Copilot can read these with Claude file settings enabled.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">Custom agents (persona + tool restrictions)</td></tr>
+          <tr class="cat"><td colspan="7">Custom agents (persona + tool restrictions) <span class="cat-type guide">guide</span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">*.agent.md</span><span class="file-loc">.github/agents/</span></span><button class="info-btn" data-info="copilot-agents">i</button></div></td>
@@ -561,7 +648,7 @@
           </tr>
           <tr class="info-row" id="oc-agents"><td colspan="7"><div class="info-content"><strong>OpenCode's native agent definitions.</strong> Same concept — persona with description, model, tool permissions, and prompt. Ships with <code>Build</code> (full tools) and <code>Plan</code> (read-only). Switch with <code>Tab</code>. Can also be defined in <code>opencode.json</code>.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">Skills (bundled capability folders with SKILL.md)</td></tr>
+          <tr class="cat"><td colspan="7">Skills (bundled capability folders with SKILL.md) <span class="cat-type guide">guide</span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/skills/*/SKILL.md</span><span class="file-loc">Copilot native path</span></span><button class="info-btn" data-info="gh-skills">i</button></div></td>
@@ -607,7 +694,7 @@
           </tr>
           <tr class="info-row" id="oc-skills"><td colspan="7"><div class="info-content"><strong>OpenCode's own skill directory.</strong> Same SKILL.md format. OpenCode also reads <code>.claude/skills/</code> and <code>.agents/skills/</code> as fallbacks, so you rarely need this unless you want OpenCode-exclusive skills.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">Prompt files (manual /slash-command invocation)</td></tr>
+          <tr class="cat"><td colspan="7">Prompt files (manual /slash-command invocation) <span class="cat-type guide">guide</span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">*.prompt.md</span><span class="file-loc">.github/prompts/</span></span><button class="info-btn" data-info="prompt-files">i</button></div></td>
@@ -631,7 +718,7 @@
           </tr>
           <tr class="info-row" id="claude-cmds"><td colspan="7"><div class="info-content"><strong>Claude Code's original slash commands — now merged into skills.</strong> A command at <code>.claude/commands/deploy.md</code> and a skill at <code>.claude/skills/deploy/SKILL.md</code> both create <code>/deploy</code> and work identically. Existing files keep working. Skills add supporting files, auto-invocation, and subagent execution.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">Automation (lifecycle hooks)</td></tr>
+          <tr class="cat"><td colspan="7">Automation (lifecycle hooks) <span class="cat-type sensor">sensor</span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/hooks/</span><span class="file-loc">hooks.json</span></span><button class="info-btn" data-info="gh-hooks">i</button></div></td>
@@ -655,7 +742,7 @@
           </tr>
           <tr class="info-row" id="claude-hooks"><td colspan="7"><div class="info-content"><strong>Claude Code's hook system.</strong> 14+ trigger points: <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, <code>PermissionRequest</code>. Run custom scripts at every stage — linting, logging, approval gates. More granular than Copilot hooks with before/after triggers for tool execution.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">MCP server configuration (project-scoped)</td></tr>
+          <tr class="cat"><td colspan="7">MCP server configuration (project-scoped) <span class="cat-type guide">guide</span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.vscode/mcp.json</span><span class="file-loc">VS Code workspace</span></span><button class="info-btn" data-info="vscode-mcp">i</button></div></td>
@@ -715,7 +802,8 @@
   </div>
 
   <footer>
-    Researched April 2026. Verify against current docs before committing to a config architecture.
+    Researched April 2026. Verify against current docs before committing to a config architecture.<br>
+    <span style="margin-top:4px;display:inline-block"><strong style="color:var(--text-secondary)">Guides</strong> steer the agent before it acts (feedforward). <strong style="color:var(--text-secondary)">Sensors</strong> observe after and enable self-correction (feedback).</span>
   </footer>
 </div>
 
