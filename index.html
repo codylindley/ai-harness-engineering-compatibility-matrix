@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Harness Engineering Compatibility Matrix — April 2026</title>
+<meta name="description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, and Gemini CLI. AGENTS.md, CLAUDE.md, skills, hooks, MCP, and more.">
+<meta property="og:title" content="AI Harness Engineering Compatibility Matrix">
+<meta property="og:description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, and Gemini CLI.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://codylindley.github.io/ai-context-engineering-compatibility-matrix/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AI Harness Engineering Compatibility Matrix">
+<meta name="twitter:description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, and Gemini CLI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -100,10 +108,40 @@
     letter-spacing: 0.02em;
   }
 
-  .theme-toggle {
+  .header-actions {
     position: absolute;
     top: 0;
     right: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .github-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    white-space: nowrap;
+    height: 36px;
+  }
+  .github-link:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+  .github-link svg { width: 18px; height: 18px; flex-shrink: 0 }
+  .github-link .star-icon { width: 14px; height: 14px }
+  .github-link .star-count { font-family: var(--mono); font-size: 0.6875rem }
+
+  .theme-toggle {
     width: 36px;
     height: 36px;
     border-radius: 8px;
@@ -115,6 +153,7 @@
     justify-content: center;
     transition: border-color 0.15s, background 0.15s;
     color: var(--text-secondary);
+    flex-shrink: 0;
   }
   .theme-toggle:hover {
     border-color: var(--border-strong);
@@ -154,6 +193,8 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     box-shadow: var(--shadow);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   table {
@@ -485,6 +526,110 @@
     background: var(--fallback-bg);
   }
 
+  .cat-tip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    font-size: 9px;
+    font-weight: 600;
+    font-style: italic;
+    font-family: Georgia, serif;
+    cursor: help;
+    margin-left: 4px;
+    vertical-align: middle;
+    opacity: 0.7;
+    line-height: 1;
+  }
+  .cat-tip:hover { opacity: 1 }
+  .cat-tip .cat-tip-text {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--bg);
+    font-family: var(--font);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.6875rem;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.45;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .cat-tip .cat-tip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--text-primary);
+  }
+  .cat-tip:hover .cat-tip-text { display: block }
+
+  .legend-tip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    font-size: 8px;
+    font-weight: 600;
+    font-style: italic;
+    font-family: Georgia, serif;
+    color: var(--text-tertiary);
+    cursor: help;
+    margin-left: 3px;
+    vertical-align: middle;
+    line-height: 1;
+  }
+  .legend-tip:hover { border-color: var(--accent); color: var(--accent) }
+  .legend-tip .cat-tip-text {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--bg);
+    font-family: var(--font);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.6875rem;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.45;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .legend-tip .cat-tip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--text-primary);
+  }
+  .legend-tip:hover .cat-tip-text { display: block }
+
   footer {
     margin-top: 2rem;
     font-size: 0.75rem;
@@ -502,10 +647,17 @@
 <body>
 <div class="wrap">
   <header>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
+    <div class="header-actions">
+      <a class="github-link" href="https://github.com/codylindley/ai-context-engineering-compatibility-matrix" target="_blank" rel="noopener" aria-label="View on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+        <span class="star-count" id="starCount"></span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
     <div class="date">Updated April 2026</div>
     <h1>AI harness engineering compatibility matrix</h1>
     <p>Which config files are read by which AI coding tools — and what each one does. Tap <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--border-strong);font-size:10px;font-style:italic;font-family:Georgia,serif;font-weight:600;color:var(--text-tertiary);vertical-align:middle">i</span> on any row to learn more.</p>
@@ -530,6 +682,7 @@
     <span class="legend-item"><span class="legend-dot no"></span>Not supported</span>
   </div>
   <div class="legend-desc"><strong style="color:var(--text-secondary)">Native</strong> = tool reads this file by default. <strong style="color:var(--text-secondary)">Fallback</strong> = tool reads another tool's file as a secondary source. <strong style="color:var(--text-secondary)">Opt-in</strong> = supported but requires a setting to enable.</div>
+  <div class="legend-desc">Category labels: <span class="cat-type guide" style="display:inline-block;vertical-align:middle;font-size:0.5625rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;padding:2px 7px;border-radius:3px">guide</span><span class="legend-tip">i<span class="cat-tip-text">Feedforward control — steers the agent before it acts</span></span> and <span class="cat-type sensor" style="display:inline-block;vertical-align:middle;font-size:0.5625rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;padding:2px 7px;border-radius:3px">sensor</span><span class="legend-tip">i<span class="cat-tip-text">Feedback control — observes after the agent acts</span></span> indicate the type of harness control.</div>
 
   <div class="toggle-bar" id="toggles">
     <span class="label">Show:</span>
@@ -539,6 +692,7 @@
     <button class="tog on" data-col="4">Claude Code</button>
     <button class="tog on" data-col="5">OpenCode</button>
     <button class="tog on" data-col="6">Codex CLI</button>
+    <button class="tog on" data-col="7">Gemini CLI</button>
   </div>
 
   <div class="table-card">
@@ -552,11 +706,12 @@
             <th data-col="4">Claude Code<span class="tool-sub">all surfaces</span></th>
             <th data-col="5">OpenCode<span class="tool-sub">all surfaces</span></th>
             <th data-col="6">Codex<span class="tool-sub">all surfaces</span></th>
+            <th data-col="7">Gemini CLI<span class="tool-sub">all surfaces</span></th>
           </tr>
         </thead>
         <tbody>
 
-          <tr class="cat"><td colspan="7">Always-on instructions <span class="cat-type guide">guide</span></td></tr>
+          <tr class="cat"><td colspan="8">Always-on instructions <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">AGENTS.md</span><span class="file-loc">root of repo</span></span><button class="info-btn" data-info="agents-md">i</button></div></td>
@@ -566,19 +721,33 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
+            <td><span class="cell o">opt-in</span></td>
           </tr>
-          <tr class="info-row" id="agents-md"><td colspan="7"><div class="info-content"><strong>The cross-tool universal standard.</strong> A markdown file at your repo root read at the start of every session. Think of it as a system prompt for your repo — stack declarations, naming conventions, architectural boundaries, "never do X" rules. Governed by the Linux Foundation's Agentic AI Foundation. Put your shared team contract here. Broadest tool support of any config file, though Claude Code doesn't read it natively yet (open feature request).</div></td></tr>
+          <tr class="info-row" id="agents-md"><td colspan="8"><div class="info-content"><strong>The cross-tool universal standard.</strong> A markdown file at your repo root read at the start of every session. Think of it as a system prompt for your repo — stack declarations, naming conventions, architectural boundaries, "never do X" rules. Governed by the Linux Foundation's Agentic AI Foundation. Put your shared team contract here. Broadest tool support of any config file, though Claude Code doesn't read it natively yet (open feature request).</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">CLAUDE.md</span><span class="file-loc">root + subdirectories</span></span><button class="info-btn" data-info="claude-md">i</button></div></td>
             <td class="cop-l"><span class="cell o">opt-in</span></td>
             <td><span class="cell y">Yes</span></td>
-            <td class="cop-r"><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-md"><td colspan="7"><div class="info-content"><strong>Claude Code's native config.</strong> Same purpose as <code>AGENTS.md</code> but Claude-specific. Standout feature: subdirectory scoping — drop a <code>CLAUDE.md</code> in <code>/api</code> and those rules only apply when working on API files. If you also have <code>AGENTS.md</code>, your <code>CLAUDE.md</code> can say <code>See @AGENTS.md for base rules</code> plus Claude-specific additions. Copilot CLI reads it natively; VS Code requires <code>chat.useClaudeMdFile</code>.</div></td></tr>
+          <tr class="info-row" id="claude-md"><td colspan="8"><div class="info-content"><strong>Claude Code's native config.</strong> Same purpose as <code>AGENTS.md</code> but Claude-specific. Standout feature: subdirectory scoping — drop a <code>CLAUDE.md</code> in <code>/api</code> and those rules only apply when working on API files. If you also have <code>AGENTS.md</code>, your <code>CLAUDE.md</code> can say <code>See @AGENTS.md for base rules</code> plus Claude-specific additions. Copilot CLI and Cloud agent read it natively; VS Code requires <code>chat.useClaudeMdFile</code>.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">GEMINI.md</span><span class="file-loc">root of repo</span></span><button class="info-btn" data-info="gemini-md">i</button></div></td>
+            <td class="cop-l"><span class="cell o">opt-in</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+          </tr>
+          <tr class="info-row" id="gemini-md"><td colspan="8"><div class="info-content"><strong>Gemini CLI's native context file.</strong> Hierarchical like <code>CLAUDE.md</code> — global (<code>~/.gemini/GEMINI.md</code>), project root, and subdirectory scoping with just-in-time discovery. Copilot Cloud agent also reads it natively as an alternative to <code>AGENTS.md</code>. Configure alternative filenames (including <code>AGENTS.md</code>) via the <code>context.fileName</code> setting.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">copilot-instructions.md</span><span class="file-loc">.github/</span></span><button class="info-btn" data-info="copilot-instr">i</button></div></td>
@@ -588,8 +757,9 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="copilot-instr"><td colspan="7"><div class="info-content"><strong>Copilot's original repo-wide config.</strong> Lives at <code>.github/copilot-instructions.md</code>. Auto-injected into every Copilot request. Same purpose as <code>AGENTS.md</code> but Copilot-exclusive. If you already have <code>AGENTS.md</code>, this can hold Copilot-only overrides. Auto-generate one with <code>/init</code>.</div></td></tr>
+          <tr class="info-row" id="copilot-instr"><td colspan="8"><div class="info-content"><strong>Copilot's original repo-wide config.</strong> Lives at <code>.github/copilot-instructions.md</code>. Auto-injected into every Copilot request. Same purpose as <code>AGENTS.md</code> but Copilot-exclusive. If you already have <code>AGENTS.md</code>, this can hold Copilot-only overrides. Auto-generate one with <code>/init</code>.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">*.instructions.md</span><span class="file-loc">.github/instructions/ (glob scoped)</span></span><button class="info-btn" data-info="scoped-instr">i</button></div></td>
@@ -599,8 +769,9 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="scoped-instr"><td colspan="7"><div class="info-content"><strong>Surgically scoped rules via glob patterns.</strong> Each file has an <code>applyTo</code> frontmatter property (e.g., <code>"**/*.tsx"</code>) so rules only activate on matching files. Perfect for framework-specific conventions. Copilot auto-detects relevance. Claude Code's equivalent is <code>.claude/rules/*.md</code> with a <code>paths</code> property.</div></td></tr>
+          <tr class="info-row" id="scoped-instr"><td colspan="8"><div class="info-content"><strong>Surgically scoped rules via glob patterns.</strong> Each file has an <code>applyTo</code> frontmatter property (e.g., <code>"**/*.tsx"</code>) so rules only activate on matching files. Perfect for framework-specific conventions. Copilot auto-detects relevance. Claude Code's equivalent is <code>.claude/rules/*.md</code> with a <code>paths</code> property.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/rules/*.md</span><span class="file-loc">scoped via paths property</span></span><button class="info-btn" data-info="claude-rules">i</button></div></td>
@@ -610,10 +781,11 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-rules"><td colspan="7"><div class="info-content"><strong>Claude Code's scoped instruction files.</strong> Equivalent of Copilot's <code>*.instructions.md</code>. Uses a <code>paths</code> array in frontmatter instead of <code>applyTo</code>. Defaults to <code>**</code> (all files) when omitted. VS Code Copilot can read these with Claude file settings enabled.</div></td></tr>
+          <tr class="info-row" id="claude-rules"><td colspan="8"><div class="info-content"><strong>Claude Code's scoped instruction files.</strong> Equivalent of Copilot's <code>*.instructions.md</code>. Uses a <code>paths</code> array in frontmatter instead of <code>applyTo</code>. Defaults to <code>**</code> (all files) when omitted. VS Code Copilot can read these with Claude file settings enabled.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">Custom agents (persona + tool restrictions) <span class="cat-type guide">guide</span></td></tr>
+          <tr class="cat"><td colspan="8">Custom agents (persona + tool restrictions) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">*.agent.md</span><span class="file-loc">.github/agents/</span></span><button class="info-btn" data-info="copilot-agents">i</button></div></td>
@@ -623,8 +795,9 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="copilot-agents"><td colspan="7"><div class="info-content"><strong>Specialized Copilot personas invoked by name.</strong> Each defines a role with tool access, model choice, and behavioral boundaries. Invoke via <code>@agent-name</code>. Examples: <code>@reviewer</code> (read-only), <code>@test-writer</code> (writes to <code>/tests/</code> only). Can be used as subagents by other agents.</div></td></tr>
+          <tr class="info-row" id="copilot-agents"><td colspan="8"><div class="info-content"><strong>Specialized Copilot personas invoked by name.</strong> Each defines a role with tool access, model choice, and behavioral boundaries. Invoke via <code>@agent-name</code>. Examples: <code>@reviewer</code> (read-only), <code>@test-writer</code> (writes to <code>/tests/</code> only). Can be used as subagents by other agents.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/agents/*.md</span><span class="file-loc">Claude subagents</span></span><button class="info-btn" data-info="claude-agents">i</button></div></td>
@@ -634,8 +807,9 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-agents"><td colspan="7"><div class="info-content"><strong>Claude Code's subagent system.</strong> Specialized agents running in isolated context. Built-in: <code>Explore</code> (read-only research) and <code>Plan</code> (no file modifications). Skills can reference agents via the <code>agent</code> frontmatter field to run in a forked context.</div></td></tr>
+          <tr class="info-row" id="claude-agents"><td colspan="8"><div class="info-content"><strong>Claude Code's subagent system.</strong> Specialized agents running in isolated context. Built-in: <code>Explore</code> (read-only research) and <code>Plan</code> (no file modifications). Skills can reference agents via the <code>agent</code> frontmatter field to run in a forked context.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.opencode/agents/*.md</span><span class="file-loc">OpenCode agents</span></span><button class="info-btn" data-info="oc-agents">i</button></div></td>
@@ -645,10 +819,11 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="oc-agents"><td colspan="7"><div class="info-content"><strong>OpenCode's native agent definitions.</strong> Same concept — persona with description, model, tool permissions, and prompt. Ships with <code>Build</code> (full tools) and <code>Plan</code> (read-only). Switch with <code>Tab</code>. Can also be defined in <code>opencode.json</code>.</div></td></tr>
+          <tr class="info-row" id="oc-agents"><td colspan="8"><div class="info-content"><strong>OpenCode's native agent definitions.</strong> Same concept — persona with description, model, tool permissions, and prompt. Ships with <code>Build</code> (full tools) and <code>Plan</code> (read-only). Switch with <code>Tab</code>. Can also be defined in <code>opencode.json</code>.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">Skills (bundled capability folders with SKILL.md) <span class="cat-type guide">guide</span></td></tr>
+          <tr class="cat"><td colspan="8">Skills (bundled capability folders with SKILL.md) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/skills/*/SKILL.md</span><span class="file-loc">Copilot native path</span></span><button class="info-btn" data-info="gh-skills">i</button></div></td>
@@ -658,8 +833,9 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="gh-skills"><td colspan="7"><div class="info-content"><strong>Copilot's native skill path — Copilot-only.</strong> Skills are <em>folders</em> with a <code>SKILL.md</code> entrypoint plus optional scripts, templates, and assets. Progressive disclosure: only name + description loaded by default, full body on demand. Invoke via <code>/skill-name</code> or auto-detected. Claude Code does <em>not</em> read this path — use <code>.claude/skills/</code> instead.</div></td></tr>
+          <tr class="info-row" id="gh-skills"><td colspan="8"><div class="info-content"><strong>Copilot's native skill path — Copilot-only.</strong> Skills are <em>folders</em> with a <code>SKILL.md</code> entrypoint plus optional scripts, templates, and assets. Progressive disclosure: only name + description loaded by default, full body on demand. Invoke via <code>/skill-name</code> or auto-detected. Claude Code does <em>not</em> read this path — use <code>.claude/skills/</code> instead.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/skills/*/SKILL.md</span><span class="file-loc">Claude Code native path</span></span><button class="info-btn" data-info="claude-skills">i</button></div></td>
@@ -669,8 +845,9 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-skills"><td colspan="7"><div class="info-content"><strong>The best cross-tool skill path available today.</strong> Claude Code's native location, <em>and</em> Copilot auto-discovers it. Put skills here to span both ecosystems without symlinks. Supports auto-invocation, user-invocation (<code>/skill-name</code>), and forked subagent execution in Claude Code.</div></td></tr>
+          <tr class="info-row" id="claude-skills"><td colspan="8"><div class="info-content"><strong>The best cross-tool skill path available today.</strong> Claude Code's native location, <em>and</em> Copilot auto-discovers it. Put skills here to span both ecosystems without symlinks. Supports auto-invocation, user-invocation (<code>/skill-name</code>), and forked subagent execution in Claude Code.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.agents/skills/*/SKILL.md</span><span class="file-loc">cross-agent standard path</span></span><button class="info-btn" data-info="agents-skills">i</button></div></td>
@@ -679,9 +856,10 @@
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
+            <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="agents-skills"><td colspan="7"><div class="info-content"><strong>An emerging cross-agent skill path.</strong> Currently only read by OpenCode. Intended as a tool-agnostic skill location. May gain adoption as the Agent Skills standard matures.</div></td></tr>
+          <tr class="info-row" id="agents-skills"><td colspan="8"><div class="info-content"><strong>The emerging cross-agent skill standard.</strong> Codex's primary skill path — scans <code>.agents/skills</code> from your working directory up to the repo root. Also read by OpenCode. Based on the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.opencode/skills/*/SKILL.md</span><span class="file-loc">OpenCode native path</span></span><button class="info-btn" data-info="oc-skills">i</button></div></td>
@@ -691,10 +869,11 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="oc-skills"><td colspan="7"><div class="info-content"><strong>OpenCode's own skill directory.</strong> Same SKILL.md format. OpenCode also reads <code>.claude/skills/</code> and <code>.agents/skills/</code> as fallbacks, so you rarely need this unless you want OpenCode-exclusive skills.</div></td></tr>
+          <tr class="info-row" id="oc-skills"><td colspan="8"><div class="info-content"><strong>OpenCode's own skill directory.</strong> Same SKILL.md format. OpenCode also reads <code>.claude/skills/</code> and <code>.agents/skills/</code> as fallbacks, so you rarely need this unless you want OpenCode-exclusive skills.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">Prompt files (manual /slash-command invocation) <span class="cat-type guide">guide</span></td></tr>
+          <tr class="cat"><td colspan="8">Prompt files (manual /slash-command invocation) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">*.prompt.md</span><span class="file-loc">.github/prompts/</span></span><button class="info-btn" data-info="prompt-files">i</button></div></td>
@@ -704,8 +883,9 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="prompt-files"><td colspan="7"><div class="info-content"><strong>Lightweight reusable prompt templates — IDE only.</strong> Invoke via <code>/prompt-name</code> in chat. No persona, no tool restrictions, no bundled assets. Best for tasks you repeat: <code>/new-component</code>, <code>/spell-check</code>, <code>/prep-pr</code>. Supported in VS Code and JetBrains IDEs only — CLI and Cloud agent support is an open feature request.</div></td></tr>
+          <tr class="info-row" id="prompt-files"><td colspan="8"><div class="info-content"><strong>Lightweight reusable prompt templates — IDE only.</strong> Invoke via <code>/prompt-name</code> in chat. No persona, no tool restrictions, no bundled assets. Best for tasks you repeat: <code>/new-component</code>, <code>/spell-check</code>, <code>/prep-pr</code>. Supported in VS Code and JetBrains IDEs only — CLI and Cloud agent support is an open feature request.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/commands/*.md</span><span class="file-loc">merged into skills system</span></span><button class="info-btn" data-info="claude-cmds">i</button></div></td>
@@ -715,10 +895,11 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-cmds"><td colspan="7"><div class="info-content"><strong>Claude Code's original slash commands — now merged into skills.</strong> A command at <code>.claude/commands/deploy.md</code> and a skill at <code>.claude/skills/deploy/SKILL.md</code> both create <code>/deploy</code> and work identically. Existing files keep working. Skills add supporting files, auto-invocation, and subagent execution.</div></td></tr>
+          <tr class="info-row" id="claude-cmds"><td colspan="8"><div class="info-content"><strong>Claude Code's original slash commands — now merged into skills.</strong> A command at <code>.claude/commands/deploy.md</code> and a skill at <code>.claude/skills/deploy/SKILL.md</code> both create <code>/deploy</code> and work identically. Existing files keep working. Skills add supporting files, auto-invocation, and subagent execution.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">Automation (lifecycle hooks) <span class="cat-type sensor">sensor</span></td></tr>
+          <tr class="cat"><td colspan="8">Automation (lifecycle hooks) <span class="cat-type sensor">sensor<span class="cat-tip">i<span class="cat-tip-text">Feedback — observes after the agent acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/hooks/</span><span class="file-loc">hooks.json</span></span><button class="info-btn" data-info="gh-hooks">i</button></div></td>
@@ -728,8 +909,9 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="gh-hooks"><td colspan="7"><div class="info-content"><strong>Copilot lifecycle hooks.</strong> Automated workflows at agent events — run a formatter after edits, validate branch names, enforce lint. <code>preToolUse</code> hooks can deny or modify tool calls. Think git hooks for the AI loop. VS Code and CLI only — not Cloud agent.</div></td></tr>
+          <tr class="info-row" id="gh-hooks"><td colspan="8"><div class="info-content"><strong>Copilot lifecycle hooks.</strong> Automated workflows at agent events — run a formatter after edits, validate branch names, enforce lint. <code>preToolUse</code> hooks can deny or modify tool calls. Think git hooks for the AI loop. VS Code and CLI only — not Cloud agent.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/hooks/</span><span class="file-loc">settings.json hooks</span></span><button class="info-btn" data-info="claude-hooks">i</button></div></td>
@@ -739,10 +921,23 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-hooks"><td colspan="7"><div class="info-content"><strong>Claude Code's hook system.</strong> 14+ trigger points: <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, <code>PermissionRequest</code>. Run custom scripts at every stage — linting, logging, approval gates. More granular than Copilot hooks with before/after triggers for tool execution.</div></td></tr>
+          <tr class="info-row" id="claude-hooks"><td colspan="8"><div class="info-content"><strong>Claude Code's hook system.</strong> 14+ trigger points: <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, <code>PermissionRequest</code>. Run custom scripts at every stage — linting, logging, approval gates. More granular than Copilot hooks with before/after triggers for tool execution.</div></td></tr>
 
-          <tr class="cat"><td colspan="7">MCP server configuration (project-scoped) <span class="cat-type guide">guide</span></td></tr>
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.codex/hooks.json</span><span class="file-loc">repo or ~/.codex/</span></span><button class="info-btn" data-info="codex-hooks">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="codex-hooks"><td colspan="8"><div class="info-content"><strong>Codex's lifecycle hook system.</strong> Experimental. Five trigger points: <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, <code>UserPromptSubmit</code>, <code>Stop</code>. Hooks receive JSON on stdin and can block commands, inject context, or continue stopped turns. Loaded from both user (<code>~/.codex/hooks.json</code>) and repo (<code>.codex/hooks.json</code>) locations. Requires <code>codex_hooks = true</code> in <code>config.toml</code> features.</div></td></tr>
+
+          <tr class="cat"><td colspan="8">MCP server configuration (project-scoped) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.vscode/mcp.json</span><span class="file-loc">VS Code workspace</span></span><button class="info-btn" data-info="vscode-mcp">i</button></div></td>
@@ -752,8 +947,9 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="vscode-mcp"><td colspan="7"><div class="info-content"><strong>Copilot's MCP config for VS Code.</strong> Defines MCP servers available in the workspace. Supports stdio and HTTP servers with environment variables, auth, and sandboxing. Committable to git for team sharing. Can also configure MCP in <code>settings.json</code> (workspace or user), install from the MCP server gallery, or add via <code>devcontainer.json</code>. User-level config available via <code>MCP: Open User Configuration</code>.</div></td></tr>
+          <tr class="info-row" id="vscode-mcp"><td colspan="8"><div class="info-content"><strong>Copilot's MCP config for VS Code.</strong> Defines MCP servers available in the workspace. Supports stdio and HTTP servers with environment variables, auth, and sandboxing. Committable to git for team sharing. Can also configure MCP in <code>settings.json</code> (workspace or user), install from the MCP server gallery, or add via <code>devcontainer.json</code>. User-level config available via <code>MCP: Open User Configuration</code>.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.mcp.json</span><span class="file-loc">repo root</span></span><button class="info-btn" data-info="claude-mcp">i</button></div></td>
@@ -763,8 +959,9 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-mcp"><td colspan="7"><div class="info-content"><strong>Claude Code's project-scoped MCP config.</strong> Defines MCP servers for all collaborators on this repository. Supports stdio, SSE, and HTTP servers. Committable to git. User-scoped servers go in <code>~/.claude.json</code> instead.</div></td></tr>
+          <tr class="info-row" id="claude-mcp"><td colspan="8"><div class="info-content"><strong>Claude Code's project-scoped MCP config.</strong> Defines MCP servers for all collaborators on this repository. Supports stdio, SSE, and HTTP servers. Committable to git. User-scoped servers go in <code>~/.claude.json</code> instead.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">opencode.json</span><span class="file-loc">repo root (mcp key)</span></span><button class="info-btn" data-info="oc-mcp">i</button></div></td>
@@ -774,8 +971,9 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="oc-mcp"><td colspan="7"><div class="info-content"><strong>OpenCode's MCP config.</strong> MCP servers are defined under the <code>mcp</code> key in <code>opencode.json</code> at the repo root. Supports local (stdio) and remote (HTTP) servers with OAuth support. Committable to git.</div></td></tr>
+          <tr class="info-row" id="oc-mcp"><td colspan="8"><div class="info-content"><strong>OpenCode's MCP config.</strong> MCP servers are defined under the <code>mcp</code> key in <code>opencode.json</code> at the repo root. Supports local (stdio) and remote (HTTP) servers with OAuth support. Committable to git.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.codex/config.toml</span><span class="file-loc">repo root (mcp_servers)</span></span><button class="info-btn" data-info="codex-mcp">i</button></div></td>
@@ -785,8 +983,21 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="codex-mcp"><td colspan="7"><div class="info-content"><strong>Codex's project-scoped MCP config.</strong> MCP servers defined under <code>[mcp_servers.&lt;name&gt;]</code> tables in TOML format. Supports stdio and streamable HTTP servers with bearer token auth and OAuth. Shared by CLI and IDE extension. User-level config at <code>~/.codex/config.toml</code>.</div></td></tr>
+          <tr class="info-row" id="codex-mcp"><td colspan="8"><div class="info-content"><strong>Codex's project-scoped MCP config.</strong> MCP servers defined under <code>[mcp_servers.&lt;name&gt;]</code> tables in TOML format. Supports stdio and streamable HTTP servers with bearer token auth and OAuth. Shared by CLI and IDE extension. User-level config at <code>~/.codex/config.toml</code>.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.gemini/settings.json</span><span class="file-loc">mcpServers key</span></span><button class="info-btn" data-info="gemini-mcp">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+          </tr>
+          <tr class="info-row" id="gemini-mcp"><td colspan="8"><div class="info-content"><strong>Gemini CLI's MCP config.</strong> MCP servers defined under the <code>mcpServers</code> key in <code>.gemini/settings.json</code>. Supports stdio, SSE, and streamable HTTP with tool allowlists/excludelists. User-level config at <code>~/.gemini/settings.json</code>. Invoke MCP tools via <code>@server-name</code> in prompts.</div></td></tr>
 
         </tbody>
       </table>
@@ -797,18 +1008,18 @@
     <p><code>AGENTS.md</code> has the broadest cross-tool reach, but Claude Code still doesn't read it natively — that's an open feature request.</p>
     <p>The only skill path spanning both Copilot and Claude Code is <code>.claude/skills/</code> — Copilot auto-discovers it. No symlinks needed.</p>
     <p>Prompt files (<code>.prompt.md</code>) are VS Code / JetBrains only. Claude Code's equivalent (<code>.claude/commands/</code>) has merged into skills.</p>
-    <p>OpenCode has the best cross-compat story — reads <code>AGENTS.md</code> natively and falls back to all of Claude Code's paths.</p>
+    <p>Codex reads <code>.agents/skills/</code> natively — the same path OpenCode uses — making it the closest thing to a cross-tool skill standard.</p>
     <p>MCP server config is fully fragmented — every tool uses a different file and format. No project-scoped MCP config is portable across tools.</p>
   </div>
 
   <footer>
     Researched April 2026. Verify against current docs before committing to a config architecture.<br>
-    <span style="margin-top:4px;display:inline-block"><strong style="color:var(--text-secondary)">Guides</strong> steer the agent before it acts (feedforward). <strong style="color:var(--text-secondary)">Sensors</strong> observe after and enable self-correction (feedback).</span>
+    <span style="margin-top:4px;display:inline-block">Created by <a href="https://codylindley.com" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">Cody Lindley</a></span>
   </footer>
 </div>
 
 <script>
-  const COL_COUNT = 7;
+  const COL_COUNT = 8;
   const table = document.getElementById('matrix');
 
   // Info row toggles
@@ -899,6 +1110,17 @@
   themeBtn.addEventListener('click', () => {
     applyTheme(!document.documentElement.classList.contains('dark'));
   });
+
+  // Fetch GitHub star count
+  fetch('https://api.github.com/repos/codylindley/ai-context-engineering-compatibility-matrix')
+    .then(r => r.json())
+    .then(data => {
+      if (data.stargazers_count != null) {
+        const el = document.getElementById('starCount');
+        el.textContent = data.stargazers_count.toLocaleString();
+      }
+    })
+    .catch(() => {});
 </script>
 </body>
 </html>

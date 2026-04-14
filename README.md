@@ -1,8 +1,8 @@
 # AI Harness Engineering Compatibility Matrix
 
-A single-page reference table showing which AI coding tool configuration files are supported by which tools — covering **GitHub Copilot**, **Claude Code**, **OpenCode**, and **Codex CLI**.
+A single-page reference table showing which AI coding tool configuration files are supported by which tools — covering **GitHub Copilot**, **Claude Code**, **OpenCode**, **Codex CLI**, and **Gemini CLI**.
 
-**Live page:** [codylindley.github.io/ai-harness-engineering-compatibility-matrix](https://codylindley.github.io/ai-harness-engineering-compatibility-matrix/)
+**Live page:** [codylindley.github.io/ai-context-engineering-compatibility-matrix](https://codylindley.github.io/ai-context-engineering-compatibility-matrix/)
 
 ## Wait, what kind of engineering is this now?
 
@@ -22,20 +22,21 @@ The table maps config files across five categories:
 
 | Category | Examples |
 |---|---|
-| **Always-on instructions** | `AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`, `*.instructions.md`, `.claude/rules/*.md` |
+| **Always-on instructions** | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `copilot-instructions.md`, `*.instructions.md`, `.claude/rules/*.md` |
 | **Custom agents** | `.github/agents/*.agent.md`, `.claude/agents/*.md`, `.opencode/agents/*.md` |
 | **Skills** | `.github/skills/*/SKILL.md`, `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md` |
 | **Prompt files** | `*.prompt.md`, `.claude/commands/*.md` |
-| **Lifecycle hooks** | `.github/hooks/`, `.claude/hooks/` |
+| **Lifecycle hooks** | `.github/hooks/`, `.claude/hooks/`, `.codex/hooks.json` |
 
 Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/partial**, or **Not supported**.
 
 ## Key takeaways
 
-- `AGENTS.md` has the broadest cross-tool reach (3 of 4 tools), but Claude Code doesn't read it natively yet.
+- `AGENTS.md` has the broadest cross-tool reach (4 of 5 tools), but Claude Code doesn't read it natively yet.
 - `.claude/skills/` is the only skill path that spans both Copilot and Claude Code — Copilot auto-discovers it.
-- OpenCode has the best cross-compatibility story — reads `AGENTS.md` natively and falls back to Claude Code's paths.
+- `.agents/skills/` is read by both Codex and OpenCode — the closest thing to a cross-tool skill standard.
 - Prompt files (`.prompt.md`) are IDE-only; Claude Code's equivalent (`.claude/commands/`) has been merged into its skills system.
+- MCP server config is fully fragmented — every tool uses a different file and format.
 
 ## Features
 
