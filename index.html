@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Config Compatibility Matrix — April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --bg: #FAFAF8;
+    --bg-surface: #F2F1ED;
+    --bg-card: #FFFFFF;
+    --text-primary: #1A1A18;
+    --text-secondary: #6B6A65;
+    --text-tertiary: #9C9B95;
+    --border: #E2E1DC;
+    --border-strong: #C8C7C1;
+    --yes: #1A7A56;
+    --yes-bg: #E8F5EE;
+    --no: #B8B7B1;
+    --no-bg: transparent;
+    --fallback: #A0650E;
+    --fallback-bg: #FDF4E7;
+    --optin: #2D6AB0;
+    --optin-bg: #EBF3FC;
+    --accent: #534AB7;
+    --accent-light: #EEEDFE;
+    --cat-bg: #F7F6F3;
+    --info-bg: #F5F4FF;
+    --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+    --font: 'DM Sans', -apple-system, sans-serif;
+    --mono: 'DM Mono', 'SF Mono', monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413;
+      --bg-surface: #1E1E1C;
+      --bg-card: #232321;
+      --text-primary: #EAEAE6;
+      --text-secondary: #9C9B95;
+      --text-tertiary: #6B6A65;
+      --border: #333330;
+      --border-strong: #4A4A45;
+      --yes: #3CBF7E;
+      --yes-bg: #1A2E22;
+      --no: #555550;
+      --no-bg: transparent;
+      --fallback: #D4A54A;
+      --fallback-bg: #2A2316;
+      --optin: #6BA3E0;
+      --optin-bg: #1A2536;
+      --accent: #9B94E8;
+      --accent-light: #26234A;
+      --cat-bg: #1A1A18;
+      --info-bg: #1E1D2A;
+      --shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
+    }
+  }
+
+  html { font-size: 16px }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 1rem;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 0 4rem;
+  }
+
+  header { margin-bottom: 2.5rem }
+  header h1 {
+    font-size: 1.625rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  header p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    max-width: 640px;
+    line-height: 1.65;
+  }
+  header .date {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.8125rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .legend-dot.yes { background: var(--yes) }
+  .legend-dot.no { background: var(--no) }
+  .legend-dot.fb { background: var(--fallback) }
+  .legend-dot.oi { background: var(--optin) }
+
+  .table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+  }
+
+  thead th {
+    padding: 14px 12px 12px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-strong);
+    background: var(--bg-card);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
+  }
+  thead th:first-child {
+    text-align: left;
+    padding-left: 20px;
+    min-width: 240px;
+  }
+  thead .tool-sub {
+    display: block;
+    font-weight: 400;
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    margin-top: 1px;
+    font-family: var(--mono);
+  }
+
+  tbody td {
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 0.5px solid var(--border);
+    vertical-align: middle;
+    transition: background 0.15s;
+  }
+  tbody td:first-child {
+    text-align: left;
+    padding-left: 20px;
+    font-weight: 500;
+    font-size: 0.8125rem;
+  }
+  .file-path {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-primary);
+  }
+  .file-loc {
+    display: block;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  tr.cat td {
+    background: var(--cat-bg);
+    padding: 8px 20px;
+    font-weight: 600;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 0.5px solid var(--border);
+    position: sticky;
+    top: 45px;
+    z-index: 5;
+  }
+  tr.cat td[colspan] { text-align: left }
+
+  tbody tr:not(.cat):not(.info-row):hover td { background: var(--bg-surface) }
+
+  .cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 5px;
+    min-width: 58px;
+    gap: 3px;
+  }
+  .cell.y { color: var(--yes); background: var(--yes-bg) }
+  .cell.n { color: var(--no); background: var(--no-bg); font-weight: 400 }
+  .cell.f { color: var(--fallback); background: var(--fallback-bg) }
+  .cell.o { color: var(--optin); background: var(--optin-bg); font-size: 0.6875rem }
+
+  .fn {
+    font-size: 0.625rem;
+    font-weight: 600;
+    vertical-align: super;
+    line-height: 0;
+    color: var(--accent);
+    margin-left: 1px;
+  }
+
+  .info-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface);
+    color: var(--text-tertiary);
+    font-size: 11px;
+    font-weight: 600;
+    font-style: italic;
+    font-family: Georgia, serif;
+    cursor: pointer;
+    margin-left: 6px;
+    vertical-align: middle;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .info-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+  .info-btn.active {
+    border-color: var(--accent);
+    color: var(--bg-card);
+    background: var(--accent);
+  }
+
+  .info-row { display: none }
+  .info-row.open { display: table-row }
+  .info-row td {
+    padding: 0 20px;
+    background: var(--info-bg);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .info-content {
+    padding: 14px 0;
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 640px;
+  }
+  .info-content strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .info-content code {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .name-cell {
+    display: flex;
+    align-items: flex-start;
+  }
+  .name-cell .name-text { flex: 1 }
+
+  .footnotes {
+    margin-top: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .footnotes p {
+    margin-bottom: 0.35rem;
+  }
+  .footnotes p:last-child { margin-bottom: 0 }
+  .footnotes .fn-num {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: 4px;
+  }
+
+  .surface-note {
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .surface-note strong { color: var(--text-primary); font-weight: 500 }
+  .surface-note code {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    background: var(--bg-surface);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .insight {
+    margin-top: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-surface);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+  }
+  .insight-title {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+  .insight p {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 0.5rem;
+  }
+  .insight p:last-child { margin-bottom: 0 }
+  .insight code {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  footer {
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    header h1 { font-size: 1.375rem }
+    .wrap { padding: 2rem 0 3rem }
+    thead th:first-child { min-width: 180px }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="date">Updated April 2026</div>
+    <h1>AI agent config compatibility matrix</h1>
+    <p>Which configuration files are read by which AI coding tools. Tap the <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--border-strong);font-size:10px;font-style:italic;font-family:Georgia,serif;font-weight:600;color:var(--text-tertiary);vertical-align:middle">i</span> icon on any row to learn what it does and when to use it.</p>
+  </header>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot yes"></span>Native support</span>
+    <span class="legend-item"><span class="legend-dot fb"></span>Fallback / compat</span>
+    <span class="legend-item"><span class="legend-dot oi"></span>Opt-in / partial</span>
+    <span class="legend-item"><span class="legend-dot no"></span>Not supported</span>
+  </div>
+
+  <div class="table-card">
+    <div class="table-scroll">
+      <table id="matrix">
+        <thead>
+          <tr>
+            <th>Config file</th>
+            <th>Copilot<span class="tool-sub">VS Code / CLI / Cloud</span></th>
+            <th>Claude Code<span class="tool-sub">CLI / IDE / Desktop / Web</span></th>
+            <th>OpenCode<span class="tool-sub">CLI</span></th>
+            <th>Codex<span class="tool-sub">CLI</span></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ═══ ALWAYS-ON ═══ -->
+          <tr class="cat"><td colspan="5">Always-on instructions</td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">AGENTS.md</span><span class="file-loc">root of repo</span></span><button class="info-btn" data-info="agents-md" aria-label="Info about AGENTS.md">i</button></div></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell y">Yes</span></td>
+          </tr>
+          <tr class="info-row" id="agents-md"><td colspan="5"><div class="info-content"><strong>The cross-tool universal standard.</strong> A markdown file at your repo root that any AI coding agent reads at the start of every session. Think of it as a system prompt for your repo — stack declarations, naming conventions, architectural boundaries, "never do X" rules. Governed by the Linux Foundation's Agentic AI Foundation. Put your shared team contract here. It has the broadest tool support of any config file, though Claude Code doesn't read it natively yet (open feature request).</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">CLAUDE.md</span><span class="file-loc">root + subdirectories</span></span><button class="info-btn" data-info="claude-md" aria-label="Info about CLAUDE.md">i</button></div></td>
+            <td><span class="cell o">Partial<span class="fn">1</span></span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="claude-md"><td colspan="5"><div class="info-content"><strong>Claude Code's native config.</strong> Same purpose as <code>AGENTS.md</code> but Claude-specific. The standout feature is subdirectory scoping — drop a <code>CLAUDE.md</code> in <code>/api</code> and those rules only apply when Claude works on API files. If you also use <code>AGENTS.md</code>, your <code>CLAUDE.md</code> can simply say <code>See @AGENTS.md for base rules</code> plus Claude-specific additions. Copilot CLI reads it natively; VS Code requires the <code>chat.useClaudeMdFile</code> setting; Cloud agent does not support it.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">copilot-instructions.md</span><span class="file-loc">.github/</span></span><button class="info-btn" data-info="copilot-instr" aria-label="Info about copilot-instructions.md">i</button></div></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="copilot-instr"><td colspan="5"><div class="info-content"><strong>Copilot's original repo-wide config.</strong> Lives at <code>.github/copilot-instructions.md</code>. Auto-injected into every Copilot request. Same purpose as <code>AGENTS.md</code> but Copilot-exclusive. If you already have an <code>AGENTS.md</code>, you may not need this — or it can hold Copilot-only overrides. Auto-generate one by running <code>/init</code> in Copilot chat.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">*.instructions.md</span><span class="file-loc">.github/instructions/ (glob scoped)</span></span><button class="info-btn" data-info="scoped-instr" aria-label="Info about scoped instructions">i</button></div></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="scoped-instr"><td colspan="5"><div class="info-content"><strong>Surgically scoped rules via glob patterns.</strong> Each file has an <code>applyTo</code> property in frontmatter (e.g., <code>applyTo: "**/*.tsx"</code>) so rules only activate when working on matching files. Perfect for framework-specific conventions: <code>solidjs.instructions.md</code> for TSX, <code>test.instructions.md</code> for test files. Copilot auto-detects relevance. Claude Code's equivalent is <code>.claude/rules/*.md</code> with a <code>paths</code> property.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/rules/*.md</span><span class="file-loc">scoped via paths property</span></span><button class="info-btn" data-info="claude-rules" aria-label="Info about Claude rules">i</button></div></td>
+            <td><span class="cell o">Partial<span class="fn">2</span></span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="claude-rules"><td colspan="5"><div class="info-content"><strong>Claude Code's scoped instruction files.</strong> The Claude-side equivalent of Copilot's <code>*.instructions.md</code>. Each file uses a <code>paths</code> array in frontmatter (e.g., <code>paths: ["**/*.ts"]</code>) instead of Copilot's <code>applyTo</code>. Defaults to <code>**</code> (all files) when omitted. VS Code Copilot can read these with the Claude file settings enabled; CLI and Cloud agent do not.</div></td></tr>
+
+          <!-- ═══ AGENTS ═══ -->
+          <tr class="cat"><td colspan="5">Custom agents (persona + tool restrictions)</td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">*.agent.md</span><span class="file-loc">.github/agents/</span></span><button class="info-btn" data-info="copilot-agents" aria-label="Info about Copilot agents">i</button></div></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="copilot-agents"><td colspan="5"><div class="info-content"><strong>Specialized Copilot personas you invoke by name.</strong> Each file defines <em>who</em> answers — a distinct role with tool access, model choice, and behavioral boundaries. Invoke via <code>@agent-name</code> in chat. Examples: <code>@reviewer</code> (read-only), <code>@test-writer</code> (writes to <code>/tests/</code> only). Can be used as subagents. Frontmatter controls tool and model access.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/agents/*.md</span><span class="file-loc">Claude subagents</span></span><button class="info-btn" data-info="claude-agents" aria-label="Info about Claude agents">i</button></div></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="claude-agents"><td colspan="5"><div class="info-content"><strong>Claude Code's subagent system.</strong> Specialized agents that Claude delegates work to, each running in isolated context. Built-in agents include <code>Explore</code> (read-only codebase research) and <code>Plan</code> (no file modifications). Skills can reference agents via the <code>agent</code> frontmatter field to run in a forked context.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.opencode/agents/*.md</span><span class="file-loc">OpenCode agents</span></span><button class="info-btn" data-info="oc-agents" aria-label="Info about OpenCode agents">i</button></div></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="oc-agents"><td colspan="5"><div class="info-content"><strong>OpenCode's native agent definitions.</strong> Same concept — persona with description, model, tool permissions, and prompt. Ships with built-in <code>Build</code> (full tool access) and <code>Plan</code> (read-only). Switch between primary agents with <code>Tab</code>. Can be defined in <code>opencode.json</code> or as markdown files.</div></td></tr>
+
+          <!-- ═══ SKILLS ═══ -->
+          <tr class="cat"><td colspan="5">Skills (bundled capability folders with SKILL.md)</td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/skills/*/SKILL.md</span><span class="file-loc">Copilot native path</span></span><button class="info-btn" data-info="gh-skills" aria-label="Info about Copilot skills">i</button></div></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="gh-skills"><td colspan="5"><div class="info-content"><strong>Copilot's native skill path — Copilot-only.</strong> Skills are <em>folders</em> with a <code>SKILL.md</code> entrypoint plus optional scripts, templates, and reference docs. Copilot uses progressive disclosure: reads only the name + description (cheap), loads full body + resources only when relevant. Invoke via <code>/skill-name</code> or let Copilot auto-detect. Claude Code does <em>not</em> read this path — use <code>.claude/skills/</code> for cross-tool compatibility.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/skills/*/SKILL.md</span><span class="file-loc">Claude Code native path</span></span><button class="info-btn" data-info="claude-skills" aria-label="Info about Claude skills">i</button></div></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="claude-skills"><td colspan="5"><div class="info-content"><strong>The best cross-tool skill path available today.</strong> Claude Code's native location, <em>and</em> Copilot auto-discovers it too. Put skills here to span both ecosystems without symlinks. Supports the full SKILL.md spec: frontmatter with name/description, markdown body, and bundled assets. Claude Code supports auto-invocation, user-invocation (<code>/skill-name</code>), and forked subagent execution.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.agents/skills/*/SKILL.md</span><span class="file-loc">cross-agent standard path</span></span><button class="info-btn" data-info="agents-skills" aria-label="Info about .agents skills">i</button></div></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="agents-skills"><td colspan="5"><div class="info-content"><strong>An emerging cross-agent skill path.</strong> Currently only read by OpenCode. Intended as a tool-agnostic location for skills, mirroring how <code>AGENTS.md</code> is a universal instruction file. May gain broader adoption as the Agent Skills standard matures.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.opencode/skills/*/SKILL.md</span><span class="file-loc">OpenCode native path</span></span><button class="info-btn" data-info="oc-skills" aria-label="Info about OpenCode skills">i</button></div></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="oc-skills"><td colspan="5"><div class="info-content"><strong>OpenCode's own skill directory.</strong> Same SKILL.md format. OpenCode also reads <code>.claude/skills/</code> and <code>.agents/skills/</code> as fallbacks, so you rarely need this unless you want OpenCode-exclusive skills.</div></td></tr>
+
+          <!-- ═══ PROMPTS ═══ -->
+          <tr class="cat"><td colspan="5">Prompt files (manual /slash-command invocation)</td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">*.prompt.md</span><span class="file-loc">.github/prompts/</span></span><button class="info-btn" data-info="prompt-files" aria-label="Info about prompt files">i</button></div></td>
+            <td><span class="cell o">Partial<span class="fn">3</span></span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="prompt-files"><td colspan="5"><div class="info-content"><strong>Lightweight reusable prompt templates.</strong> Invoke via <code>/prompt-name</code> in chat. No persona, no tool restrictions, no bundled assets — just a well-crafted prompt with optional frontmatter. Best for tasks you repeat: <code>/new-component</code>, <code>/spell-check</code>, <code>/prep-pr</code>. Can reference workspace files via markdown links. Only supported in VS Code and JetBrains IDEs — not Copilot CLI or Cloud agent. These don't port to any other tool.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/commands/*.md</span><span class="file-loc">merged into skills system</span></span><button class="info-btn" data-info="claude-cmds" aria-label="Info about Claude commands">i</button></div></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="claude-cmds"><td colspan="5"><div class="info-content"><strong>Claude Code's original slash commands — now merged into skills.</strong> A command at <code>.claude/commands/deploy.md</code> and a skill at <code>.claude/skills/deploy/SKILL.md</code> both create <code>/deploy</code> and work identically. Existing command files keep working. Skills add optional supporting files, auto-invocation via description matching, and forked subagent execution.</div></td></tr>
+
+          <!-- ═══ HOOKS ═══ -->
+          <tr class="cat"><td colspan="5">Automation (lifecycle hooks)</td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/hooks/</span><span class="file-loc">hooks.json</span></span><button class="info-btn" data-info="gh-hooks" aria-label="Info about Copilot hooks">i</button></div></td>
+            <td><span class="cell o">Partial<span class="fn">4</span></span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="gh-hooks"><td colspan="5"><div class="info-content"><strong>Copilot lifecycle hooks.</strong> Automated workflows triggered at agent events — run a formatter after every edit, validate branch names, enforce lint before commits. Think of them as git hooks for the AI agent loop. Supported in VS Code and CLI only — not Cloud agent.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/hooks/</span><span class="file-loc">settings.json hooks</span></span><button class="info-btn" data-info="claude-hooks" aria-label="Info about Claude hooks">i</button></div></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="claude-hooks"><td colspan="5"><div class="info-content"><strong>Claude Code's hook system.</strong> 14+ trigger points including <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, and <code>PermissionRequest</code>. Run custom scripts at every stage of the agent loop — linting, logging, approval gates. More granular than Copilot hooks, with triggers for both before and after tool execution.</div></td></tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footnotes">
+    <p><span class="fn-num">1</span> <strong>CLAUDE.md in Copilot:</strong> CLI reads it natively at repo root. VS Code requires the <code>chat.useClaudeMdFile</code> setting. Cloud agent does not support it.</p>
+    <p><span class="fn-num">2</span> <strong>.claude/rules in Copilot:</strong> VS Code only, requires opt-in setting. Not supported in CLI or Cloud agent.</p>
+    <p><span class="fn-num">3</span> <strong>Prompt files:</strong> VS Code and JetBrains IDEs only. Not supported in Copilot CLI (open feature request) or Cloud agent.</p>
+    <p><span class="fn-num">4</span> <strong>Copilot hooks:</strong> VS Code and CLI only. Not supported in Cloud agent.</p>
+  </div>
+
+  <div class="surface-note">
+    <strong>About tool surfaces:</strong> The Copilot column covers VS Code, CLI, and Cloud agent — they share almost all config support, with footnoted exceptions above. Claude Code is a single engine across CLI, VS Code extension, JetBrains, Desktop (including Cowork), and browser — all surfaces read the same config. <strong>Claude.ai chat</strong> (the consumer chat product) is a separate product and reads none of these files.
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">Key takeaways</div>
+    <p><code>AGENTS.md</code> has the broadest cross-tool reach (3 of 4 tools), but Claude Code still doesn't read it natively — that's an open feature request.</p>
+    <p>The only skill path that spans both Copilot and Claude Code is <code>.claude/skills/</code> — Copilot auto-discovers it. This eliminates the need for symlinks.</p>
+    <p>Prompt files (<code>.prompt.md</code>) are IDE-only. Claude Code's equivalent (<code>.claude/commands/</code>) has been merged into its skills system.</p>
+    <p>OpenCode has the best cross-compatibility story — reads <code>AGENTS.md</code> natively and falls back to Claude Code's paths for skills, agents, and commands.</p>
+  </div>
+
+  <footer>
+    Researched April 2026. This landscape changes fast — verify against current docs before committing to a config architecture.
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.info-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.info;
+      const row = document.getElementById(id);
+      const isOpen = row.classList.contains('open');
+
+      document.querySelectorAll('.info-row.open').forEach(r => r.classList.remove('open'));
+      document.querySelectorAll('.info-btn.active').forEach(b => b.classList.remove('active'));
+
+      if (!isOpen) {
+        row.classList.add('open');
+        btn.classList.add('active');
+      }
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.info-btn') && !e.target.closest('.info-row')) {
+      document.querySelectorAll('.info-row.open').forEach(r => r.classList.remove('open'));
+      document.querySelectorAll('.info-btn.active').forEach(b => b.classList.remove('active'));
+    }
+  });
+</script>
+</body>
+</html>
