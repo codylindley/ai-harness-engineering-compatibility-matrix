@@ -239,7 +239,6 @@
   /* Copilot group border */
   thead th.cop-l { border-left: 2px solid var(--border-strong) }
   thead th.cop-r { border-right: 2px solid var(--border-strong) }
-  thead th.cop-m { }
   tbody td.cop-l { border-left: 2px solid var(--border) }
   tbody td.cop-r { border-right: 2px solid var(--border) }
 
@@ -768,23 +767,23 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell o">opt-in</span></td>
           </tr>
-          <tr class="info-row" id="agents-md"><td colspan="8"><div class="info-content"><strong>The cross-tool universal standard.</strong> A markdown file at your repo root read at the start of every session. Think of it as a system prompt for your repo — stack declarations, naming conventions, architectural boundaries, "never do X" rules. Governed by the Linux Foundation's Agentic AI Foundation. Put your shared team contract here. Broadest tool support of any config file, though Claude Code doesn't read it natively yet (open feature request).</div></td></tr>
+          <tr class="info-row" id="agents-md"><td colspan="8"><div class="info-content"><strong>The broadest shared instructions format in this matrix.</strong> A markdown file at your repo root read at the start of every session by several tools. Think of it as a system prompt for your repo — stack declarations, naming conventions, architectural boundaries, "never do X" rules. Put your shared team contract here. Claude Code still relies on <code>CLAUDE.md</code> for native instructions.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">CLAUDE.md</span><span class="file-loc">root + subdirectories</span></span><button class="info-btn" data-info="claude-md">i</button></div></td>
-            <td class="cop-l"><span class="cell o">opt-in</span></td>
-            <td><span class="cell y">Yes</span></td>
+            <td class="cop-l"><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-md"><td colspan="8"><div class="info-content"><strong>Claude Code's native config.</strong> Same purpose as <code>AGENTS.md</code> but Claude-specific. Standout feature: subdirectory scoping — drop a <code>CLAUDE.md</code> in <code>/api</code> and those rules only apply when working on API files. If you also have <code>AGENTS.md</code>, your <code>CLAUDE.md</code> can say <code>See @AGENTS.md for base rules</code> plus Claude-specific additions. Copilot CLI and Cloud agent read it natively; VS Code requires <code>chat.useClaudeMdFile</code>.</div></td></tr>
+          <tr class="info-row" id="claude-md"><td colspan="8"><div class="info-content"><strong>Claude Code's native config.</strong> Same purpose as <code>AGENTS.md</code> but Claude-specific. Standout feature: subdirectory scoping — drop a <code>CLAUDE.md</code> in <code>/api</code> and those rules only apply when working on API files. If you also have <code>AGENTS.md</code>, your <code>CLAUDE.md</code> can say <code>See @AGENTS.md for base rules</code> plus Claude-specific additions. Copilot VS Code natively scans for <code>CLAUDE.md</code> in workspace folders alongside <code>AGENTS.md</code>. Copilot cloud agent also reads it as agent instructions. CLI does not read it.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">GEMINI.md</span><span class="file-loc">root of repo</span></span><button class="info-btn" data-info="gemini-md">i</button></div></td>
-            <td class="cop-l"><span class="cell o">opt-in</span></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
@@ -792,7 +791,7 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
           </tr>
-          <tr class="info-row" id="gemini-md"><td colspan="8"><div class="info-content"><strong>Gemini CLI's native context file.</strong> Hierarchical like <code>CLAUDE.md</code> — global (<code>~/.gemini/GEMINI.md</code>), project root, and subdirectory scoping with just-in-time discovery. Copilot Cloud agent also reads it natively as an alternative to <code>AGENTS.md</code>. Configure alternative filenames (including <code>AGENTS.md</code>) via the <code>context.fileName</code> setting.</div></td></tr>
+          <tr class="info-row" id="gemini-md"><td colspan="8"><div class="info-content"><strong>Gemini CLI's native context file.</strong> Hierarchical like <code>CLAUDE.md</code> — global (<code>~/.gemini/GEMINI.md</code>), project root, and subdirectory scoping with just-in-time discovery. Copilot cloud agent can also use a root-level <code>GEMINI.md</code> as agent instructions. Gemini CLI can also be configured to look for alternative filenames, including <code>AGENTS.md</code>, via the <code>context.fileName</code> setting.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">copilot-instructions.md</span><span class="file-loc">.github/</span></span><button class="info-btn" data-info="copilot-instr">i</button></div></td>
@@ -820,15 +819,15 @@
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/rules/*.md</span><span class="file-loc">scoped via paths property</span></span><button class="info-btn" data-info="claude-rules">i</button></div></td>
-            <td class="cop-l"><span class="cell o">opt-in</span></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
-            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-rules"><td colspan="8"><div class="info-content"><strong>Claude Code's scoped instruction files.</strong> Equivalent of Copilot's <code>*.instructions.md</code>. Uses a <code>paths</code> array in frontmatter instead of <code>applyTo</code>. Defaults to <code>**</code> (all files) when omitted. VS Code Copilot can read these with Claude file settings enabled.</div></td></tr>
+          <tr class="info-row" id="claude-rules"><td colspan="8"><div class="info-content"><strong>Claude Code's scoped instruction files.</strong> Equivalent of Copilot's <code>*.instructions.md</code>. Uses a <code>paths</code> array in frontmatter instead of <code>applyTo</code>. Defaults to <code>**</code> (all files) when omitted.</div></td></tr>
 
           <tr class="cat"><td colspan="8">Custom agents (persona + tool restrictions) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
@@ -850,7 +849,7 @@
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
-            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
@@ -867,6 +866,18 @@
             <td><span class="cell n">—</span></td>
           </tr>
           <tr class="info-row" id="oc-agents"><td colspan="8"><div class="info-content"><strong>OpenCode's native agent definitions.</strong> Same concept — persona with description, model, tool permissions, and prompt. Ships with <code>Build</code> (full tools) and <code>Plan</code> (read-only). Switch with <code>Tab</code>. Can also be defined in <code>opencode.json</code>.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.gemini/agents/*.md</span><span class="file-loc">Gemini subagents</span></span><button class="info-btn" data-info="gemini-agents">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+          </tr>
+          <tr class="info-row" id="gemini-agents"><td colspan="8"><div class="info-content"><strong>Gemini CLI's custom subagents.</strong> Markdown files with YAML frontmatter that define specialized local agents. Store them at project scope in <code>.gemini/agents/</code> or user scope in <code>~/.gemini/agents/</code>. Invoke them automatically or force them with <code>@agent-name</code>.</div></td></tr>
 
           <tr class="cat"><td colspan="8">Skills (bundled capability folders with SKILL.md) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
@@ -892,7 +903,7 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="claude-skills"><td colspan="8"><div class="info-content"><strong>The best cross-tool skill path available today.</strong> Claude Code's native location, <em>and</em> Copilot auto-discovers it. Put skills here to span both ecosystems without symlinks. Supports auto-invocation, user-invocation (<code>/skill-name</code>), and forked subagent execution in Claude Code.</div></td></tr>
+          <tr class="info-row" id="claude-skills"><td colspan="8"><div class="info-content"><strong>Claude Code's native skill path.</strong> OpenCode also reads this directory as a fallback. Copilot natively scans <code>.claude/skills/</code> as a default skill path alongside <code>.github/skills/</code> — confirmed in the VS Code extension bundle. Claude Code supports auto-invocation, user-invocation (<code>/skill-name</code>), and forked subagent execution.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.agents/skills/*/SKILL.md</span><span class="file-loc">cross-agent standard path</span></span><button class="info-btn" data-info="agents-skills">i</button></div></td>
@@ -902,9 +913,21 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
-            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
           </tr>
-          <tr class="info-row" id="agents-skills"><td colspan="8"><div class="info-content"><strong>The emerging cross-agent skill standard.</strong> Codex's primary skill path — scans <code>.agents/skills</code> from your working directory up to the repo root. Also read by OpenCode. Based on the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
+          <tr class="info-row" id="agents-skills"><td colspan="8"><div class="info-content"><strong>The strongest cross-agent skill path available today.</strong> Codex's primary skill path — scans <code>.agents/skills</code> from your working directory up to the repo root. OpenCode and Gemini CLI also read it. Based on the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.gemini/skills/*/SKILL.md</span><span class="file-loc">Gemini CLI native path</span></span><button class="info-btn" data-info="gemini-skills">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+          </tr>
+          <tr class="info-row" id="gemini-skills"><td colspan="8"><div class="info-content"><strong>Gemini CLI's native skill path.</strong> Skills live under <code>.gemini/skills/&lt;name&gt;/SKILL.md</code> and are activated on demand via the <code>activate_skill</code> tool. Gemini also supports <code>.agents/skills/</code> as a native alias, which makes that path the better portability choice when you want cross-tool reuse.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.opencode/skills/*/SKILL.md</span><span class="file-loc">OpenCode native path</span></span><button class="info-btn" data-info="oc-skills">i</button></div></td>
@@ -930,7 +953,7 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="prompt-files"><td colspan="8"><div class="info-content"><strong>Lightweight reusable prompt templates — IDE only.</strong> Invoke via <code>/prompt-name</code> in chat. No persona, no tool restrictions, no bundled assets. Best for tasks you repeat: <code>/new-component</code>, <code>/spell-check</code>, <code>/prep-pr</code>. Supported in VS Code and JetBrains IDEs only — CLI and Cloud agent support is an open feature request.</div></td></tr>
+          <tr class="info-row" id="prompt-files"><td colspan="8"><div class="info-content"><strong>Lightweight reusable prompt templates — Copilot IDE only.</strong> Invoke via <code>/prompt-name</code> in chat. No persona, no tool restrictions, no bundled assets. Best for tasks you repeat: <code>/new-component</code>, <code>/spell-check</code>, <code>/prep-pr</code>. Available in Copilot IDE integrations such as VS Code, Visual Studio, and JetBrains — not in Copilot CLI or cloud agent.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/commands/*.md</span><span class="file-loc">merged into skills system</span></span><button class="info-btn" data-info="claude-cmds">i</button></div></td>
@@ -938,11 +961,35 @@
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell y">Yes</span></td>
-            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
           <tr class="info-row" id="claude-cmds"><td colspan="8"><div class="info-content"><strong>Claude Code's original slash commands — now merged into skills.</strong> A command at <code>.claude/commands/deploy.md</code> and a skill at <code>.claude/skills/deploy/SKILL.md</code> both create <code>/deploy</code> and work identically. Existing files keep working. Skills add supporting files, auto-invocation, and subagent execution.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.opencode/commands/*.md</span><span class="file-loc">OpenCode native commands</span></span><button class="info-btn" data-info="oc-cmds">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="oc-cmds"><td colspan="8"><div class="info-content"><strong>OpenCode's native custom command format.</strong> Markdown files in <code>.opencode/commands/</code> define reusable slash commands. The file body becomes the prompt template, and frontmatter can choose an agent or model for execution.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.gemini/commands/*.toml</span><span class="file-loc">Gemini custom commands</span></span><button class="info-btn" data-info="gemini-cmds">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+          </tr>
+          <tr class="info-row" id="gemini-cmds"><td colspan="8"><div class="info-content"><strong>Gemini CLI's native custom command format.</strong> TOML files in <code>.gemini/commands/</code> define reusable slash commands. Project commands override user commands, support argument injection, and can embed shell output or file content into the final prompt.</div></td></tr>
 
           <tr class="cat"><td colspan="8">Automation (lifecycle hooks) <span class="cat-type sensor">sensor<span class="cat-tip">i<span class="cat-tip-text">Feedback — observes after the agent acts</span></span></span></td></tr>
 
@@ -1050,10 +1097,10 @@
 
   <div class="insight">
     <div class="insight-title">Key takeaways</div>
-    <p><code>AGENTS.md</code> has the broadest cross-tool reach, but Claude Code still doesn't read it natively — that's an open feature request.</p>
-    <p>The only skill path spanning both Copilot and Claude Code is <code>.claude/skills/</code> — Copilot auto-discovers it. No symlinks needed.</p>
-    <p>Prompt files (<code>.prompt.md</code>) are VS Code / JetBrains only. Claude Code's equivalent (<code>.claude/commands/</code>) has merged into skills.</p>
-    <p>Codex reads <code>.agents/skills/</code> natively — the same path OpenCode uses — making it the closest thing to a cross-tool skill standard.</p>
+    <p><code>AGENTS.md</code> has the broadest reach of any instructions file shown here, but Claude Code still relies on <code>CLAUDE.md</code> for native instructions. Copilot VS Code natively reads both.</p>
+    <p><code>.agents/skills/</code> is now the clearest cross-tool skill path in the table — read natively by Codex and also supported by OpenCode and Gemini CLI.</p>
+    <p>Prompt files split hard by tool family: Copilot uses <code>*.prompt.md</code>, Claude keeps backward-compatible <code>.claude/commands/</code>, OpenCode uses <code>.opencode/commands/</code>, and Gemini CLI uses <code>.gemini/commands/*.toml</code>.</p>
+    <p><code>.claude/skills/</code> is a default skill scan path in Copilot VS Code alongside <code>.github/skills/</code> — making it the best cross-tool skill path for Copilot + Claude Code projects.</p>
     <p>MCP server config is fully fragmented — every tool uses a different file and format. No project-scoped MCP config is portable across tools.</p>
   </div>
 

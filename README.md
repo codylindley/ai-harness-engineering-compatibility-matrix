@@ -23,19 +23,19 @@ The table maps config files across five categories:
 | Category | Examples |
 |---|---|
 | **Always-on instructions** | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `copilot-instructions.md`, `*.instructions.md`, `.claude/rules/*.md` |
-| **Custom agents** | `.github/agents/*.agent.md`, `.claude/agents/*.md`, `.opencode/agents/*.md` |
-| **Skills** | `.github/skills/*/SKILL.md`, `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md` |
-| **Prompt files** | `*.prompt.md`, `.claude/commands/*.md` |
+| **Custom agents** | `.github/agents/*.agent.md`, `.claude/agents/*.md`, `.opencode/agents/*.md`, `.gemini/agents/*.md` |
+| **Skills** | `.github/skills/*/SKILL.md`, `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md`, `.gemini/skills/*/SKILL.md` |
+| **Prompt files** | `*.prompt.md`, `.claude/commands/*.md`, `.opencode/commands/*.md`, `.gemini/commands/*.toml` |
 | **Lifecycle hooks** | `.github/hooks/`, `.claude/hooks/`, `.codex/hooks.json` |
 
 Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/partial**, or **Not supported**.
 
 ## Key takeaways
 
-- `AGENTS.md` has the broadest cross-tool reach (4 of 5 tools), but Claude Code doesn't read it natively yet.
-- `.claude/skills/` is the only skill path that spans both Copilot and Claude Code — Copilot auto-discovers it.
-- `.agents/skills/` is read by both Codex and OpenCode — the closest thing to a cross-tool skill standard.
-- Prompt files (`.prompt.md`) are IDE-only; Claude Code's equivalent (`.claude/commands/`) has been merged into its skills system.
+- `AGENTS.md` has the broadest reach of any instructions file in the matrix, but Claude Code still relies on `CLAUDE.md` for native instructions. Copilot VS Code natively reads both.
+- `.agents/skills/` is the clearest cross-tool skill path today — read natively by Codex and also supported by OpenCode and Gemini CLI.
+- Prompt files split by tool family: Copilot uses `*.prompt.md`, Claude keeps backward-compatible `.claude/commands/`, OpenCode uses `.opencode/commands/`, and Gemini CLI uses `.gemini/commands/*.toml`.
+- `.claude/skills/` is a default skill scan path in Copilot VS Code alongside `.github/skills/` — making it the best cross-tool skill path for Copilot + Claude Code projects.
 - MCP server config is fully fragmented — every tool uses a different file and format.
 
 ## Features
