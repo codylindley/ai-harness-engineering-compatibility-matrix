@@ -2,7 +2,7 @@
 
 A single-page reference table showing which AI coding tool configuration files are supported by which tools — covering **GitHub Copilot**, **Claude Code**, **OpenCode**, **Codex CLI**, and **Gemini CLI**.
 
-**Live page:** [codylindley.github.io/ai-context-engineering-compatibility-matrix](https://codylindley.github.io/ai-context-engineering-compatibility-matrix/)
+**Live page:** [codylindley.github.io/ai-harness-engineering-compatibility-matrix](https://codylindley.github.io/ai-harness-engineering-compatibility-matrix/)
 
 ## Wait, what kind of engineering is this now?
 
