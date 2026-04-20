@@ -314,6 +314,9 @@
   .cell.f { color: var(--fallback); background: var(--fallback-bg) }
   .cell.o { color: var(--optin); background: var(--optin-bg); font-size: 0.6875rem }
 
+  .cell-wrap { display: inline-flex; flex-direction: column; align-items: center; gap: 2px }
+  .cell-sub { font-size: 0.5625rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-tertiary); font-weight: 500; line-height: 1 }
+
   .info-btn {
     display: inline-flex;
     align-items: center;
@@ -671,14 +674,28 @@
     border: 1px solid var(--border);
     border-radius: 14px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
-    max-width: min(72ch, 90vw);
+    max-width: min(1024px, 90vw);
     width: 100%;
     max-height: 85vh;
-    overflow-y: auto;
-    padding: 1.75rem 2rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     position: relative;
   }
   html.dark .cat-modal { box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2) }
+
+  .cat-modal-header {
+    flex-shrink: 0;
+    padding: 1.75rem 2rem 0;
+    position: relative;
+  }
+
+  .cat-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.75rem 2rem 1.75rem;
+  }
 
   .cat-modal-close {
     position: absolute;
@@ -720,11 +737,15 @@
     margin-bottom: 0.75rem;
     padding-right: 2rem;
   }
-  .cat-modal p {
+  .cat-modal p, .cat-modal-desc {
     font-size: 0.8125rem;
     color: var(--text-secondary);
     line-height: 1.65;
     margin-bottom: 0.75rem;
+    overflow-wrap: anywhere;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
   .cat-modal p:last-child { margin-bottom: 0 }
   .cat-modal .example-label {
@@ -752,6 +773,40 @@
     padding: 1px 5px;
     border-radius: 3px;
   }
+
+  /* Modal tabs */
+  .cat-modal-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+  .cat-modal-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    font-family: var(--font);
+    margin-bottom: -1px;
+  }
+  .cat-modal-tab:hover { color: var(--text-secondary) }
+  .cat-modal-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+  .cat-modal-tab-panel { display: none }
+  .cat-modal-tab-panel.active { display: block }
+  .cat-modal table { width: 100%; border-collapse: collapse; table-layout: fixed }
+  .cat-modal table th:first-child,
+  .cat-modal table td:first-child { width: 25% }
+  .cat-modal table th, .cat-modal table td { word-wrap: break-word; overflow-wrap: anywhere }
+  .cat-modal table code { word-break: break-all; white-space: normal }
 
   footer {
     margin-top: 2rem;
@@ -805,9 +860,13 @@
     .surface-note { padding: 0.85rem 1rem; font-size: 0.75rem }
 
     /* Modal */
-    .cat-modal { padding: 1.25rem 1.25rem; max-width: 100% }
+    .cat-modal { max-width: 100% }
+    .cat-modal-header { padding: 1.25rem 1.25rem 0 }
+    .cat-modal-body { padding: 0.5rem 1.25rem 1.25rem }
     .cat-modal h3 { font-size: 1rem }
     .cat-modal p { font-size: 0.75rem }
+    .cat-modal-tab { font-size: 0.6875rem; padding: 0.4rem 0.75rem }
+    .cat-modal table { font-size: 0.75rem !important }
     .cat-modal .example-label { font-size: 0.625rem }
     .cat-modal .example-block { font-size: 0.75rem; padding: 0.65rem 0.85rem }
 
@@ -860,14 +919,14 @@
 
   <div class="toggle-bar" id="toggles">
     <span class="label">Show:</span>
-    <button class="tog on" data-col="1">GitHub Copilot VS Code</button>
-    <button class="tog on" data-col="2">GitHub Copilot CLI</button>
-    <button class="tog on" data-col="3">GitHub Copilot Cloud</button>
+    <button class="tog on" data-col="1">GC VS Code</button>
+    <button class="tog on" data-col="2">GC CLI</button>
+    <button class="tog on" data-col="3">GC Cloud</button>
     <button class="tog on" data-col="4">Claude Code</button>
-    <button class="tog on" data-col="5">OpenCode</button>
-    <button class="tog" data-col="6">Codex CLI</button>
+    <button class="tog on" data-col="6">Codex CLI</button>
+    <button class="tog" data-col="5">OpenCode</button>
     <button class="tog" data-col="7">Gemini CLI</button>
-    <button class="tog on" data-col="8">Cursor</button>
+    <button class="tog" data-col="8">Cursor</button>
     <button class="tog" data-col="9">Windsurf</button>
     <button class="tog" data-col="10">Amp</button>
   </div>
@@ -891,7 +950,7 @@
         </thead>
         <tbody>
 
-          <tr class="cat" data-cat-modal="always-on"><td colspan="11">Always-on instructions <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
+          <tr class="cat" data-cat-modal="always-on"><td colspan="11">Repo-wide instructions <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">AGENTS.md</span><span class="file-loc">root of repo</span></span><button class="info-btn" data-info="agents-md">i</button></div></td>
@@ -953,6 +1012,8 @@
           </tr>
           <tr class="info-row" id="copilot-instr"><td colspan="11"><div class="info-content"><strong>Copilot's original repo-wide config.</strong> Lives at <code>.github/copilot-instructions.md</code>. Auto-injected into every Copilot request. Same purpose as <code>AGENTS.md</code> but Copilot-exclusive. If you already have <code>AGENTS.md</code>, this can hold Copilot-only overrides. Auto-generate one with <code>/init</code>.</div></td></tr>
 
+          <tr class="cat" data-cat-modal="path-scoped"><td colspan="11">Path-scoped instructions / rules <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
+
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">*.instructions.md</span><span class="file-loc">.github/instructions/ (glob scoped)</span></span><button class="info-btn" data-info="scoped-instr">i</button></div></td>
             <td class="cop-l"><span class="cell y">Yes</span></td>
@@ -1013,13 +1074,13 @@
           </tr>
           <tr class="info-row" id="windsurf-rules"><td colspan="11"><div class="info-content"><strong>Windsurf's native scoped rules.</strong> Markdown files in <code>.windsurf/rules/</code> with YAML frontmatter. Same four activation modes as Cursor: always-on, glob, model-decision, and manual. Global rules also available at <code>~/.codeium/windsurf/memories/global_rules.md</code>. Enterprise teams can deploy system-level rules.</div></td></tr>
 
-          <tr class="cat" data-cat-modal="custom-agents"><td colspan="11">Custom agents (persona + tool restrictions) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
+          <tr class="cat" data-cat-modal="custom-agents"><td colspan="11">Custom / sub agents (persona + tool restrictions) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">*.agent.md</span><span class="file-loc">.github/agents/</span></span><button class="info-btn" data-info="copilot-agents">i</button></div></td>
-            <td class="cop-l"><span class="cell y">Yes</span></td>
-            <td><span class="cell y">Yes</span></td>
-            <td class="cop-r"><span class="cell y">Yes</span></td>
+            <td class="cop-l"><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
+            <td class="cop-r"><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
@@ -1035,7 +1096,7 @@
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
-            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
@@ -1051,7 +1112,7 @@
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
-            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
@@ -1068,7 +1129,7 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
-            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
@@ -1182,7 +1243,7 @@
           </tr>
           <tr class="info-row" id="windsurf-skills"><td colspan="11"><div class="info-content"><strong>Windsurf’s native skill path.</strong> Skills at <code>.windsurf/skills/&lt;name&gt;/SKILL.md</code> with YAML frontmatter. Also available globally at <code>~/.codeium/windsurf/skills/</code>. Windsurf reads <code>.agents/skills/</code> as a fallback and <code>.claude/skills/</code> when Claude Code config reading is enabled.</div></td></tr>
 
-          <tr class="cat" data-cat-modal="prompt-files"><td colspan="11">Prompt files (manual /slash-command invocation) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
+          <tr class="cat" data-cat-modal="prompt-files"><td colspan="11">Prompt files / slash commands (manual invocation) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">*.prompt.md</span><span class="file-loc">.github/prompts/</span></span><button class="info-btn" data-info="prompt-files">i</button></div></td>
@@ -1451,8 +1512,8 @@
     <div class="insight-title">Key takeaways</div>
     <p><code>AGENTS.md</code> has the broadest reach of any instructions file shown here — natively read by Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp, with opt-in support from Gemini CLI. Claude Code still relies on <code>CLAUDE.md</code>; Amp falls back to it when no <code>AGENTS.md</code> exists.</p>
     <p><code>.agents/skills/</code> is now the broadest cross-tool skill path — read natively by Codex, Cursor, and Amp, with fallback support from OpenCode, Windsurf, and Gemini CLI.</p>
-    <p>Cursor and Windsurf both mirror the four-mode scoped rules pattern (<code>.cursor/rules/</code> and <code>.windsurf/rules/</code>) with always-on, glob, model-decision, and manual activation — the most granular instructions controls in the matrix.</p>
-    <p>Windsurf has the most complete hooks system: 12 event types with pre/post triggers for file reads, writes, commands, and MCP calls, plus three-tier config merging (system → user → workspace).</p>
+    <p>Cursor and Windsurf both mirror the four-mode scoped rules pattern (<code>.cursor/rules/</code> and <code>.windsurf/rules/</code>) with repo-wide, glob, model-decision, and manual activation — the most granular path-scoped controls in the matrix.</p>
+    <p>Claude Code has the most complete hooks system (20+ lifecycle events, four handler types), followed by Windsurf (12 events with three-tier config merging). Copilot supports hooks scoped to custom agents via frontmatter.</p>
     <p>MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf's MCP config is notably user-level only with no project-scoped committable file.</p>
   </div>
 
@@ -1464,12 +1525,17 @@
 
 <div class="cat-modal-overlay" id="catModalOverlay">
   <div class="cat-modal">
-    <button class="cat-modal-close" id="catModalClose">×</button>
-    <div id="catModalBadge" class="cat-modal-badge"></div>
-    <h3 id="catModalTitle"></h3>
-    <p id="catModalDesc"></p>
-    <div class="example-label">Canonical example</div>
-    <div class="example-block" id="catModalExample"></div>
+    <div class="cat-modal-header">
+      <button class="cat-modal-close" id="catModalClose">×</button>
+      <div id="catModalBadge" class="cat-modal-badge"></div>
+      <h3 id="catModalTitle"></h3>
+      <div id="catModalTabsWrap"></div>
+    </div>
+    <div class="cat-modal-body">
+      <div id="catModalDesc" class="cat-modal-desc"></div>
+      <div class="example-label" id="catModalExLabel">Canonical example</div>
+      <div class="example-block" id="catModalExample"></div>
+    </div>
   </div>
 </div>
 
@@ -1521,21 +1587,45 @@
       th.style.display = visible.has(i) ? '' : 'none';
     });
 
-    // Body rows
-    table.querySelectorAll('tbody tr').forEach(tr => {
-      if (tr.classList.contains('cat')) {
-        tr.querySelector('td').setAttribute('colspan', visibleCount);
-        return;
-      }
-      if (tr.classList.contains('info-row')) {
-        tr.querySelector('td').setAttribute('colspan', visibleCount);
-        return;
-      }
+    // Body rows — toggle columns and hide rows with no visible support
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(tr => {
+      if (tr.classList.contains('cat') || tr.classList.contains('info-row')) return;
       const cells = tr.querySelectorAll('td');
+      let hasVisibleSupport = false;
       cells.forEach((td, i) => {
         if (i === 0) return;
         td.style.display = visible.has(i) ? '' : 'none';
+        if (visible.has(i)) {
+          const cell = td.querySelector('.cell');
+          if (cell && !cell.classList.contains('n')) hasVisibleSupport = true;
+        }
       });
+      tr.style.display = hasVisibleSupport ? '' : 'none';
+      // Also hide the associated info-row
+      const infoBtn = tr.querySelector('.info-btn');
+      if (infoBtn) {
+        const infoRow = document.getElementById(infoBtn.dataset.info);
+        if (infoRow) infoRow.style.display = hasVisibleSupport ? '' : 'none';
+      }
+    });
+
+    // Category rows — hide if all child data rows are hidden
+    rows.forEach(tr => {
+      if (!tr.classList.contains('cat')) return;
+      tr.querySelector('td').setAttribute('colspan', visibleCount);
+      let nextRow = tr.nextElementSibling;
+      let anyVisible = false;
+      while (nextRow && !nextRow.classList.contains('cat')) {
+        if (!nextRow.classList.contains('info-row') && nextRow.style.display !== 'none') {
+          anyVisible = true;
+        }
+        if (nextRow.classList.contains('info-row')) {
+          nextRow.querySelector('td').setAttribute('colspan', visibleCount);
+        }
+        nextRow = nextRow.nextElementSibling;
+      }
+      tr.style.display = anyVisible ? '' : 'none';
     });
   }
 
@@ -1573,27 +1663,78 @@
   const catModalData = {
     'always-on': {
       badge: 'guide',
-      title: 'Always-on instructions',
-      desc: 'Markdown files automatically injected into every AI coding session — no slash command, no manual invocation. They establish your team\'s baseline contract: coding standards, architectural boundaries, forbidden patterns, and stack declarations. Every tool has its own native format (<code>copilot-instructions.md</code>, <code>CLAUDE.md</code>, <code>.cursor/rules/</code>, etc.), but <strong><code>AGENTS.md</code> is emerging as the cross-agent open standard</strong> — recognized natively by Copilot, Codex CLI, Cursor, Amp, Gemini CLI, and Windsurf, and importable into <code>CLAUDE.md</code> so you write once and every agent reads the same rules.<br><br>These files are <strong>context, not enforced configuration</strong>. The agent reads them and tries to follow them, but compliance scales with specificity — concrete, verifiable rules ("Use 2-space indentation") outperform vague guidance ("Format code properly"). They consume context tokens every session, so conciseness matters: most tools recommend keeping them under ~200 lines per file. For longer rulesets, tools support <strong>hierarchical scoping</strong>: subdirectory-level files, path-scoped rules (via <code>applyTo</code> or <code>paths</code> frontmatter), user-level global files, and even org/managed-policy tiers — all concatenated, not overridden, so instructions layer from broadest to most specific.',
-      example: 'An <code>AGENTS.md</code> at the repo root (works across Copilot, Codex, Cursor, Amp, Gemini CLI, and Windsurf — Claude Code imports it via <code>@AGENTS.md</code> in <code>CLAUDE.md</code>):<br><br><code>Use TypeScript strict mode. Prefer const over let. Never use any.<br>All API routes go in src/api/handlers/. Use Zod for request validation.<br>Never import from a sibling feature folder — go through /shared.<br>Run `npm test` before committing. Tests must pass.</code><br><br>With a path-scoped rule in <code>.claude/rules/api-design.md</code> that only loads when the agent touches API files:<br><br><code>---<br>paths:<br>&nbsp;&nbsp;- "src/api/**/*.ts"<br>---<br>All API endpoints must include input validation.<br>Use the standard error response format from /shared/errors.<br>Include OpenAPI documentation comments.</code>'
+      title: 'Repo-wide instructions',
+      desc: 'Markdown files loaded into <strong>every</strong> AI coding session automatically — no slash command, no file-pattern matching, no manual invocation required. They apply to the entire repo regardless of which files are being edited. They are the system prompt for your codebase.<br><br><strong>What goes here:</strong> stack declarations, naming conventions, architectural boundaries, forbidden patterns, and any rule that should apply repo-wide.<br><br><strong>How they work:</strong> The agent reads these files at the start of every session and treats them as guidance. They are <strong>context, not enforced configuration</strong> — compliance scales with specificity. Concrete rules ("Use 2-space indentation") outperform vague guidance ("Format code properly"). They consume tokens every session, so keep them concise (~200 lines max per file). For rules that should only apply to specific file types or directories, see path-scoped instructions / rules instead.<br><br><strong>Cross-tool portability:</strong> <code>AGENTS.md</code> is the emerging open standard — read natively by Copilot, Codex CLI, OpenCode, Cursor, Amp, Gemini CLI (opt-in), and Windsurf. Claude Code uses <code>CLAUDE.md</code> natively but can import the shared base via <code>@AGENTS.md</code>. Each tool also has its own native format for tool-specific additions.<br><br><strong>Terminology:</strong> Copilot and Codex call these "instructions." Claude Code calls <code>CLAUDE.md</code> "memory." Cursor and Windsurf call them "rules." Gemini CLI calls <code>GEMINI.md</code> a "context file." Different names, same mechanic: repo-wide context injected before the first turn.',
+      example: '<code>AGENTS.md</code><br><br><code># Acme Platform<br><br>SaaS billing platform. React 19 + TypeScript frontend, Go backend,<br>PostgreSQL 16, deployed on AWS ECS behind CloudFront.<br><br>Monorepo: frontend/, backend/, infra/, shared/types/.<br><br>Backend is a Go module at go.acme.dev/platform. HTTP handlers in<br>backend/api/, business logic in backend/domain/, DB queries in<br>backend/store/. Never put business logic in handlers.<br><br>Frontend uses Next.js App Router. Pages in app/, shared components<br>in components/ui/. State management via Zustand — no Redux.<br><br>Never modify anything in infra/ without explicit approval.<br>Never write raw SQL — use the query builder in backend/store/db.go.<br>Never commit .env files or hardcoded credentials.<br>Never import from frontend/ in backend/ or vice versa — shared<br>types go in shared/types/.</code>'
+    },
+    'path-scoped': {
+      badge: 'guide',
+      title: 'Path-scoped instructions / rules',
+      desc: 'Instruction files that <strong>only activate when the agent touches matching file paths</strong>. Unlike repo-wide instructions (which load every session regardless of file context), these fire conditionally — keeping context lean and rules targeted.<br><br><strong>How activation works:</strong> Each file includes YAML frontmatter with a glob pattern. When the agent opens, edits, or references a file matching that pattern, the scoped rule is injected into context. If no matching files are active, the rule is never loaded.<br><br><strong>Format by tool:</strong><br>• <strong>Copilot</strong> — <code>.github/instructions/*.instructions.md</code> with an <code>applyTo</code> glob<br>• <strong>Claude Code</strong> — <code>.claude/rules/*.md</code> with a <code>paths</code> array (defaults to <code>**</code> if omitted, making it effectively repo-wide)<br>• <strong>Cursor</strong> — <code>.cursor/rules/*.md</code> or <code>.mdc</code> with four modes: <code>alwaysApply</code>, <code>globs</code>, model-decision (agent picks based on description), or manual (<code>@rule-name</code>)<br>• <strong>Windsurf</strong> — <code>.windsurf/rules/*.md</code> with the same four modes as Cursor<br><br><strong>Best for:</strong> framework-specific conventions (<code>*.tsx</code> → React patterns), directory-level ownership (<code>src/api/**</code> → API design standards), language-specific style (<code>*.py</code> → Python formatting). Keeps rules out of context when they\'re irrelevant.<br><br><strong>No cross-tool standard:</strong> Unlike repo-wide instructions (where <code>AGENTS.md</code> works across 7+ tools), each tool has its own path-scoped format. To share a scoped rule across tools, you must duplicate it in each format.',
+      example: '<code>.github/instructions/react.instructions.md</code> (Copilot format):<br><br><code>---<br>applyTo: "src/components/**/*.tsx"<br>---<br>This directory contains shared UI components.<br><br>Functional components only — no class components.<br>Props interface goes directly above the component, named<br>[ComponentName]Props. Export components as named exports, not default.<br><br>Styles use CSS modules. The .module.css file lives next to the<br>component file with the same base name.<br><br>Every component must have a corresponding .test.tsx file<br>in the same directory. Use React Testing Library, not Enzyme.</code><br><br>Claude Code equivalent at <code>.claude/rules/react.md</code> — same content, different frontmatter:<br><br><code>---<br>paths:<br>&nbsp;&nbsp;- "src/components/**/*.tsx"<br>---</code><br><br>Cursor equivalent at <code>.cursor/rules/react.mdc</code>:<br><br><code>---<br>globs: ["src/components/**/*.tsx"]<br>---</code>'
     },
     'custom-agents': {
       badge: 'guide',
-      title: 'Custom agents',
-      desc: 'Reusable AI personas defined in Markdown files, each with its own <strong>system prompt</strong>, <strong>explicit tool allowlist/denylist</strong>, and optional <strong>model override</strong> — the key differentiator from prompt files and instructions, which have no tool restrictions. Agents enforce the principle of least privilege: a code reviewer gets read-only tools, a debugger gets edit access, a planner gets no file modification at all.<br><br>Copilot uses <code>.agent.md</code> files in <code>.github/agents/</code>; Claude Code uses <code>.md</code> files in <code>.claude/agents/</code> — and VS Code reads both formats natively, so cross-tool compatibility is possible. Agents can be scoped to a workspace (shared via version control), to a user profile (personal, all projects), or to an entire GitHub organization.<br><br>Beyond basic personas, agents support <strong>handoffs</strong> (guided sequential workflows that transition between agents with suggested next steps — e.g., Plan → Implement → Review), <strong>persistent memory</strong> (accumulate domain knowledge across sessions in a dedicated memory directory), <strong>foreground or background execution</strong> (run concurrently while you continue working), <strong>scoped MCP servers</strong> (connect tools only when that agent is active), <strong>lifecycle hooks</strong> (validate commands or run linters scoped to the agent), and <strong>subagent isolation</strong> (each runs in its own context window so verbose output doesn\'t pollute your main conversation). Claude Code also supports running an entire session as an agent via <code>--agent</code>, and agents can preload specific skills into their context.',
-      example: 'A <code>.github/agents/reviewer.agent.md</code> (Copilot format, also readable by VS Code with Claude):<br><br><code>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']<br>handoffs:<br>&nbsp;&nbsp;- label: Fix Issues<br>&nbsp;&nbsp;&nbsp;&nbsp;agent: implementation<br>&nbsp;&nbsp;&nbsp;&nbsp;prompt: Fix the security issues identified above.<br>---<br><br>You are a security-focused code reviewer. Never modify files.<br>Flag SQL injection, XSS, and auth bypass risks. Cite the line number.<br>Classify each finding as Critical, Warning, or Suggestion.</code><br><br>Or a Claude Code subagent at <code>.claude/agents/db-reader.md</code> with hook-based validation:<br><br><code>---<br>name: db-reader<br>description: Execute read-only database queries<br>tools: Bash<br>model: sonnet<br>memory: project<br>hooks:<br>&nbsp;&nbsp;PreToolUse:<br>&nbsp;&nbsp;&nbsp;&nbsp;- matcher: "Bash"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hooks:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- type: command<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command: "./scripts/validate-readonly-query.sh"<br>---<br><br>You are a database analyst with read-only access.<br>Execute SELECT queries to answer questions about the data.</code>'
+      title: 'Custom / sub agents',
+      tabs: [
+        {
+          label: 'Overview',
+          desc: 'Reusable AI personas defined in Markdown files, each with its own <strong>system prompt</strong>, <strong>tool allowlist/denylist</strong>, and optional <strong>model override</strong>. The key differentiator from prompt files / slash commands and instructions: agents have <strong>hard tool restrictions</strong> — the model literally cannot access tools not on the list. This enables the principle of least privilege: a reviewer gets read-only tools, a planner gets no file modification at all.<br><br><strong>Format by tool:</strong><br>• <strong>Copilot</strong> — <code>.github/agents/*.agent.md</code>, invoked with <code>@agent-name</code><br>• <strong>Claude Code</strong> — <code>.claude/agents/*.md</code>, invoked with <code>/agent-name</code> or dispatched by the parent<br>• <strong>OpenCode</strong> — <code>.opencode/agents/*.md</code>, switched with <code>Tab</code><br>• <strong>Gemini CLI</strong> — <code>.gemini/agents/*.md</code>, invoked with <code>@agent-name</code> or auto-delegated<br><br>VS Code reads both Copilot and Claude agent formats natively.<br><br><strong>Capabilities beyond basic personas:</strong> handoffs (sequential multi-agent workflows), persistent memory, foreground or background execution, scoped MCP servers, lifecycle hooks, and subagent isolation (each runs in its own context window).<br><br><strong>A note on naming:</strong> Anthropic uses <em>"subagent,"</em> GitHub uses <em>"custom agents,"</em> OpenCode and Gemini CLI just say <em>"agents."</em> The mechanic is identical — a specialized persona invoked from a parent, running in a forked context. This matrix uses <strong>"subagent"</strong> where precision matters.',
+          example: '<code>.github/agents/reviewer.agent.md</code><br><br><code>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']<br>---<br><br>You are a security-focused code reviewer. Never modify files.<br>Flag SQL injection, XSS, and auth bypass risks.<br>Cite the line number. Classify each finding as<br>Critical, Warning, or Suggestion.</code>'
+        },
+        {
+          label: 'Custom / sub agents vs. agent skills',
+          desc: 'Both make the AI better at specific tasks, but they work differently.<br><br><strong>Agents</strong> are <strong>autonomous personas</strong> with their own identity, system prompt, tool restrictions, and isolated context window. Invoked by name (<code>@reviewer</code>), they take over execution within defined boundaries.<br><br><strong>Skills</strong> are <strong>knowledge packages</strong> — directories of reference material (<code>SKILL.md</code> + scripts + templates) loaded into the current agent\'s context when relevant. No persona, no decisions — the skill just gives the active agent domain expertise.<br><br><strong>Key differences:</strong><br>• <strong>Identity:</strong> Agents have a persona. Skills augment whatever agent is running.<br>• <strong>Tool access:</strong> Agents have hard tool allowlists. Skills inherit the parent\'s tools.<br>• <strong>Execution:</strong> Agents run in a forked context (isolated). Skills load into the current context.<br>• <strong>Invocation:</strong> Agents are called by name. Skills activate by intent or <code>/command</code>.<br>• <strong>Assets:</strong> Skills bundle scripts, templates, schemas. Agents are a single Markdown file.<br><br><strong>When to use which:</strong> Agent when you need <strong>restricted tools or an isolated persona</strong>. Skill when you need to give the current agent <strong>domain expertise with bundled reference material</strong>.',
+          example: 'An <strong>agent</strong> — restricted persona, isolated context:<br><br><code># .github/agents/reviewer.agent.md<br>---<br>description: Read-only code reviewer<br>tools: [\'codebase\', \'search\']  # no edit tools<br>---<br>Review code for bugs and security issues. Never modify files.</code><br><br>A <strong>skill</strong> — knowledge package, same context:<br><br><code># .github/skills/db-migrate/SKILL.md<br>---<br>name: db-migrate<br>description: Database migration workflow<br>---<br>Step 1: Check current schema version...<br>Step 2: Generate migration file...<br>Step 3: Run scripts/validate_migration.py...</code><br><br>The agent <em>becomes</em> a reviewer. The skill <em>teaches</em> the current agent how to do migrations.'
+        },
+        {
+          label: 'Custom / sub agents vs. prompt files / slash commands',
+          desc: 'Both are invoked manually, but they differ in <strong>power</strong> and <strong>isolation</strong>.<br><br><strong>Prompt files / slash commands</strong> are <strong>reusable templates</strong> invoked via <code>/command-name</code>. They inject text into the current conversation — the agent reads the prompt but stays in the same context window with full tool access. Think of them as saved messages you can replay.<br><br><strong>Agents</strong> are <strong>autonomous personas</strong> with their own system prompt, tool restrictions, and isolated context. They don\'t just add text — they <em>replace</em> the active persona for the duration of their task and report back.<br><br><strong>Key differences:</strong><br>• <strong>Tool restrictions:</strong> Agents have hard tool allowlists. Prompt files inherit all tools.<br>• <strong>Context isolation:</strong> Agents run in their own context window. Prompt files run inline.<br>• <strong>Persona:</strong> Agents have their own identity. Prompt files use the current agent\'s identity.<br>• <strong>Complexity:</strong> Prompt files are lightweight templates. Agents support handoffs, memory, hooks, scoped MCP servers, and background execution.<br><br><strong>When to use which:</strong> Prompt file for <strong>simple, repeatable tasks</strong> that don\'t need isolation (<code>/security-review</code>, <code>/write-tests</code>). Agent when you need <strong>restricted tools, context isolation, or multi-agent workflows</strong>.',
+          example: 'A <strong>prompt file</strong> — template in current context:<br><br><code># .github/prompts/security-review.prompt.md<br>---<br>description: Review code for security vulnerabilities<br>---<br>Review the current file for OWASP Top 10 vulnerabilities.<br>For each finding, cite the line and suggest a fix.</code><br><br>An <strong>agent</strong> — isolated persona with restricted tools:<br><br><code># .github/agents/security-reviewer.agent.md<br>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']  # read-only, no edit tools<br>---<br>You are a security auditor. Review code for vulnerabilities.<br>Never modify files. Report findings with severity and line numbers.</code><br><br>The prompt file runs your security review <em>as you</em> with all your tools. The agent runs it <em>as a restricted specialist</em> that can\'t accidentally edit anything.'
+        }
+      ]
     },
     'skills': {
       badge: 'guide',
       title: 'Skills',
-      desc: 'Modular capability packages that transform a general-purpose agent into a domain specialist. Each skill is a <em>directory</em> — not just a file — anchored by a <code>SKILL.md</code> entrypoint and optionally containing executable scripts, reference docs, templates, schemas, and other assets. Skills use <strong>three-tier progressive disclosure</strong>: <strong>Level 1</strong> — only the skill\'s name and description (YAML frontmatter) are loaded at startup (~100 tokens); <strong>Level 2</strong> — when the skill is triggered (by intent or <code>/command</code>), the <code>SKILL.md</code> body is read into context; <strong>Level 3</strong> — bundled resources and scripts are accessed only as needed, with scripts executing <em>without</em> their source code ever entering the context window (only output is returned). This architecture means a skill can bundle unlimited reference material with zero context cost until accessed. Multiple skills can be composed for tasks that span domains.',
-      example: 'A <code>.github/skills/db-migrate/</code> directory containing:<br><br><code>SKILL.md</code> — step-by-step migration workflow and naming conventions<br><code>SCHEMA.md</code> — current database schema reference (read only when needed)<br><code>scripts/validate_migration.py</code> — runs pre-flight checks on the generated SQL (executes in a subprocess; only pass/fail output enters context)<br><code>templates/migration.sql.tmpl</code> — team-standard migration template<br><br>Triggered automatically when the agent detects migration intent, or invoked explicitly with <code>/db-migrate</code>. The agent reads <code>SKILL.md</code> first, pulls in <code>SCHEMA.md</code> only if it needs the current table structure, and runs the validation script against the generated file — all without the schema or script source consuming context tokens.'
+      tabs: [
+        {
+          label: 'Overview',
+          desc: 'Modular capability packages that transform a general-purpose agent into a domain specialist. Each skill is a <em>directory</em> — not just a file — anchored by a <code>SKILL.md</code> entrypoint and optionally containing executable scripts, reference docs, templates, schemas, and other assets. Skills use <strong>three-tier progressive disclosure</strong>: <strong>Level 1</strong> — only the skill\'s name and description (YAML frontmatter) are loaded at startup (~100 tokens); <strong>Level 2</strong> — when the skill is triggered (by intent or <code>/command</code>), the <code>SKILL.md</code> body is read into context; <strong>Level 3</strong> — bundled resources and scripts are accessed only as needed, with scripts executing <em>without</em> their source code ever entering the context window (only output is returned). This architecture means a skill can bundle unlimited reference material with zero context cost until accessed. Multiple skills can be composed for tasks that span domains.',
+          example: 'A <code>.github/skills/db-migrate/</code> directory containing:<br><br><code>SKILL.md</code> — step-by-step migration workflow and naming conventions<br><code>SCHEMA.md</code> — current database schema reference (read only when needed)<br><code>scripts/validate_migration.py</code> — runs pre-flight checks on the generated SQL (executes in a subprocess; only pass/fail output enters context)<br><code>templates/migration.sql.tmpl</code> — team-standard migration template<br><br>Triggered automatically when the agent detects migration intent, or invoked explicitly with <code>/db-migrate</code>. The agent reads <code>SKILL.md</code> first, pulls in <code>SCHEMA.md</code> only if it needs the current table structure, and runs the validation script against the generated file — all without the schema or script source consuming context tokens.'
+        },
+        {
+          label: 'Skills vs. custom / sub agents',
+          desc: 'Both make the AI better at specific tasks, but they work differently.<br><br><strong>Skills</strong> are <strong>knowledge packages</strong> — directories of reference material loaded into the current agent\'s context when relevant. No persona, no isolation. The active agent stays in control; the skill just gives it domain expertise.<br><br><strong>Agents</strong> are <strong>autonomous personas</strong> with their own identity, system prompt, tool restrictions, and isolated context window. They take over execution within defined boundaries.<br><br><strong>Key differences:</strong><br>• <strong>Identity:</strong> Skills augment whatever agent is running. Agents have their own persona.<br>• <strong>Tool access:</strong> Skills inherit the parent\'s tools. Agents have hard tool allowlists.<br>• <strong>Execution:</strong> Skills load into the current context. Agents run in a forked context (isolated).<br>• <strong>Assets:</strong> Skills bundle scripts, templates, schemas, docs. Agents are a single Markdown file.<br>• <strong>Invocation:</strong> Skills activate by intent or <code>/command</code>. Agents are called by name (<code>@agent-name</code>).<br><br><strong>When to use which:</strong> Skill when you need to give the current agent <strong>domain expertise with bundled reference material</strong>. Agent when you need <strong>restricted tools or an isolated persona</strong>.',
+          example: 'A <strong>skill</strong> — knowledge package, same context:<br><br><code># .github/skills/db-migrate/SKILL.md<br>---<br>name: db-migrate<br>description: Database migration workflow<br>---<br>Step 1: Check current schema version...<br>Step 2: Generate migration file...<br>Step 3: Run scripts/validate_migration.py...</code><br><br>An <strong>agent</strong> — restricted persona, isolated context:<br><br><code># .github/agents/reviewer.agent.md<br>---<br>description: Read-only code reviewer<br>tools: [\'codebase\', \'search\']  # no edit tools<br>---<br>Review code for bugs and security issues. Never modify files.</code><br><br>The skill <em>teaches</em> the current agent how to do migrations. The agent <em>becomes</em> a reviewer.'
+        },
+        {
+          label: 'Skills vs. prompt files / slash commands',
+          desc: 'Both are triggered on demand, but they differ in <strong>structure</strong> and <strong>depth</strong>.<br><br><strong>Skills</strong> are <strong>directories</strong> with a <code>SKILL.md</code> entrypoint plus bundled assets — scripts, templates, schemas, reference docs. They use progressive disclosure (name → body → assets) so only what\'s needed enters context. They can execute scripts without their source code consuming tokens.<br><br><strong>Prompt files / slash commands</strong> are <strong>single Markdown files</strong> — a template injected into the current conversation when invoked via <code>/command-name</code>. No bundled assets, no progressive disclosure. The entire file loads at once.<br><br><strong>Key differences:</strong><br>• <strong>Structure:</strong> Skills are directories with multiple files. Prompts are single files.<br>• <strong>Assets:</strong> Skills bundle scripts, templates, schemas. Prompts have no bundled assets.<br>• <strong>Context cost:</strong> Skills use progressive disclosure (load only what\'s needed). Prompts load the full template.<br>• <strong>Script execution:</strong> Skills can run validation scripts (only output enters context). Prompts cannot execute code.<br>• <strong>Activation:</strong> Skills can auto-activate by intent detection. Prompts are always manually invoked.<br><br><strong>When to use which:</strong> Skill when the task needs <strong>reference material, validation scripts, or templates</strong>. Prompt file when you need a <strong>simple, reusable template</strong> with no supporting assets.',
+          example: 'A <strong>skill</strong> — directory with bundled assets:<br><br><code># .github/skills/db-migrate/<br>SKILL.md        — workflow instructions<br>SCHEMA.md       — current DB schema (loaded on demand)<br>scripts/validate.py — pre-flight checks<br>templates/migration.sql.tmpl — team template</code><br><br>A <strong>prompt file</strong> — single template:<br><br><code># .github/prompts/security-review.prompt.md<br>---<br>description: Review code for security vulnerabilities<br>---<br>Review the current file for OWASP Top 10 vulnerabilities.<br>For each finding, cite the line and suggest a fix.</code><br><br>The skill bundles everything needed for migrations. The prompt is just a saved message you replay.'
+        }
+      ]
     },
     'prompt-files': {
       badge: 'guide',
-      title: 'Prompt files',
-      desc: 'Reusable prompt templates stored as <code>.prompt.md</code> Markdown files and invoked via <code>/command-name</code> in chat. They sit between always-on instructions (which load every session automatically) and full custom agents (which have tool restrictions and personas). Prompt files are <strong>manually invoked, lightweight, and composable</strong>.<br><br>Optional YAML frontmatter gives them surprising power: <code>tools</code> specifies which tools are available during execution, <code>agent</code> routes the prompt to a specific agent (<code>ask</code>, <code>agent</code>, <code>plan</code>, or a custom agent name), and <code>model</code> overrides the active model. The body supports Markdown links to reference other workspace files, <code>#tool:&lt;name&gt;</code> syntax to invoke tools, and input variables (<code>${input:varName}</code>) so the model prompts the user for values at runtime.<br><br>Stored in <code>.github/prompts/</code> (workspace, committable) or your user profile (personal, all workspaces). Claude Code uses <code>.claude/commands/</code> for its equivalent (<code>.md</code> files invoked with <code>/command-name</code>), with <code>$ARGUMENTS</code> as the input placeholder. Workspace prompt files are shared via version control; user-level ones sync across devices via Settings Sync.',
-      example: 'A <code>.github/prompts/security-review.prompt.md</code> invoked with <code>/security-review</code>:<br><br><code>---<br>description: Run a security review on the current file<br>agent: agent<br>tools: [\'codebase\', \'search\']<br>model: GPT-5 (copilot)<br>---<br><br>Review the code in the current editor for security vulnerabilities.<br>Check for the OWASP Top 10: SQL injection, XSS, broken auth,<br>sensitive data exposure, and insecure deserialization.<br><br>For each finding, provide:<br>- Severity (Critical / High / Medium / Low)<br>- The vulnerable line(s)<br>- A concrete fix with code</code><br><br>Or the Claude Code equivalent at <code>.claude/commands/security-review.md</code>:<br><br><code>Review the code for security vulnerabilities. Focus on: $ARGUMENTS<br><br>Check for OWASP Top 10 risks. For each finding, cite the file<br>and line number, classify severity, and provide a fix.</code>'
+      title: 'Prompt files / slash commands',
+      tabs: [
+        {
+          label: 'Overview',
+          desc: 'Reusable prompt templates stored as <code>.prompt.md</code> Markdown files and invoked via <code>/command-name</code> in chat. They sit between repo-wide instructions (which load every session automatically) and full custom agents (which have tool restrictions and personas). Prompt files are <strong>manually invoked, lightweight, and composable</strong>.<br><br>Optional YAML frontmatter gives them surprising power: <code>tools</code> specifies which tools are available during execution, <code>agent</code> routes the prompt to a specific agent (<code>ask</code>, <code>agent</code>, <code>plan</code>, or a custom agent name), and <code>model</code> overrides the active model. The body supports Markdown links to reference other workspace files, <code>#tool:&lt;name&gt;</code> syntax to invoke tools, and input variables (<code>${input:varName}</code>) so the model prompts the user for values at runtime.<br><br>Stored in <code>.github/prompts/</code> (workspace, committable) or your user profile (personal, all workspaces). Claude Code uses <code>.claude/commands/</code> for its equivalent (<code>.md</code> files invoked with <code>/command-name</code>), with <code>$ARGUMENTS</code> as the input placeholder. Workspace prompt files are shared via version control; user-level ones sync across devices via Settings Sync.',
+          example: 'A <code>.github/prompts/security-review.prompt.md</code> invoked with <code>/security-review</code>:<br><br><code>---<br>description: Run a security review on the current file<br>agent: agent<br>tools: [\'codebase\', \'search\']<br>model: GPT-5 (copilot)<br>---<br><br>Review the code in the current editor for security vulnerabilities.<br>Check for the OWASP Top 10: SQL injection, XSS, broken auth,<br>sensitive data exposure, and insecure deserialization.<br><br>For each finding, provide:<br>- Severity (Critical / High / Medium / Low)<br>- The vulnerable line(s)<br>- A concrete fix with code</code><br><br>Or the Claude Code equivalent at <code>.claude/commands/security-review.md</code>:<br><br><code>Review the code for security vulnerabilities. Focus on: $ARGUMENTS<br><br>Check for OWASP Top 10 risks. For each finding, cite the file<br>and line number, classify severity, and provide a fix.</code>'
+        },
+        {
+          label: 'Prompt files vs. custom / sub agents',
+          desc: 'Both are invoked manually, but they differ in <strong>power</strong> and <strong>isolation</strong>.<br><br><strong>Prompt files / slash commands</strong> are <strong>reusable templates</strong> invoked via <code>/command-name</code>. They inject text into the current conversation — the agent reads the prompt but stays in the same context window with full tool access. Think of them as saved messages you can replay.<br><br><strong>Agents</strong> are <strong>autonomous personas</strong> with their own system prompt, tool restrictions, and isolated context. They don\'t just add text — they <em>replace</em> the active persona for the duration of their task and report back.<br><br><strong>Key differences:</strong><br>• <strong>Tool restrictions:</strong> Prompt files inherit all tools. Agents have hard tool allowlists.<br>• <strong>Context isolation:</strong> Prompt files run inline. Agents run in their own context window.<br>• <strong>Persona:</strong> Prompt files use the current agent\'s identity. Agents have their own.<br>• <strong>Complexity:</strong> Prompt files are lightweight templates. Agents support handoffs, memory, hooks, scoped MCP servers, and background execution.<br><br><strong>When to use which:</strong> Prompt file for <strong>simple, repeatable tasks</strong> that don\'t need isolation. Agent when you need <strong>restricted tools, context isolation, or multi-agent workflows</strong>.',
+          example: 'A <strong>prompt file</strong> — template in current context:<br><br><code># .github/prompts/security-review.prompt.md<br>---<br>description: Review code for security vulnerabilities<br>---<br>Review the current file for OWASP Top 10 vulnerabilities.<br>For each finding, cite the line and suggest a fix.</code><br><br>An <strong>agent</strong> — isolated persona with restricted tools:<br><br><code># .github/agents/security-reviewer.agent.md<br>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']  # read-only, no edit tools<br>---<br>You are a security auditor. Review code for vulnerabilities.<br>Never modify files. Report findings with severity and line numbers.</code><br><br>The prompt file runs your review <em>as you</em> with all your tools. The agent runs it <em>as a restricted specialist</em> that can\'t edit anything.'
+        },
+        {
+          label: 'Prompt files vs. skills',
+          desc: 'Both are triggered on demand, but they differ in <strong>structure</strong> and <strong>depth</strong>.<br><br><strong>Prompt files / slash commands</strong> are <strong>single Markdown files</strong> — a template injected into the current conversation when invoked via <code>/command-name</code>. No bundled assets, no progressive disclosure. The entire file loads at once.<br><br><strong>Skills</strong> are <strong>directories</strong> with a <code>SKILL.md</code> entrypoint plus bundled assets — scripts, templates, schemas, reference docs. They use progressive disclosure so only what\'s needed enters context, and can execute scripts without their source code consuming tokens.<br><br><strong>Key differences:</strong><br>• <strong>Structure:</strong> Prompts are single files. Skills are directories with multiple files.<br>• <strong>Assets:</strong> Prompts have no bundled assets. Skills bundle scripts, templates, schemas.<br>• <strong>Context cost:</strong> Prompts load the full template. Skills use progressive disclosure (load only what\'s needed).<br>• <strong>Script execution:</strong> Prompts cannot execute code. Skills can run validation scripts.<br>• <strong>Activation:</strong> Prompts are always manually invoked. Skills can auto-activate by intent detection.<br><br><strong>When to use which:</strong> Prompt file when you need a <strong>simple, reusable template</strong> with no supporting assets. Skill when the task needs <strong>reference material, validation scripts, or templates</strong>.',
+          example: 'A <strong>prompt file</strong> — single template:<br><br><code># .github/prompts/security-review.prompt.md<br>---<br>description: Review code for security vulnerabilities<br>---<br>Review the current file for OWASP Top 10 vulnerabilities.<br>For each finding, cite the line and suggest a fix.</code><br><br>A <strong>skill</strong> — directory with bundled assets:<br><br><code># .github/skills/db-migrate/<br>SKILL.md        — workflow instructions<br>SCHEMA.md       — current DB schema (loaded on demand)<br>scripts/validate.py — pre-flight checks<br>templates/migration.sql.tmpl — team template</code><br><br>The prompt is just a saved message you replay. The skill bundles everything needed for migrations.'
+        }
+      ]
     },
     'hooks': {
       badge: 'sensor',
@@ -1615,6 +1756,15 @@
   const modalTitle = document.getElementById('catModalTitle');
   const modalDesc = document.getElementById('catModalDesc');
   const modalExample = document.getElementById('catModalExample');
+  const modalTabsWrap = document.getElementById('catModalTabsWrap');
+  const modalExLabel = document.getElementById('catModalExLabel');
+
+  function renderTabContent(tab) {
+    modalDesc.innerHTML = tab.desc;
+    modalExample.innerHTML = tab.example;
+    modalExLabel.style.display = '';
+    modalExample.style.display = '';
+  }
 
   function openCatModal(key) {
     const data = catModalData[key];
@@ -1622,8 +1772,32 @@
     modalBadge.textContent = data.badge;
     modalBadge.className = 'cat-modal-badge ' + data.badge;
     modalTitle.textContent = data.title;
-    modalDesc.innerHTML = data.desc;
-    modalExample.innerHTML = data.example;
+
+    // Tabs support
+    modalTabsWrap.innerHTML = '';
+    if (data.tabs) {
+      const tabBar = document.createElement('div');
+      tabBar.className = 'cat-modal-tabs';
+      data.tabs.forEach((tab, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'cat-modal-tab' + (i === 0 ? ' active' : '');
+        btn.textContent = tab.label;
+        btn.addEventListener('click', () => {
+          tabBar.querySelectorAll('.cat-modal-tab').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderTabContent(tab);
+        });
+        tabBar.appendChild(btn);
+      });
+      modalTabsWrap.appendChild(tabBar);
+      renderTabContent(data.tabs[0]);
+    } else {
+      modalDesc.innerHTML = data.desc;
+      modalExample.innerHTML = data.example;
+      modalExLabel.style.display = '';
+      modalExample.style.display = '';
+    }
+
     overlay.classList.add('open');
   }
 
