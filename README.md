@@ -18,32 +18,36 @@ This compatibility matrix exists because harness engineering has produced roughl
 
 ## What's in the matrix
 
-The table maps config files across five categories:
+The table maps config files across seven categories. GitHub Copilot is split into three surfaces (VS Code, CLI, Cloud agent) for ten tool columns total.
 
-| Category | Examples |
-|---|---|
-| **Always-on instructions** | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `copilot-instructions.md`, `*.instructions.md`, `.claude/rules/*.md`, `.cursor/rules/*.md`, `.windsurf/rules/*.md` |
-| **Custom agents** | `.github/agents/*.agent.md`, `.claude/agents/*.md`, `.opencode/agents/*.md`, `.gemini/agents/*.md` |
-| **Skills** | `.github/skills/*/SKILL.md`, `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md`, `.gemini/skills/*/SKILL.md`, `.opencode/skills/*/SKILL.md`, `.cursor/skills/*/SKILL.md`, `.windsurf/skills/*/SKILL.md` |
-| **Prompt files** | `*.prompt.md`, `.claude/commands/*.md`, `.opencode/commands/*.md`, `.gemini/commands/*.toml`, `.windsurf/workflows/*.md` |
-| **Lifecycle hooks** | `.github/hooks/`, `.claude/hooks/`, `.codex/hooks.json`, `.windsurf/hooks.json` |
+| Category | Type | Examples |
+|---|---|---|
+| **Repo-wide instructions** | Guide | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `copilot-instructions.md` |
+| **Path-scoped instructions / rules** | Guide | `*.instructions.md`, `.claude/rules/*.md`, `.cursor/rules/*.md`, `.windsurf/rules/*.md` |
+| **Custom / sub agents** | Guide | `.github/agents/*.agent.md`, `.claude/agents/*.md`, `.opencode/agents/*.md`, `.gemini/agents/*.md` |
+| **Skills** | Guide | `.github/skills/*/SKILL.md`, `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md`, `.gemini/skills/*/SKILL.md`, `.opencode/skills/*/SKILL.md`, `.cursor/skills/*/SKILL.md`, `.windsurf/skills/*/SKILL.md` |
+| **Prompt files / slash commands** | Guide | `*.prompt.md`, `.claude/commands/*.md`, `.opencode/commands/*.md`, `.gemini/commands/*.toml`, `.windsurf/workflows/*.md` |
+| **Automation (lifecycle hooks)** | Sensor | `.github/hooks/`, `.claude/hooks/`, `.codex/hooks.json`, `.windsurf/hooks.json` |
+| **MCP server configuration** | Guide | `.vscode/mcp.json`, `.mcp.json`, `opencode.json`, `.codex/config.toml`, `.gemini/settings.json`, `.cursor/mcp.json`, `mcp_config.json`, `.amp/settings.json` |
 
-Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/partial**, or **Not supported**.
+Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/partial**, or **Not supported**. Category types follow Birgitta Böckeler's taxonomy: **Guide** = feedforward control (steers before the agent acts), **Sensor** = feedback control (observes after the agent acts).
 
 ## Key takeaways
 
 - `AGENTS.md` has the broadest reach of any instructions file in the matrix — natively read by Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp, with opt-in support from Gemini CLI. Claude Code still relies on `CLAUDE.md`; Amp falls back to it when no `AGENTS.md` exists.
 - `.agents/skills/` is now the broadest cross-tool skill path — read natively by Codex, Cursor, and Amp, with fallback support from OpenCode, Windsurf, and Gemini CLI.
-- Cursor and Windsurf both support four-mode scoped rules (`.cursor/rules/` and `.windsurf/rules/`) with always-on, glob, model-decision, and manual activation.
-- Windsurf has the most complete hooks system: 12 event types with pre/post triggers and three-tier config merging (system → user → workspace).
-- MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf’s MCP config is notably user-level only.
+- Cursor and Windsurf both mirror the four-mode scoped rules pattern (`.cursor/rules/` and `.windsurf/rules/`) with repo-wide, glob, model-decision, and manual activation — the most granular path-scoped controls in the matrix.
+- Claude Code has the most complete hooks system (20+ lifecycle events, four handler types), followed by Windsurf (12 events with three-tier config merging). Copilot supports hooks scoped to custom agents via frontmatter.
+- MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf's MCP config is notably user-level only with no project-scoped committable file.
 
 ## Features
 
-- Light/dark mode via `prefers-color-scheme`
+- Light/dark mode with manual toggle (defaults to `prefers-color-scheme`)
+- Column toggle filters — show/hide any tool to focus comparisons
 - Expandable info rows (tap the **ⓘ** icon on any row)
-- Footnoted edge cases for partial support
-- No dependencies — pure HTML/CSS/JS
+- Clickable category headers open detail modals with examples and comparison tabs
+- GitHub star count badge (live from API)
+- No framework dependencies — pure HTML/CSS/JS
 
 ## Last updated
 
