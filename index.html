@@ -1170,8 +1170,8 @@
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.agents/skills/*/SKILL.md</span><span class="file-loc">cross-agent standard path</span></span><button class="info-btn" data-info="agents-skills">i</button></div></td>
-            <td class="cop-l"><span class="cell n">—</span></td>
-            <td><span class="cell n">—</span></td>
+            <td class="cop-l"><span class="cell o">opt-in</span></td>
+            <td><span class="cell y">Yes</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell f">Fallback</span></td>
@@ -1181,7 +1181,7 @@
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell y">Yes</span></td>
           </tr>
-          <tr class="info-row" id="agents-skills"><td colspan="11"><div class="info-content"><strong>The broadest cross-agent skill path available today.</strong> Codex's primary skill path — scans <code>.agents/skills</code> from your working directory up to the repo root. Also read natively by Cursor and Amp, and as a fallback by OpenCode, Windsurf, and Gemini CLI. Based on the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
+          <tr class="info-row" id="agents-skills"><td colspan="11"><div class="info-content"><strong>The broadest cross-agent skill path available today.</strong> Codex's primary skill path — scans <code>.agents/skills</code> from your working directory up to the repo root. Copilot CLI reads it natively; VS Code can be configured to read it by adding <code>.agents/skills</code> to the <code>chat.agentSkillsLocations</code> setting (not in defaults). Also read natively by Cursor and Amp, and as a fallback by OpenCode, Windsurf, and Gemini CLI. Based on the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.gemini/skills/*/SKILL.md</span><span class="file-loc">Gemini CLI native path</span></span><button class="info-btn" data-info="gemini-skills">i</button></div></td>
