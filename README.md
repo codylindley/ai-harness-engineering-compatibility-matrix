@@ -37,7 +37,7 @@ Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/par
 - `AGENTS.md` has the broadest reach of any instructions file in the matrix — natively read by Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp, with opt-in support from Gemini CLI. Claude Code still relies on `CLAUDE.md`; Amp falls back to it when no `AGENTS.md` exists.
 - `.agents/skills/` is now the broadest cross-tool skill path — read natively by Codex, Cursor, and Amp, with fallback support from OpenCode, Windsurf, and Gemini CLI.
 - Cursor and Windsurf both mirror the four-mode scoped rules pattern (`.cursor/rules/` and `.windsurf/rules/`) with repo-wide, glob, model-decision, and manual activation — the most granular path-scoped controls in the matrix.
-- Claude Code has the most complete hooks system (20+ lifecycle events, four handler types), followed by Windsurf (12 events with three-tier config merging). Copilot supports hooks scoped to custom agents via frontmatter.
+- Claude Code has the most complete hooks system (20+ lifecycle events, five handler types), followed by Windsurf (12 events with three-tier config merging). Copilot supports hooks scoped to custom agents via frontmatter.
 - MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf's MCP config is notably user-level only with no project-scoped committable file.
 
 ## Features
