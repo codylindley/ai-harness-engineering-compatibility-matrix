@@ -474,6 +474,95 @@
     border-radius: 4px;
   }
 
+  .precedence {
+    margin-top: 1.5rem;
+    padding: 1.5rem 1.5rem 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .precedence-title {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    margin-bottom: 0.4rem;
+  }
+  .precedence-intro {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+  .precedence-intro code {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    background: var(--bg-surface);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .prec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 0.85rem;
+  }
+  .prec-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1rem 0.85rem;
+  }
+  .prec-card h4 {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .prec-card h4 .prec-confidence {
+    font-size: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--bg-card);
+    color: var(--text-tertiary);
+    border: 1px solid var(--border);
+  }
+  .prec-card h4 .prec-confidence.partial {
+    color: var(--optin);
+    background: var(--optin-bg);
+    border-color: color-mix(in srgb, var(--optin) 25%, transparent);
+  }
+  .prec-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+  }
+  .prec-card li {
+    padding: 3px 0;
+    border-top: 1px dashed var(--border);
+  }
+  .prec-card li:first-child { border-top: none; padding-top: 0 }
+  .prec-card li strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .prec-card code {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    background: var(--bg-card);
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: var(--text-secondary);
+    border: 0.5px solid var(--border);
+  }
+
   .explainer {
     margin-bottom: 1.75rem;
     padding: 1.25rem 1.5rem;
@@ -547,6 +636,30 @@
   tr.cat .cat-type.sensor {
     color: var(--fallback);
     background: var(--fallback-bg);
+  }
+
+  .scope-pill {
+    display: inline-block;
+    font-size: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+    line-height: 1.4;
+    border: 1px solid transparent;
+  }
+  .scope-pill.user {
+    color: var(--optin);
+    background: var(--optin-bg);
+    border-color: color-mix(in srgb, var(--optin) 25%, transparent);
+  }
+  .scope-pill.both {
+    color: var(--text-tertiary);
+    background: var(--bg-surface);
+    border-color: var(--border);
   }
 
   .cat-tip {
@@ -916,6 +1029,7 @@
   </div>
   <div class="legend-desc"><strong style="color:var(--text-secondary)">Native</strong> = tool reads this file by default. <strong style="color:var(--text-secondary)">Fallback</strong> = tool reads another tool's file as a secondary source. <strong style="color:var(--text-secondary)">Opt-in</strong> = supported but requires a setting to enable.</div>
   <div class="legend-desc">Category labels: <span class="cat-type guide" style="display:inline-block;vertical-align:middle;font-size:0.5625rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;padding:2px 7px;border-radius:3px">guide</span><span class="legend-tip">i<span class="cat-tip-text">Feedforward control — steers the agent before it acts</span></span> and <span class="cat-type sensor" style="display:inline-block;vertical-align:middle;font-size:0.5625rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;padding:2px 7px;border-radius:3px">sensor</span><span class="legend-tip">i<span class="cat-tip-text">Feedback control — observes after the agent acts</span></span> indicate the type of harness control.</div>
+  <div class="legend-desc"><strong style="color:var(--text-secondary)">Trust boundary:</strong> all rows are <strong style="color:var(--text-secondary)">committed</strong> (team-shared, version-controlled) by default. Exceptions are flagged: <span class="scope-pill user">user-local</span> (per-user, doesn't travel with repo) or <span class="scope-pill both">both</span> (loaded from project and user scopes — see Precedence section below).</div>
 
   <div class="toggle-bar" id="toggles">
     <span class="label">Show:</span>
@@ -1353,7 +1467,7 @@
           <tr class="info-row" id="claude-hooks"><td colspan="11"><div class="info-content"><strong>Claude Code's hook system.</strong> 20+ trigger points including <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, <code>PermissionRequest</code>, <code>UserPromptSubmit</code>, <code>SubagentStart/Stop</code>, and <code>Stop</code>. Five handler types: <strong>command</strong> (shell), <strong>HTTP</strong> (POST endpoint), <strong>MCP tool</strong>, <strong>prompt</strong> (single-turn LLM), and <strong>agent</strong> (multi-turn subagent). Run custom scripts at every stage — linting, logging, approval gates. More granular than Copilot hooks with before/after triggers for tool execution.</div></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">.codex/hooks.json</span><span class="file-loc">repo or ~/.codex/</span></span><button class="info-btn" data-info="codex-hooks">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.codex/hooks.json <span class="scope-pill both" title="Loaded from both ~/.codex/ (user) and .codex/ (project)">both</span></span><span class="file-loc">repo or ~/.codex/</span></span><button class="info-btn" data-info="codex-hooks">i</button></div></td>
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
@@ -1368,7 +1482,7 @@
           <tr class="info-row" id="codex-hooks"><td colspan="11"><div class="info-content"><strong>Codex's lifecycle hook system.</strong> Experimental. Six trigger points: <code>SessionStart</code>, <code>UserPromptSubmit</code>, <code>PreToolUse</code>, <code>PermissionRequest</code>, <code>PostToolUse</code>, <code>Stop</code>. Hooks receive JSON on stdin and can block commands, inject context, or continue stopped turns. Loaded from both user (<code>~/.codex/hooks.json</code>) and repo (<code>.codex/hooks.json</code>) locations. Requires <code>codex_hooks = true</code> in <code>config.toml</code> features.</div></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/hooks.json</span><span class="file-loc">.windsurf/ (system/user/workspace)</span></span><button class="info-btn" data-info="windsurf-hooks">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/hooks.json <span class="scope-pill both" title="Loaded from system, user, and workspace tiers (merged)">both</span></span><span class="file-loc">.windsurf/ (system/user/workspace)</span></span><button class="info-btn" data-info="windsurf-hooks">i</button></div></td>
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
@@ -1475,7 +1589,7 @@
           <tr class="info-row" id="cursor-mcp"><td colspan="11"><div class="info-content"><strong>Cursor's MCP config.</strong> Project-scoped at <code>.cursor/mcp.json</code>, user-scoped at <code>~/.cursor/mcp.json</code>. Supports stdio, SSE, and streamable HTTP transports. Committable to git for team sharing.</div></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">mcp_config.json</span><span class="file-loc">~/.codeium/windsurf/ (user-level)</span></span><button class="info-btn" data-info="windsurf-mcp">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">mcp_config.json <span class="scope-pill user" title="User-local only — does not travel with the repo">user-local</span></span><span class="file-loc">~/.codeium/windsurf/ (user-level)</span></span><button class="info-btn" data-info="windsurf-mcp">i</button></div></td>
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
@@ -1549,8 +1663,105 @@
     <p>MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf's MCP config is notably user-level only with no project-scoped committable file.</p>
   </div>
 
-  <div class="surface-note">
-    <strong>When multiple instruction files coexist:</strong> Instructions are <strong>additive, not overriding</strong> — no tool silently drops one file because another exists. <code>AGENTS.md</code> + <code>copilot-instructions.md</code> both load in Copilot. <code>CLAUDE.md</code> in root + subdirectory merges hierarchically in Claude Code (subdirectory layers on top). Multiple <code>.cursor/rules/</code> files all merge when triggered. Path-scoped rules always layer on top of repo-wide instructions across all tools. When in doubt, keep repo-wide files short and use scoped rules for specifics.
+  <div class="precedence">
+    <div class="precedence-title">Precedence &amp; conflicts</div>
+    <div class="precedence-intro">
+      The matrix shows <em>which</em> files each tool reads. This section answers <em>what wins when they collide</em> — instruction file load order, settings layering (user vs project vs managed), and merge-vs-override semantics. Most tools <strong>merge</strong> instruction files (additive context, nothing silently dropped) and <strong>override</strong> settings (later scope wins). The major exceptions and footguns are flagged below.
+      Confidence: <span class="prec-confidence" style="display:inline-block;font-size:0.5rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:1px 5px;border-radius:3px;background:var(--bg-surface);color:var(--text-tertiary);border:1px solid var(--border)">documented</span> means the rule is in official docs; <span class="prec-confidence partial" style="display:inline-block;font-size:0.5rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:1px 5px;border-radius:3px;background:var(--optin-bg);color:var(--optin);border:1px solid color-mix(in srgb, var(--optin) 25%, transparent)">partial</span> means some dimensions are undocumented.
+    </div>
+
+    <div class="prec-grid">
+
+      <div class="prec-card">
+        <h4>GitHub Copilot <span class="prec-confidence partial">partial</span></h4>
+        <ul>
+          <li><strong>Instructions:</strong> all sources <em>merged</em>. Personal &gt; repository &gt; organization, but all are sent.</li>
+          <li><strong>AGENTS.md / CLAUDE.md / GEMINI.md:</strong> nearest file in the directory tree wins as the AGENTS source; root <code>.github/copilot-instructions.md</code> always loads.</li>
+          <li><strong>Path-scoped <code>*.instructions.md</code>:</strong> merges with repo-wide. <code>excludeAgent</code> frontmatter can opt out per surface (<code>code-review</code>, <code>cloud-agent</code>).</li>
+          <li><strong>Settings:</strong> VS Code workspace &gt; user (standard VS Code precedence).</li>
+          <li><strong>MCP same-name conflicts:</strong> undocumented across <code>.vscode/mcp.json</code>, user, and <code>.github/copilot-mcp.json</code>.</li>
+        </ul>
+      </div>
+
+      <div class="prec-card">
+        <h4>Claude Code <span class="prec-confidence">documented</span></h4>
+        <ul>
+          <li><strong>Settings (high → low):</strong> managed (org policy) &gt; CLI args &gt; <code>.claude/settings.local.json</code> &gt; <code>.claude/settings.json</code> &gt; <code>~/.claude/settings.json</code>.</li>
+          <li><strong>Permissions:</strong> <code>deny</code> always beats <code>allow</code> across all scopes. Project <code>deny</code> overrides user <code>allow</code>.</li>
+          <li><strong>CLAUDE.md:</strong> walk-up from cwd, all files concatenated. Subdirectory files lazy-load. <code>CLAUDE.local.md</code> appended after <code>CLAUDE.md</code> (effectively higher priority).</li>
+          <li><strong>AGENTS.md:</strong> not read directly — recommended pattern is <code>@AGENTS.md</code> import inside <code>CLAUDE.md</code>.</li>
+          <li><strong>Hooks:</strong> user + project both fire (merge). <code>allowManagedHooksOnly: true</code> blocks user/project. Array settings concat across sources.</li>
+          <li><strong>MCP:</strong> managed denylist always wins over allowlist; <code>allowManagedMcpServersOnly</code> locks to admin list.</li>
+        </ul>
+      </div>
+
+      <div class="prec-card">
+        <h4>OpenCode <span class="prec-confidence">documented</span></h4>
+        <ul>
+          <li><strong>Load order (later wins):</strong> remote <code>.well-known/opencode</code> → global <code>~/.config/opencode/</code> → <code>OPENCODE_CONFIG</code> env → project <code>opencode.json</code> → <code>.opencode/</code> dirs → inline env → managed file → MDM (<code>ai.opencode.managed</code>, not user-overridable).</li>
+          <li><strong>Merge semantics:</strong> conflicting keys take later config; non-conflicting settings preserved across all layers.</li>
+          <li><strong>Instructions:</strong> explicit <code>instructions</code> array of paths/globs in config — no implicit AGENTS.md hierarchy. You declare which files load.</li>
+          <li><strong>Provider toggles:</strong> <code>disabled_providers</code> always beats <code>enabled_providers</code>.</li>
+        </ul>
+      </div>
+
+      <div class="prec-card">
+        <h4>Codex CLI <span class="prec-confidence partial">partial</span></h4>
+        <ul>
+          <li><strong>Settings:</strong> single <code>~/.codex/config.toml</code>. Project-scope layering is undocumented in public docs.</li>
+          <li><strong>MCP per-tool approval:</strong> <code>default_tools_approval_mode</code> on the server, with <code>[mcp_servers.NAME.tools.X]</code> overrides per tool — explicit override.</li>
+          <li><strong>CA certs:</strong> <code>CODEX_CA_CERTIFICATE</code> &gt; <code>SSL_CERT_FILE</code> &gt; system roots.</li>
+          <li><strong>AGENTS.md walk-up / hook layering:</strong> undocumented.</li>
+        </ul>
+      </div>
+
+      <div class="prec-card">
+        <h4>Gemini CLI <span class="prec-confidence">documented</span></h4>
+        <ul>
+          <li><strong>Settings:</strong> enterprise/system &gt; workspace <code>.gemini/settings.json</code> &gt; user <code>~/.gemini/settings.json</code>.</li>
+          <li><strong>GEMINI.md (concatenated, not overridden):</strong> global <code>~/.gemini/GEMINI.md</code> + workspace + parent dirs + JIT subdirectory files when tools touch them.</li>
+          <li><strong>Filename customization:</strong> <code>context.fileName</code> can list <code>["AGENTS.md", "CONTEXT.md", "GEMINI.md"]</code> — array order = lookup order.</li>
+          <li><strong>Custom ignore files:</strong> earlier in array beats later, both beat <code>.geminiignore</code> and <code>.gitignore</code>.</li>
+          <li><strong>Lockouts:</strong> <code>disableYoloMode</code> / <code>disableAlwaysAllow</code> available for security policy.</li>
+        </ul>
+      </div>
+
+      <div class="prec-card">
+        <h4>Cursor <span class="prec-confidence">documented</span></h4>
+        <ul>
+          <li><strong>Rules (high → low):</strong> Team Rules &gt; Project Rules (<code>.cursor/rules/</code>) &gt; User Rules. Conflicts resolved earliest-wins.</li>
+          <li><strong>AGENTS.md:</strong> nested files combine with parent-dir; deeper (more specific) instructions take precedence.</li>
+          <li><strong>Team Rule enforcement:</strong> admin can mark a Team Rule "Enforce" so users cannot disable it.</li>
+          <li><strong>User Rules scope:</strong> Agent (Chat) only. Not applied to Inline Edit (Cmd/Ctrl+K) or Cursor Tab.</li>
+          <li><strong>Same-name MCP across scopes:</strong> undocumented.</li>
+        </ul>
+      </div>
+
+      <div class="prec-card">
+        <h4>Windsurf <span class="prec-confidence">documented</span></h4>
+        <ul>
+          <li><strong>Rules:</strong> System (enterprise) + Workspace + Global all <em>merge</em> — system rules add context, do not override user-defined rules.</li>
+          <li><strong>Workspace activation modes:</strong> <code>always_on</code>, <code>model_decision</code>, <code>glob</code>, <code>manual</code> (frontmatter <code>trigger</code>).</li>
+          <li><strong>Limits:</strong> global rules 6k chars (single file); workspace rules 12k chars per file.</li>
+          <li><strong>Discovery:</strong> walks up to git root; multi-folder workspaces deduplicate.</li>
+          <li><strong>System rules:</strong> display "System" label, cannot be deleted/modified by end users.</li>
+          <li><strong>MCP / hooks cross-scope:</strong> hook tiers merge; MCP same-name conflicts undocumented.</li>
+        </ul>
+      </div>
+
+      <div class="prec-card">
+        <h4>Amp <span class="prec-confidence">documented</span></h4>
+        <ul>
+          <li><strong>Settings:</strong> workspace <code>.amp/settings.json</code> overrides user <code>~/.config/amp/settings.json</code>.</li>
+          <li><strong>AGENTS.md:</strong> walk-up from cwd to <code>$HOME</code> + subtree (when files touched) + system-wide all merged. Falls back to <code>AGENT.md</code> then <code>CLAUDE.md</code> per directory.</li>
+          <li><strong>Skills (first wins):</strong> <code>~/.config/agents/skills/</code> → <code>~/.config/amp/skills/</code> → <code>.agents/skills/</code> → <code>.claude/skills/</code> → <code>~/.claude/skills/</code> → plugins → built-in.</li>
+          <li><strong>MCP load order:</strong> CLI <code>--mcp-config</code> &gt; user/workspace <code>amp.mcpServers</code> &gt; skill-bundled <code>mcp.json</code> (only if not already configured).</li>
+          <li><strong>Workspace MCP trust:</strong> servers in <code>.amp/settings.json</code> require <code>amp mcp approve &lt;server&gt;</code> before they run.</li>
+          <li><strong>Permissions:</strong> first-match wins in user list; falls through to built-in if no match. Actions: <code>allow</code>, <code>reject</code>, <code>ask</code>, <code>delegate</code>.</li>
+        </ul>
+      </div>
+
+    </div>
   </div>
 
   <footer>

@@ -33,6 +33,10 @@ The table maps config files across eight categories. GitHub Copilot is split int
 
 Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/partial**, or **Not supported**. Category types follow Birgitta Böckeler's taxonomy: **Guide** = feedforward control (steers before the agent acts), **Sensor** = feedback control (observes after the agent acts).
 
+**Trust boundary:** all rows are committed (team-shared, version-controlled) by default. Exceptions are visually flagged in the matrix — `user-local` (per-user, doesn't travel with the repo) for Windsurf's `mcp_config.json`, and `both` for the Codex and Windsurf hooks files which load from project and user scopes simultaneously.
+
+**Precedence & conflicts:** a section below the matrix documents per-tool load order, settings layering, and merge-vs-override semantics — what wins when files collide.
+
 ## Key takeaways
 
 - `AGENTS.md` has the broadest reach of any instructions file in the matrix — natively read by Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp, with opt-in support from Gemini CLI. Claude Code still relies on `CLAUDE.md`; Amp falls back to it when no `AGENTS.md` exists.
