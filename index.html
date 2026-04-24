@@ -923,9 +923,9 @@
     <button class="tog on" data-col="2">GC CLI</button>
     <button class="tog on" data-col="3">GC Cloud</button>
     <button class="tog on" data-col="4">Claude Code</button>
-    <button class="tog on" data-col="6">Codex CLI</button>
+    <button class="tog on" data-col="6">Codex</button>
     <button class="tog" data-col="5">OpenCode</button>
-    <button class="tog" data-col="7">Gemini CLI</button>
+    <button class="tog" data-col="7">Gemini</button>
     <button class="tog" data-col="8">Cursor</button>
     <button class="tog" data-col="9">Windsurf</button>
     <button class="tog" data-col="10">Amp</button>
@@ -942,10 +942,10 @@
             <th data-col="4">Claude Code<span class="tool-sub">all surfaces</span></th>
             <th data-col="5">OpenCode<span class="tool-sub">all surfaces</span></th>
             <th data-col="6">Codex<span class="tool-sub">all surfaces</span></th>
-            <th data-col="7">Gemini CLI<span class="tool-sub">all surfaces</span></th>
-            <th data-col="8">Cursor<span class="tool-sub">IDE</span></th>
-            <th data-col="9">Windsurf<span class="tool-sub">IDE</span></th>
-            <th data-col="10">Amp<span class="tool-sub">IDE + CLI</span></th>
+            <th data-col="7">Gemini<span class="tool-sub">all surfaces</span></th>
+            <th data-col="8">Cursor<span class="tool-sub">all surfaces</span></th>
+            <th data-col="9">Windsurf<span class="tool-sub">all surfaces</span></th>
+            <th data-col="10">Amp<span class="tool-sub">all surfaces</span></th>
           </tr>
         </thead>
         <tbody>
@@ -1172,7 +1172,7 @@
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.agents/skills/*/SKILL.md</span><span class="file-loc">cross-agent standard path</span></span><button class="info-btn" data-info="agents-skills">i</button></div></td>
             <td class="cop-l"><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
-            <td class="cop-r"><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell y">Yes</span></td>
@@ -1326,7 +1326,7 @@
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/hooks/</span><span class="file-loc">hooks.json</span></span><button class="info-btn" data-info="gh-hooks">i</button></div></td>
             <td class="cop-l"><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
-            <td class="cop-r"><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
@@ -1335,7 +1335,7 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="gh-hooks"><td colspan="11"><div class="info-content"><strong>Copilot lifecycle hooks.</strong> Automated workflows at agent events — run a formatter after edits, validate branch names, enforce lint. <code>preToolUse</code> hooks can deny or modify tool calls. Think git hooks for the AI loop. VS Code and CLI only — not Cloud agent.</div></td></tr>
+          <tr class="info-row" id="gh-hooks"><td colspan="11"><div class="info-content"><strong>Copilot lifecycle hooks.</strong> Automated workflows at agent events — run a formatter after edits, validate branch names, enforce lint. <code>preToolUse</code> hooks can deny or modify tool calls. Think git hooks for the AI loop. Available on Copilot CLI and Cloud Agent (public preview in VS Code).</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/hooks/</span><span class="file-loc">settings.json hooks</span></span><button class="info-btn" data-info="claude-hooks">i</button></div></td>
@@ -1504,6 +1504,38 @@
           </tr>
           <tr class="info-row" id="amp-mcp"><td colspan="11"><div class="info-content"><strong>Amp's MCP config.</strong> MCP servers defined under <code>amp.mcpServers</code> in <code>.amp/settings.json</code> (workspace) or <code>~/.config/amp/settings.json</code> (user). Skills can also bundle their own MCP servers via an <code>mcp.json</code> file in the skill directory. Supports <code>--mcp-config</code> CLI flag and <code>amp mcp add</code> command.</div></td></tr>
 
+          <tr class="cat" data-cat-modal="permissions"><td colspan="11">Permissions / sandboxing (tool-call gating) <span class="cat-type sensor">sensor<span class="cat-tip">i<span class="cat-tip-text">Feedback — intercepts tool calls before they execute</span></span></span></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">permission rules (allow / deny / ask)</span><span class="file-loc">file path or UI</span></span><button class="info-btn" data-info="permission-rules">i</button></div></td>
+            <td class="cop-l"><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">settings.json</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">~/.copilot/</span></span></td>
+            <td class="cop-r"><span class="cell-wrap"><span class="cell o">UI only</span><span class="cell-sub">repo settings</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">.claude/settings.json</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">opencode.json</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">config.toml</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">.gemini/settings.json</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">.cursor/cli.json</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">settings + lists</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">.amp/settings.json</span></span></td>
+          </tr>
+          <tr class="info-row" id="permission-rules"><td colspan="11"><div class="info-content"><strong>How each tool gates tool calls before execution.</strong> Every tool ships some form of allow/deny/ask system, but the expressiveness varies widely. Most use rule arrays with glob matching (<code>Bash(git diff:*)</code>, <code>Read(./src/**)</code>, <code>WebFetch(domain:example.com)</code>). Codex uses a discrete <code>approval_policy</code> mode (<code>untrusted</code> | <code>on-failure</code> | <code>on-request</code> | <code>never</code>). Cloud Agent has no interactive approval — it runs autonomously and humans review the resulting PR; permissions are enforced by the firewall allowlist and ephemeral runner. Bypass flags exist on most CLIs (<code>--allow-all</code>, <code>--dangerously-skip-permissions</code>, <code>--yolo</code>, <code>--dangerously-bypass-approvals-and-sandbox</code>, <code>--dangerously-allow-all</code>) — use with caution.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">OS-level sandbox</span><span class="file-loc">filesystem + network isolation</span></span><button class="info-btn" data-info="os-sandbox">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">Actions VM</span></span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">Seatbelt / Landlock</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">Docker / Seatbelt</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">Seatbelt / Landlock</span></span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+          <tr class="info-row" id="os-sandbox"><td colspan="11"><div class="info-content"><strong>True OS-level isolation — beyond just permission rules.</strong> A real sandbox confines the agent's processes via kernel-enforced filesystem and network restrictions that the agent cannot escape, even if it ignores its own permission rules. <strong>Codex</strong> ships <code>sandbox_mode</code> (<code>read-only</code> | <code>workspace-write</code> | <code>danger-full-access</code>) using macOS Seatbelt and Linux Landlock+seccomp. <strong>Gemini CLI</strong> supports the broadest set of backends — Docker, Podman, gVisor/runsc, LXC, Seatbelt, and Windows Native — selectable via <code>GEMINI_SANDBOX</code>. <strong>Cursor</strong> sandboxes terminal commands using Seatbelt (macOS), Landlock (Linux), or WSL2 (Windows) with a default-deny network and a curated dev-domain allowlist. <strong>Copilot Cloud Agent</strong> runs in an ephemeral GitHub Actions VM with an allowlist firewall (only the agent's Bash tool is firewalled — MCP servers and setup steps are not). The other tools rely on permission rules alone — no kernel-enforced isolation.</div></td></tr>
+
         </tbody>
       </table>
   </div>
@@ -1515,6 +1547,10 @@
     <p>Cursor and Windsurf both mirror the four-mode scoped rules pattern (<code>.cursor/rules/</code> and <code>.windsurf/rules/</code>) with repo-wide, glob, model-decision, and manual activation — the most granular path-scoped controls in the matrix.</p>
     <p>Claude Code has the most complete hooks system (20+ lifecycle events, five handler types), followed by Windsurf (12 events with three-tier config merging). Copilot supports hooks scoped to custom agents via frontmatter.</p>
     <p>MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf's MCP config is notably user-level only with no project-scoped committable file.</p>
+  </div>
+
+  <div class="surface-note">
+    <strong>When multiple instruction files coexist:</strong> Instructions are <strong>additive, not overriding</strong> — no tool silently drops one file because another exists. <code>AGENTS.md</code> + <code>copilot-instructions.md</code> both load in Copilot. <code>CLAUDE.md</code> in root + subdirectory merges hierarchically in Claude Code (subdirectory layers on top). Multiple <code>.cursor/rules/</code> files all merge when triggered. Path-scoped rules always layer on top of repo-wide instructions across all tools. When in doubt, keep repo-wide files short and use scoped rules for specifics.
   </div>
 
   <footer>
@@ -1747,6 +1783,12 @@
       title: 'MCP server configuration',
       desc: 'Project-scoped config files based on the <strong><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Model Context Protocol</a></strong> — an open standard for connecting AI models to external tools and services. MCP servers extend the agent\'s capabilities beyond built-in tools: databases, APIs, browsers, cloud services, or any custom tooling your team builds.<br><br>MCP provides more than just tools. Servers can also expose <strong>resources</strong> (read-only data like files, schemas, or API responses attached as context), <strong>prompts</strong> (preconfigured templates invoked via <code>/server.prompt-name</code>), and <strong>MCP Apps</strong> (interactive UI components like forms and visualizations rendered inline in chat).<br><br>Config locations vary by tool: <code>.vscode/mcp.json</code> (Copilot), <code>.mcp.json</code> (Claude Code, Cursor, Windsurf), <code>.gemini/settings.json</code> (Gemini CLI). Transport types include <code>stdio</code> (local process), <code>http</code> (remote endpoint), <code>sse</code> (server-sent events), and <code>ws</code> (WebSocket). Workspace configs are committable to git so every team member gets the same tool surface. User-level configs apply across all projects.<br><br>Security controls include <strong>sandboxing</strong> (restrict filesystem and network access on macOS/Linux), <strong>trust prompts</strong> (confirm before first start), and <strong>enterprise policy management</strong> (centrally allow or block servers via GitHub organization policies). Claude Code also supports <strong>scoping MCP servers to specific agents</strong> — define a server inline in an agent\'s frontmatter so the tools are only available when that agent is active, keeping the main conversation\'s tool surface clean.',
       example: 'A <code>.vscode/mcp.json</code> (Copilot) with a remote GitHub server and a local Playwright server:<br><br><code>{<br>&nbsp;&nbsp;"servers": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"github": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "http",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url": "https://api.githubcopilot.com/mcp"<br>&nbsp;&nbsp;&nbsp;&nbsp;},<br>&nbsp;&nbsp;&nbsp;&nbsp;"playwright": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "stdio",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "npx",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["-y", "@playwright/mcp@latest"]<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>}</code><br><br>Or a Claude Code agent with an MCP server scoped to just that agent (at <code>.claude/agents/browser-tester.md</code>):<br><br><code>---<br>name: browser-tester<br>description: Tests features in a real browser<br>mcpServers:<br>&nbsp;&nbsp;- playwright:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: stdio<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command: npx<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args: ["-y", "@playwright/mcp@latest"]<br>---<br><br>Use Playwright tools to navigate, screenshot, and interact with pages.</code><br><br>The Playwright server connects only when this agent is active — the main conversation never sees its tools.'
+    },
+    'permissions': {
+      badge: 'sensor',
+      title: 'Permissions / sandboxing',
+      desc: 'The <strong>enforcement layer</strong> of the harness — what actually stops the agent from running a destructive command, exfiltrating files, or hitting an endpoint it shouldn\'t. Permissions and sandboxing are distinct mechanisms that often work together:<br><br><strong>Permission rules</strong> are user-defined allow/deny/ask policies expressed in config files. They gate tool calls <em>before</em> the agent runs them. Most tools use rule arrays with glob matching: <code>Bash(git diff:*)</code>, <code>Read(./src/**)</code>, <code>WebFetch(domain:example.com)</code>, <code>mcp__server__tool</code>. Codex uses a discrete <code>approval_policy</code> mode (<code>untrusted</code> | <code>on-failure</code> | <code>on-request</code> | <code>never</code>). Cursor\'s CLI uses typed tokens (<code>Shell</code>, <code>Read</code>, <code>Write</code>, <code>WebFetch</code>, <code>Mcp</code>) with deny precedence over allow. Amp supports <code>delegate</code> as a fourth action, handing the decision to an external helper program.<br><br><strong>OS-level sandboxes</strong> are kernel-enforced filesystem and network restrictions that confine agent processes regardless of what the model decides to do. Codex uses macOS Seatbelt and Linux Landlock+seccomp with three modes (<code>read-only</code>, <code>workspace-write</code>, <code>danger-full-access</code>). Gemini CLI supports the broadest set of backends — Docker, Podman, gVisor/runsc, LXC, Seatbelt, Windows Native — selectable via <code>GEMINI_SANDBOX</code>. Cursor sandboxes terminal commands on macOS (Seatbelt), Linux (Landlock + unprivileged user namespaces), and Windows (WSL2) with a default-deny network and a curated allowlist of ~80 dev domains. Copilot Cloud Agent runs in an ephemeral GitHub Actions VM with an allowlist firewall (caveat: only the agent\'s Bash tool processes are firewalled — MCP servers and setup steps are not). The remaining tools (VS Code, CLI, Claude Code, OpenCode, Windsurf, Amp) rely on permission rules alone with no kernel-enforced isolation.<br><br><strong>Bypass flags</strong> exist on most CLIs and skip both permission rules and sandboxes: <code>--allow-all</code> (Copilot CLI), <code>--dangerously-skip-permissions</code> (Claude Code), <code>--yolo</code> / <code>-y</code> (Gemini CLI), <code>--dangerously-bypass-approvals-and-sandbox</code> (Codex), <code>--dangerously-allow-all</code> (Amp). The naming is deliberate — these disable the enforcement layer entirely.<br><br><strong>Enterprise lockdown:</strong> Claude Code\'s <code>disableBypassPermissionsMode: "disable"</code> in managed-settings.json prevents users from invoking the bypass flag. Cursor\'s enterprise dashboard can lock auto-run modes. Windsurf admins can cap the maximum auto-execution level (Disabled / Allowlist / Auto / Turbo). VS Code workspace trust prompts and <code>chat.tools.terminal.autoApprove</code> can be set via group policy.',
+      example: 'A Claude Code <code>.claude/settings.json</code> with a tight permission policy:<br><br><code>{<br>&nbsp;&nbsp;"permissions": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"defaultMode": "default",<br>&nbsp;&nbsp;&nbsp;&nbsp;"allow": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Bash(git diff:*)",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Bash(npm test:*)",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Read(./src/**)",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"WebFetch(domain:docs.anthropic.com)"<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"deny": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Bash(rm -rf:*)",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Bash(git push:*)",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Read(./.env*)"<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"ask": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Bash(git commit:*)"<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;}<br>}</code><br><br>Or a Codex <code>~/.codex/config.toml</code> combining approval policy with sandbox:<br><br><code>approval_policy = "on-request"<br>sandbox_mode = "workspace-write"<br><br>[sandbox_workspace_write]<br>writable_roots = ["~/projects/acme"]<br>network_access = false<br>exclude_slash_tmp = false</code><br><br>The TOML config gives Codex write access to the workspace and tmp, blocks network access entirely, and prompts the user only when the agent explicitly asks for elevated permissions. Sandbox enforcement comes from Seatbelt (macOS) or Landlock (Linux) — the agent literally cannot escape it without restarting with <code>--dangerously-bypass-approvals-and-sandbox</code>.'
     }
   };
 

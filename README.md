@@ -18,7 +18,7 @@ This compatibility matrix exists because harness engineering has produced roughl
 
 ## What's in the matrix
 
-The table maps config files across seven categories. GitHub Copilot is split into three surfaces (VS Code, CLI, Cloud agent) for ten tool columns total.
+The table maps config files across eight categories. GitHub Copilot is split into three surfaces (VS Code, CLI, Cloud agent) for ten tool columns total.
 
 | Category | Type | Examples |
 |---|---|---|
@@ -29,6 +29,7 @@ The table maps config files across seven categories. GitHub Copilot is split int
 | **Prompt files / slash commands** | Guide | `*.prompt.md`, `.claude/commands/*.md`, `.opencode/commands/*.md`, `.gemini/commands/*.toml`, `.windsurf/workflows/*.md` |
 | **Automation (lifecycle hooks)** | Sensor | `.github/hooks/`, `.claude/hooks/`, `.codex/hooks.json`, `.windsurf/hooks.json` |
 | **MCP server configuration** | Guide | `.vscode/mcp.json`, `.mcp.json`, `opencode.json`, `.codex/config.toml`, `.gemini/settings.json`, `.cursor/mcp.json`, `mcp_config.json`, `.amp/settings.json` |
+| **Permissions / sandboxing** | Sensor | `permissions` blocks in `.claude/settings.json`, `opencode.json`, `.amp/settings.json`; `~/.copilot/permissions-config.json`; Codex `approval_policy` + `sandbox_mode`; Gemini `GEMINI_SANDBOX`; Cursor sandbox + `.cursor/cli.json` |
 
 Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/partial**, or **Not supported**. Category types follow Birgitta Böckeler's taxonomy: **Guide** = feedforward control (steers before the agent acts), **Sensor** = feedback control (observes after the agent acts).
 
@@ -39,6 +40,22 @@ Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/par
 - Cursor and Windsurf both mirror the four-mode scoped rules pattern (`.cursor/rules/` and `.windsurf/rules/`) with repo-wide, glob, model-decision, and manual activation — the most granular path-scoped controls in the matrix.
 - Claude Code has the most complete hooks system (20+ lifecycle events, five handler types), followed by Windsurf (12 events with three-tier config merging). Copilot supports hooks scoped to custom agents via frontmatter.
 - MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf's MCP config is notably user-level only with no project-scoped committable file.
+- **Codex, Gemini CLI, and Cursor are the only tools with kernel-enforced OS sandboxes** (Seatbelt / Landlock / Docker). Copilot Cloud Agent gets isolation for free via the ephemeral GitHub Actions VM. Every other tool relies on permission rules alone — meaning a misbehaving agent with the right rule match can still touch anything the user can.
+
+## What happens when multiple instruction files coexist
+
+Most repos will end up with more than one instruction file — `AGENTS.md` alongside `copilot-instructions.md`, or `CLAUDE.md` in both root and subdirectories. Precedence behavior varies by tool:
+
+| Scenario | Behavior |
+|---|---|
+| `AGENTS.md` + `copilot-instructions.md` | Copilot loads both additively — no override, no conflict. Use `copilot-instructions.md` for Copilot-specific additions. |
+| `AGENTS.md` + `CLAUDE.md` (same repo) | Copilot reads both. Claude Code reads only `CLAUDE.md` (ignores `AGENTS.md`). Use `@AGENTS.md` in your `CLAUDE.md` to import shared rules. |
+| `CLAUDE.md` in root + subdirectory | Claude Code merges hierarchically — subdirectory rules layer on top of root rules for files in that directory. |
+| `GEMINI.md` at global + project + subdirectory | Gemini CLI merges all three tiers with just-in-time discovery — narrower scope layers on top of broader. |
+| Multiple `.cursor/rules/*.md` files | All matching rules are merged. `alwaysApply` rules load every session; glob/model/manual rules are additive when triggered. |
+| Path-scoped rules + repo-wide instructions | Always additive — scoped rules layer on top, they never replace repo-wide instructions. True across all tools. |
+
+The general principle: **instructions are additive, not overriding.** No tool silently drops one file because another exists. When in doubt, keep repo-wide files short and use scoped rules for specifics.
 
 ## Features
 
