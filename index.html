@@ -1290,12 +1290,12 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell y">Yes</span></td>
-            <td><span class="cell f">Fallback</span></td>
+            <td><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell y">Yes</span></td>
           </tr>
-          <tr class="info-row" id="agents-skills"><td colspan="11"><div class="info-content"><strong>The broadest cross-agent skill path available today.</strong> Codex's primary skill path — scans <code>.agents/skills</code> from your working directory up to the repo root. Copilot Cloud agent, CLI, and VS Code all read it natively as a default project skills location (additional VS Code paths can be added via the <code>chat.agentSkillsLocations</code> setting). Also read natively by Cursor and Amp, and as a fallback by OpenCode, Windsurf, and Gemini CLI. Based on the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
+          <tr class="info-row" id="agents-skills"><td colspan="11"><div class="info-content"><strong>The broadest cross-agent skill path available today.</strong> Codex's primary skill path — scans <code>.agents/skills</code> from your working directory up to the repo root. Copilot Cloud agent, CLI, and VS Code all read it natively as a default project skills location (additional VS Code paths can be added via the <code>chat.agentSkillsLocations</code> setting). Also read natively by Cursor, Amp, and Gemini CLI (where the <code>.agents/skills/</code> alias takes precedence over <code>.gemini/skills/</code>), and as a fallback by OpenCode and Windsurf. Based on the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.gemini/skills/*/SKILL.md</span><span class="file-loc">Gemini CLI native path</span></span><button class="info-btn" data-info="gemini-skills">i</button></div></td>
@@ -1310,7 +1310,7 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="gemini-skills"><td colspan="11"><div class="info-content"><strong>Gemini CLI's native skill path.</strong> Skills live under <code>.gemini/skills/&lt;name&gt;/SKILL.md</code> and are activated on demand via the <code>activate_skill</code> tool. Gemini also reads <code>.agents/skills/</code> as a fallback, which makes that path the better portability choice when you want cross-tool reuse.</div></td></tr>
+          <tr class="info-row" id="gemini-skills"><td colspan="11"><div class="info-content"><strong>Gemini CLI's native skill path.</strong> Skills live under <code>.gemini/skills/&lt;name&gt;/SKILL.md</code> and are activated on demand via the <code>activate_skill</code> tool. Gemini CLI also reads <code>.agents/skills/</code> natively — per the docs, within the same tier the <code>.agents/skills/</code> alias takes precedence over <code>.gemini/skills/</code> — making that path the better portability choice when you want cross-tool reuse.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.opencode/skills/*/SKILL.md</span><span class="file-loc">OpenCode native path</span></span><button class="info-btn" data-info="oc-skills">i</button></div></td>
@@ -1438,7 +1438,7 @@
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/hooks/</span><span class="file-loc">hooks.json</span></span><button class="info-btn" data-info="gh-hooks">i</button></div></td>
-            <td class="cop-l"><span class="cell n">—</span></td>
+            <td class="cop-l"><span class="cell o">opt-in</span></td>
             <td><span class="cell y">Yes</span></td>
             <td class="cop-r"><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
@@ -1449,7 +1449,7 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="gh-hooks"><td colspan="11"><div class="info-content"><strong>Copilot lifecycle hooks.</strong> Automated workflows at agent events — run a formatter after edits, validate branch names, enforce lint. <code>preToolUse</code> hooks can deny or modify tool calls. Think git hooks for the AI loop. Documented for Copilot CLI and the cloud agent.</div></td></tr>
+          <tr class="info-row" id="gh-hooks"><td colspan="11"><div class="info-content"><strong>Copilot lifecycle hooks.</strong> Automated workflows at agent events — run a formatter after edits, validate branch names, enforce lint. <code>preToolUse</code> hooks can deny or modify tool calls. Think git hooks for the AI loop. GA for Copilot CLI and the cloud agent; available in Preview for VS Code, which also reads Claude-format <code>.claude/settings.json</code> hooks and supports a <code>chat.hookFilesLocations</code> setting.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/settings.json</span><span class="file-loc">hooks key</span></span><button class="info-btn" data-info="claude-hooks">i</button></div></td>
@@ -1657,9 +1657,9 @@
   <div class="insight">
     <div class="insight-title">Key takeaways</div>
     <p><code>AGENTS.md</code> has the broadest reach of any instructions file shown here — natively read by Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp, with opt-in support from Gemini CLI. Claude Code still relies on <code>CLAUDE.md</code>; Amp falls back to it when no <code>AGENTS.md</code> exists.</p>
-    <p><code>.agents/skills/</code> is now the broadest cross-tool skill path — read natively by Copilot, Codex, Cursor, and Amp, with fallback support from OpenCode, Windsurf, and Gemini CLI.</p>
+    <p><code>.agents/skills/</code> is now the broadest cross-tool skill path — read natively by Copilot, Codex, Cursor, Amp, and Gemini CLI, with fallback support from OpenCode and Windsurf.</p>
     <p>Cursor and Windsurf both mirror the four-mode scoped rules pattern (<code>.cursor/rules/</code> and <code>.windsurf/rules/</code>) with repo-wide, glob, model-decision, and manual activation — the most granular path-scoped controls in the matrix.</p>
-    <p>Claude Code has the most complete hooks system among the tools shown here, with core lifecycle/tool-use events and five handler types in the agent SDK. Windsurf follows with 12 events and three-tier config merging. Copilot hooks are documented for CLI and cloud-agent workflows.</p>
+    <p>Claude Code has the most complete hooks system among the tools shown here, with core lifecycle/tool-use events and five handler types in the agent SDK. Windsurf follows with 12 events and three-tier config merging. Copilot hooks are GA for CLI and the cloud agent, and available in Preview for VS Code (which also reads Claude-format <code>.claude/settings.json</code> hooks).</p>
     <p>MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf's MCP config is notably user-level only with no project-scoped committable file.</p>
   </div>
 
