@@ -23,7 +23,7 @@ The table maps config files across eight categories. GitHub Copilot is split int
 | Category | Type | Examples |
 |---|---|---|
 | **Repo-wide instructions** | Guide | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `copilot-instructions.md` |
-| **Path-scoped instructions / rules** | Guide | `*.instructions.md`, `.claude/rules/*.md`, `.cursor/rules/*.md`, `.windsurf/rules/*.md` |
+| **Path-scoped instructions / rules** | Guide | `*.instructions.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.windsurf/rules/*.md` |
 | **Custom / sub agents** | Guide | `.github/agents/*.agent.md`, `.claude/agents/*.md`, `.opencode/agents/*.md`, `.gemini/agents/*.md` |
 | **Skills** | Guide | `.github/skills/*/SKILL.md`, `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md`, `.gemini/skills/*/SKILL.md`, `.opencode/skills/*/SKILL.md`, `.cursor/skills/*/SKILL.md`, `.windsurf/skills/*/SKILL.md` |
 | **Prompt files / slash commands** | Guide | `*.prompt.md`, `.claude/commands/*.md`, `.opencode/commands/*.md`, `.gemini/commands/*.toml`, `.windsurf/workflows/*.md` |
@@ -40,9 +40,9 @@ Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/par
 ## Key takeaways
 
 - `AGENTS.md` has the broadest reach of any instructions file in the matrix — natively read by Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp, with opt-in support from Gemini CLI. Claude Code still relies on `CLAUDE.md`; Amp falls back to it when no `AGENTS.md` exists.
-- `.agents/skills/` is now the broadest cross-tool skill path — read natively by Copilot, Codex, Cursor, and Amp, with fallback support from OpenCode, Windsurf, and Gemini CLI.
+- `.agents/skills/` is now the broadest cross-tool skill path — read natively by Copilot, Codex, Cursor, Amp, and Gemini CLI, with fallback support from OpenCode and Windsurf.
 - Cursor and Windsurf both mirror the four-mode scoped rules pattern (`.cursor/rules/` and `.windsurf/rules/`) with repo-wide, glob, model-decision, and manual activation — the most granular path-scoped controls in the matrix.
-- Claude Code has the most complete hooks system among the tools shown here, with core lifecycle/tool-use events and five handler types in the agent SDK. Windsurf follows with 12 events and three-tier config merging. Copilot hooks are documented for CLI and cloud-agent workflows.
+- Claude Code has the most complete hooks system among the tools shown here, with core lifecycle/tool-use events and five handler types in the agent SDK. Windsurf follows with 12 events and three-tier config merging. Copilot hooks are documented for CLI and cloud-agent workflows, and available in Preview for VS Code (which also reads Claude-format `.claude/settings.json` hooks).
 - MCP server config remains fully fragmented — every tool uses a different file and format. Windsurf's MCP config is notably user-level only with no project-scoped committable file.
 - **Codex, Gemini CLI, and Cursor are the only tools with kernel-enforced OS sandboxes** (Seatbelt / Landlock / Docker). Copilot Cloud Agent gets isolation for free via the ephemeral GitHub Actions VM. Every other tool relies on permission rules alone — meaning a misbehaving agent with the right rule match can still touch anything the user can.
 
@@ -57,7 +57,7 @@ Most repos will end up with more than one instruction file — `AGENTS.md` along
 | `CLAUDE.md` in root + subdirectory | Claude Code merges hierarchically — subdirectory rules layer on top of root rules for files in that directory. |
 | `GEMINI.md` at global + project + subdirectory | Gemini CLI merges all three tiers with just-in-time discovery — narrower scope layers on top of broader. |
 | `AGENTS.md` + `CLAUDE.md` in OpenCode | OpenCode prefers `AGENTS.md` in a directory and only falls back to `CLAUDE.md` when `AGENTS.md` is absent. |
-| Multiple `.cursor/rules/*.md` files | All matching rules are merged. `alwaysApply` rules load every session; glob/model/manual rules are additive when triggered. |
+| Multiple `.cursor/rules/*.mdc` files | All matching rules are merged. `alwaysApply` rules load every session; glob/model/manual rules are additive when triggered. |
 | Path-scoped rules + repo-wide instructions | Usually additive in tools that support both, but tool-specific precedence still matters. Check the matrix notes before assuming both files load. |
 
 The general principle: **many instruction systems are additive, but not all are.** Some tools merge every matching source; others use fallback or nearest-file precedence. When in doubt, keep repo-wide files short and use scoped rules for specifics.
