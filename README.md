@@ -1,6 +1,6 @@
 # AI Harness Engineering Compatibility Matrix
 
-A single-page reference for which AI coding tool configuration files are supported by which tools, covering **GitHub Copilot**, **Claude Code**, **OpenCode**, **Codex CLI**, **Gemini CLI**, **Cursor**, **Windsurf**, and **Amp**.
+A single-page reference for which AI coding tool configuration files are supported by which tools, covering **GitHub Copilot**, **Claude Code**, **OpenCode**, **Codex CLI**, **Gemini CLI**, **Cursor**, **Devin Desktop / Windsurf**, and **Amp**.
 
 **Live page:** [codylindley.github.io/ai-harness-engineering-compatibility-matrix](https://codylindley.github.io/ai-harness-engineering-compatibility-matrix/)
 
@@ -23,7 +23,7 @@ The table maps config files across eight harness categories. GitHub Copilot is s
 | Category | Type | Examples |
 |---|---|---|
 | **Repo-wide instructions** | Guide | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `copilot-instructions.md` |
-| **Path-scoped instructions / rules** | Guide | `*.instructions.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.windsurf/rules/*.md` |
+| **Path-scoped instructions / rules** | Guide | `*.instructions.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.devin/rules/*.md`, `.windsurf/rules/*.md` |
 | **Custom / sub agents** | Guide | `.github/agents/*.agent.md`, `.claude/agents/*.md`, `.opencode/agents/*.md`, `.gemini/agents/*.md` |
 | **Skills** | Guide | `.github/skills/*/SKILL.md`, `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md`, `.gemini/skills/*/SKILL.md`, `.opencode/skills/*/SKILL.md`, `.cursor/skills/*/SKILL.md`, `.windsurf/skills/*/SKILL.md` |
 | **Prompt files / slash commands** | Guide | `*.prompt.md`, `.claude/commands/*.md`, `.opencode/commands/*.md`, `.gemini/commands/*.toml`, `.windsurf/workflows/*.md` |
@@ -39,11 +39,11 @@ Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/par
 
 ## Key takeaways
 
-- `AGENTS.md` has the broadest reach of any instruction file here. Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp read it natively; Gemini CLI can opt in. Claude Code still uses `CLAUDE.md`.
-- `.agents/skills/` is the broadest shared skill path. Copilot, Codex, Cursor, Amp, and Gemini CLI read it natively; OpenCode and Windsurf support it as fallback.
-- Cursor and Windsurf provide the most granular scoped rules: repo-wide, glob, model-decision, and manual activation.
-- Claude Code has the richest hook system. Cursor, Windsurf, Gemini CLI, Codex, and Copilot also support hooks, but with different event models and config scopes.
-- MCP configuration is still fragmented. Every tool uses a different file and format, and Windsurf's MCP config is user-local only.
+- `AGENTS.md` has the broadest reach of any instruction file here. Copilot, Codex, OpenCode, Cursor, Devin Desktop, and Amp read it natively; Gemini CLI can opt in. Claude Code still uses `CLAUDE.md`.
+- `.agents/skills/` is the broadest shared skill path. Copilot, Codex, Cursor, Amp, and Gemini CLI read it natively; OpenCode supports it as fallback, and Devin Desktop discovers it for cross-agent compatibility.
+- Cursor and Devin Desktop provide the most granular scoped rules: repo-wide, glob, model-decision, and manual activation.
+- Claude Code has the richest hook system. Cursor, Devin Desktop, Gemini CLI, Codex, and Copilot also support hooks, but with different event models and config scopes.
+- MCP configuration is still fragmented. Every tool uses a different file and format, and Devin Desktop's MCP config is user-local only.
 - Claude Code, Codex, Gemini CLI, and Cursor have local OS sandboxes. Copilot Cloud Agent isolates work in an ephemeral GitHub Actions VM. The remaining local tools rely on permission rules without kernel-enforced isolation.
 
 ## When Multiple Instruction Files Coexist
@@ -73,4 +73,4 @@ The practical rule: keep repo-wide files short, use scoped rules for specifics, 
 
 ## Last updated
 
-May 2026
+June 2026

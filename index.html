@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Harness Engineering Compatibility Matrix — May 2026</title>
-<meta name="description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, Gemini CLI, Cursor, Windsurf, and Amp. AGENTS.md, CLAUDE.md, skills, hooks, MCP, and more.">
+<title>AI Harness Engineering Compatibility Matrix — June 2026</title>
+<meta name="description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, Gemini CLI, Cursor, Devin Desktop / Windsurf, and Amp. AGENTS.md, CLAUDE.md, skills, hooks, MCP, and more.">
 <meta property="og:title" content="AI Harness Engineering Compatibility Matrix">
-<meta property="og:description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, Gemini CLI, Cursor, Windsurf, and Amp.">
+<meta property="og:description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, Gemini CLI, Cursor, Devin Desktop / Windsurf, and Amp.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://codylindley.github.io/ai-harness-engineering-compatibility-matrix/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AI Harness Engineering Compatibility Matrix">
-<meta name="twitter:description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, Gemini CLI, Cursor, Windsurf, and Amp.">
+<meta name="twitter:description" content="Which AI coding tool config files are supported where — GitHub Copilot, Claude Code, OpenCode, Codex CLI, Gemini CLI, Cursor, Devin Desktop / Windsurf, and Amp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -992,7 +992,7 @@
 <div class="wrap">
   <header>
     <div class="header-top">
-    <div class="date">Updated May 2026</div>
+    <div class="date">Updated June 2026</div>
     <div class="header-actions">
       <a class="github-link" href="https://github.com/codylindley/ai-harness-engineering-compatibility-matrix" target="_blank" rel="noopener" aria-label="View on GitHub">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
@@ -1041,7 +1041,7 @@
     <button class="tog" data-col="5">OpenCode</button>
     <button class="tog" data-col="7">Gemini</button>
     <button class="tog" data-col="8">Cursor</button>
-    <button class="tog" data-col="9">Windsurf</button>
+    <button class="tog" data-col="9">Devin</button>
     <button class="tog" data-col="10">Amp</button>
   </div>
 
@@ -1058,7 +1058,7 @@
             <th data-col="6">Codex<span class="tool-sub">all surfaces</span></th>
             <th data-col="7">Gemini<span class="tool-sub">all surfaces</span></th>
             <th data-col="8">Cursor<span class="tool-sub">all surfaces</span></th>
-            <th data-col="9">Windsurf<span class="tool-sub">all surfaces</span></th>
+            <th data-col="9">Devin Desktop<span class="tool-sub">Cascade</span></th>
             <th data-col="10">Amp<span class="tool-sub">all surfaces</span></th>
           </tr>
         </thead>
@@ -1079,7 +1079,7 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
           </tr>
-          <tr class="info-row" id="agents-md"><td colspan="11"><div class="info-content"><strong>The broadest shared instruction file in this matrix.</strong> Put durable repo guidance here: stack, architecture, naming rules, forbidden patterns, and team conventions. Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp read it natively; Gemini CLI can opt in. Claude Code still uses <code>CLAUDE.md</code> natively.</div></td></tr>
+          <tr class="info-row" id="agents-md"><td colspan="11"><div class="info-content"><strong>The broadest shared instruction file in this matrix.</strong> Put durable repo guidance here: stack, architecture, naming rules, forbidden patterns, and team conventions. Copilot, Codex, OpenCode, Cursor, Devin Desktop, and Amp read it natively; Gemini CLI can opt in. Claude Code still uses <code>CLAUDE.md</code> natively.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">CLAUDE.md</span><span class="file-loc">root + subdirectories</span></span><button class="info-btn" data-info="claude-md">i</button></div></td>
@@ -1094,7 +1094,7 @@
             <td><span class="cell n">—</span></td>
             <td><span class="cell f">Fallback</span></td>
           </tr>
-          <tr class="info-row" id="claude-md"><td colspan="11"><div class="info-content"><strong>Claude Code's native repo instruction file.</strong> It serves the same purpose as <code>AGENTS.md</code>, with hierarchical loading from root and subdirectories. If a repo also has <code>AGENTS.md</code>, import it with <code>@AGENTS.md</code> and keep Claude-specific additions here. Copilot VS Code scans <code>CLAUDE.md</code> as a compatibility instruction file; Copilot CLI and cloud agent can use a root-level file too.</div></td></tr>
+          <tr class="info-row" id="claude-md"><td colspan="11"><div class="info-content"><strong>Claude Code's native repo instruction file.</strong> It serves the same purpose as <code>AGENTS.md</code>, with hierarchical loading from root and subdirectories. If a repo also has <code>AGENTS.md</code>, import it with <code>@AGENTS.md</code> and keep Claude-specific additions here. Copilot VS Code reads <code>CLAUDE.md</code> as an always-on compatibility instruction file when <code>chat.useClaudeMdFile</code> is enabled; that setting is documented as default-on. Copilot CLI and cloud agent can use a root-level file too.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">GEMINI.md</span><span class="file-loc">root of repo</span></span><button class="info-btn" data-info="gemini-md">i</button></div></td>
@@ -1174,7 +1174,7 @@
           <tr class="info-row" id="cursor-rules"><td colspan="11"><div class="info-content"><strong>Cursor's native scoped rules.</strong> MDC files in <code>.cursor/rules/</code> support four activation modes: always-on, glob match, model-decision, and manual <code>@rule-name</code>. Use them when <code>AGENTS.md</code> is too broad and the rule needs explicit activation control.</div></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/rules/*.md</span><span class="file-loc">.windsurf/rules/ (frontmatter scoped)</span></span><button class="info-btn" data-info="windsurf-rules">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.devin/rules/*.md</span><span class="file-loc">preferred; .windsurf/rules fallback</span></span><button class="info-btn" data-info="windsurf-rules">i</button></div></td>
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
@@ -1186,7 +1186,7 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="windsurf-rules"><td colspan="11"><div class="info-content"><strong>Windsurf's native scoped rules.</strong> Markdown files in <code>.windsurf/rules/</code> support the same four activation modes as Cursor: always-on, glob, model-decision, and manual. Global rules live at <code>~/.codeium/windsurf/memories/global_rules.md</code>; enterprise teams can deploy system rules.</div></td></tr>
+          <tr class="info-row" id="windsurf-rules"><td colspan="11"><div class="info-content"><strong>Devin Desktop's native scoped rules.</strong> Markdown files in <code>.devin/rules/</code> are preferred, with legacy <code>.windsurf/rules/</code> kept as a fallback. Rules support four activation modes: always-on, glob, model-decision, and manual. Global rules live at <code>~/.codeium/windsurf/memories/global_rules.md</code>; enterprise system rules prefer Devin paths with Windsurf paths as legacy fallback.</div></td></tr>
 
           <tr class="cat" data-cat-modal="custom-agents"><td colspan="11">Custom / sub agents (persona + tool restrictions) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
@@ -1295,7 +1295,7 @@
             <td><span class="cell f">Fallback</span></td>
             <td><span class="cell y">Yes</span></td>
           </tr>
-          <tr class="info-row" id="agents-skills"><td colspan="11"><div class="info-content"><strong>The broadest shared skill path today.</strong> Codex uses <code>.agents/skills</code> as its primary skill path. Copilot, Cursor, Amp, and Gemini CLI read it natively; OpenCode and Windsurf read it as fallback. VS Code can add more skill paths through <code>chat.agentSkillsLocations</code>. In Gemini CLI, this alias takes precedence over <code>.gemini/skills/</code> within the same tier. The path follows the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
+          <tr class="info-row" id="agents-skills"><td colspan="11"><div class="info-content"><strong>The broadest shared skill path today.</strong> Codex uses <code>.agents/skills</code> as its primary skill path. Copilot, Cursor, Amp, and Gemini CLI read it natively; OpenCode reads it as fallback, and Devin Desktop discovers it for cross-agent compatibility. VS Code can add more skill paths through <code>chat.agentSkillsLocations</code>. In Gemini CLI, this alias takes precedence over <code>.gemini/skills/</code> within the same tier. The path follows the open <a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills</a> specification.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.gemini/skills/*/SKILL.md</span><span class="file-loc">Gemini CLI native path</span></span><button class="info-btn" data-info="gemini-skills">i</button></div></td>
@@ -1343,7 +1343,7 @@
           <tr class="info-row" id="cursor-skills"><td colspan="11"><div class="info-content"><strong>Cursor’s native skill path.</strong> Skills live at <code>.cursor/skills/&lt;name&gt;/SKILL.md</code> with <code>name</code> and <code>description</code> frontmatter. Cursor loads metadata until the skill is invoked, reads <code>.agents/skills/</code> natively, and scans Claude/Codex compatibility paths.</div></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/skills/*/SKILL.md</span><span class="file-loc">Windsurf native path</span></span><button class="info-btn" data-info="windsurf-skills">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/skills/*/SKILL.md</span><span class="file-loc">Devin Desktop path</span></span><button class="info-btn" data-info="windsurf-skills">i</button></div></td>
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
@@ -1355,7 +1355,7 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="windsurf-skills"><td colspan="11"><div class="info-content"><strong>Windsurf’s native skill path.</strong> Skills at <code>.windsurf/skills/&lt;name&gt;/SKILL.md</code> with YAML frontmatter. Also available globally at <code>~/.codeium/windsurf/skills/</code>. Windsurf reads <code>.agents/skills/</code> as a fallback and <code>.claude/skills/</code> when Claude Code config reading is enabled.</div></td></tr>
+          <tr class="info-row" id="windsurf-skills"><td colspan="11"><div class="info-content"><strong>Devin Desktop's Cascade skill path.</strong> Skills at <code>.windsurf/skills/&lt;name&gt;/SKILL.md</code> use YAML frontmatter and optional supporting files. They are also available globally at <code>~/.codeium/windsurf/skills/</code>. Devin Desktop also discovers <code>.agents/skills/</code> for cross-agent compatibility and <code>.claude/skills/</code> when Claude Code config reading is enabled.</div></td></tr>
 
           <tr class="cat" data-cat-modal="prompt-files"><td colspan="11">Prompt files / slash commands (manual invocation) <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
@@ -1420,7 +1420,7 @@
           <tr class="info-row" id="gemini-cmds"><td colspan="11"><div class="info-content"><strong>Gemini CLI's native custom command format.</strong> TOML files in <code>.gemini/commands/</code> define reusable slash commands. Project commands override user commands, support argument injection, and can embed shell output or file content into the final prompt.</div></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/workflows/*.md</span><span class="file-loc">Windsurf workflows</span></span><button class="info-btn" data-info="windsurf-workflows">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/workflows/*.md</span><span class="file-loc">Devin Desktop workflows</span></span><button class="info-btn" data-info="windsurf-workflows">i</button></div></td>
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
@@ -1432,7 +1432,7 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="windsurf-workflows"><td colspan="11"><div class="info-content"><strong>Windsurf's reusable prompt templates.</strong> Markdown files in <code>.windsurf/workflows/</code> are invoked as <code>/workflow-name</code> in Cascade. They are equivalent to Copilot <code>*.prompt.md</code> files. Global workflows live at <code>~/.codeium/windsurf/global_workflows/</code>; each file has a 12,000 character limit.</div></td></tr>
+          <tr class="info-row" id="windsurf-workflows"><td colspan="11"><div class="info-content"><strong>Devin Desktop's reusable prompt templates.</strong> Markdown files in <code>.windsurf/workflows/</code> are invoked as <code>/workflow-name</code> in Cascade. They are equivalent to Copilot <code>*.prompt.md</code> files. Global workflows live at <code>~/.codeium/windsurf/global_workflows/</code>; each file has a 12,000 character limit.</div></td></tr>
 
           <tr class="cat" data-cat-modal="hooks"><td colspan="11">Automation (lifecycle hooks) <span class="cat-type sensor">sensor<span class="cat-tip">i<span class="cat-tip-text">Feedback — observes after the agent acts</span></span></span></td></tr>
 
@@ -1473,13 +1473,13 @@
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
-            <td><span class="cell o">opt-in</span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">default-on</span></span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="codex-hooks"><td colspan="11"><div class="info-content"><strong>Codex's lifecycle hook system.</strong> Experimental hooks run on <code>SessionStart</code>, <code>UserPromptSubmit</code>, <code>PreToolUse</code>, <code>PermissionRequest</code>, <code>PostToolUse</code>, and <code>Stop</code>. They receive JSON on stdin and can block commands, inject context, or continue stopped turns. Codex loads <code>~/.codex/hooks.json</code> and <code>.codex/hooks.json</code> when <code>codex_hooks = true</code>.</div></td></tr>
+          <tr class="info-row" id="codex-hooks"><td colspan="11"><div class="info-content"><strong>Codex's lifecycle hook system.</strong> Hooks are enabled by default and can be disabled with <code>[features] hooks = false</code>; <code>codex_hooks</code> remains only as a deprecated alias. Events include <code>SessionStart</code>, <code>SubagentStart</code>, <code>UserPromptSubmit</code>, <code>PreToolUse</code>, <code>PermissionRequest</code>, <code>PostToolUse</code>, <code>PreCompact</code>, <code>PostCompact</code>, <code>SubagentStop</code>, and <code>Stop</code>. Codex loads <code>hooks.json</code> or inline <code>[hooks]</code> tables from active config layers, including <code>~/.codex/</code> and trusted project <code>.codex/</code> layers.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.gemini/settings.json</span><span class="file-loc">hooks key</span></span><button class="info-btn" data-info="gemini-hooks">i</button></div></td>
@@ -1512,7 +1512,7 @@
           <tr class="info-row" id="cursor-hooks"><td colspan="11"><div class="info-content"><strong>Cursor's hook system.</strong> Project hooks live at <code>.cursor/hooks.json</code>; user hooks live at <code>~/.cursor/hooks.json</code>. Command-based hooks receive JSON on stdin and can run on events such as <code>preToolUse</code>, <code>postToolUse</code>, <code>beforeShellExecution</code>, <code>afterFileEdit</code>, <code>beforeSubmitPrompt</code>, <code>preCompact</code>, <code>stop</code>, <code>sessionStart</code>, and <code>sessionEnd</code>. Cursor also documents compatibility with Claude Code hook files.</div></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/hooks.json <span class="scope-pill both" title="Loaded from system, user, and workspace tiers (merged)">both</span></span><span class="file-loc">.windsurf/ (system/user/workspace)</span></span><button class="info-btn" data-info="windsurf-hooks">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.windsurf/hooks.json <span class="scope-pill both" title="Loaded from system, user, and workspace tiers (merged)">both</span></span><span class="file-loc">Devin Desktop system/user/workspace</span></span><button class="info-btn" data-info="windsurf-hooks">i</button></div></td>
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
@@ -1524,7 +1524,7 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="windsurf-hooks"><td colspan="11"><div class="info-content"><strong>Windsurf’s lifecycle hook system.</strong> 12 hook events including <code>pre/post_read_code</code>, <code>pre/post_write_code</code>, <code>pre/post_run_command</code>, <code>pre/post_mcp_tool_use</code>, <code>pre_user_prompt</code>, and <code>post_cascade_response</code>. Pre-hooks can block actions via exit code 2. Three config tiers merged together: system (<code>/Library/Application Support/Windsurf/hooks.json</code>), user (<code>~/.codeium/windsurf/hooks.json</code>), and workspace (<code>.windsurf/hooks.json</code>). Enterprise teams can deploy via cloud dashboard or MDM.</div></td></tr>
+          <tr class="info-row" id="windsurf-hooks"><td colspan="11"><div class="info-content"><strong>Devin Desktop's Cascade hook system.</strong> Twelve hook events are documented: <code>pre_read_code</code>, <code>post_read_code</code>, <code>pre_write_code</code>, <code>post_write_code</code>, <code>pre_run_command</code>, <code>post_run_command</code>, <code>pre_mcp_tool_use</code>, <code>post_mcp_tool_use</code>, <code>pre_user_prompt</code>, <code>post_cascade_response</code>, <code>post_cascade_response_with_transcript</code>, and <code>post_setup_worktree</code>. Pre-hooks can block actions via exit code 2. Three config tiers merge together: system (<code>/Library/Application Support/Windsurf/hooks.json</code>), user (<code>~/.codeium/windsurf/hooks.json</code>), and workspace (<code>.windsurf/hooks.json</code>). Enterprise teams can deploy via cloud dashboard or MDM.</div></td></tr>
 
           <tr class="cat" data-cat-modal="mcp"><td colspan="11">MCP server configuration <span class="cat-type guide">guide<span class="cat-tip">i<span class="cat-tip-text">Feedforward — steers the agent before it acts</span></span></span></td></tr>
 
@@ -1631,7 +1631,7 @@
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell n">—</span></td>
           </tr>
-          <tr class="info-row" id="windsurf-mcp"><td colspan="11"><div class="info-content"><strong>Windsurf's MCP config — user-level only.</strong> Configured at <code>~/.codeium/windsurf/mcp_config.json</code> or via the MCP Marketplace in Cascade settings. Supports stdio, streamable HTTP, and SSE transports with OAuth. Notable gap: no project-scoped committable MCP config — all MCP setup is per-user. Supports variable interpolation (<code>${env:VAR}</code>, <code>${file:path}</code>) for secrets.</div></td></tr>
+          <tr class="info-row" id="windsurf-mcp"><td colspan="11"><div class="info-content"><strong>Devin Desktop's Cascade MCP config — user-level only.</strong> Configured at <code>~/.codeium/windsurf/mcp_config.json</code> or via the MCP Marketplace in Cascade settings. Supports stdio, streamable HTTP, and SSE transports with OAuth. Notable gap: no project-scoped committable MCP config — all MCP setup is per-user. Supports variable interpolation (<code>${env:VAR}</code>, <code>${file:path}</code>) for secrets.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.amp/settings.json</span><span class="file-loc">workspace (amp.mcpServers)</span></span><button class="info-btn" data-info="amp-mcp">i</button></div></td>
@@ -1686,11 +1686,11 @@
 
   <div class="insight">
     <div class="insight-title">Key takeaways</div>
-    <p><code>AGENTS.md</code> is the most portable instruction file here: Copilot, Codex, OpenCode, Cursor, Windsurf, and Amp read it natively; Gemini CLI can opt in. Claude Code still uses <code>CLAUDE.md</code>.</p>
-    <p><code>.agents/skills/</code> is the broadest shared skill path: Copilot, Codex, Cursor, Amp, and Gemini CLI read it natively; OpenCode and Windsurf support it as fallback.</p>
-    <p>Cursor and Windsurf have the most granular scoped rules, with repo-wide, glob, model-decision, and manual activation modes.</p>
-    <p>Claude Code has the richest hook system. Cursor, Windsurf, Gemini CLI, Codex, and Copilot also support hooks, but their event models and config scopes differ.</p>
-    <p>MCP config is still fragmented. Every tool uses a different file and format, and Windsurf's MCP config is user-local only.</p>
+    <p><code>AGENTS.md</code> is the most portable instruction file here: Copilot, Codex, OpenCode, Cursor, Devin Desktop, and Amp read it natively; Gemini CLI can opt in. Claude Code still uses <code>CLAUDE.md</code>.</p>
+    <p><code>.agents/skills/</code> is the broadest shared skill path: Copilot, Codex, Cursor, Amp, and Gemini CLI read it natively; OpenCode supports it as fallback, and Devin Desktop discovers it for cross-agent compatibility.</p>
+    <p>Cursor and Devin Desktop have the most granular scoped rules, with repo-wide, glob, model-decision, and manual activation modes.</p>
+    <p>Claude Code has the richest hook system. Cursor, Devin Desktop, Gemini CLI, Codex, and Copilot also support hooks, but their event models and config scopes differ.</p>
+    <p>MCP config is still fragmented. Every tool uses a different file and format, and Devin Desktop's MCP config is user-local only.</p>
   </div>
 
   <div class="precedence">
@@ -1706,7 +1706,7 @@
         <h4>GitHub Copilot <span class="prec-confidence partial">partial</span></h4>
         <ul>
           <li><strong>Instructions:</strong> all sources <em>merged</em>. Personal &gt; repository &gt; organization, but all are sent.</li>
-          <li><strong>AGENTS.md / CLAUDE.md / GEMINI.md:</strong> CLI/cloud surfaces can use root compatibility files. VS Code scans <code>AGENTS.md</code>, <code>CLAUDE.md</code>, and configured workspace instruction folders; current official docs do not list <code>GEMINI.md</code> for VS Code. Root <code>.github/copilot-instructions.md</code> loads as Copilot's native repo instructions.</li>
+          <li><strong>AGENTS.md / CLAUDE.md / GEMINI.md:</strong> CLI/cloud surfaces can use root compatibility files. VS Code scans <code>AGENTS.md</code>, <code>CLAUDE.md</code>, and configured workspace instruction folders; <code>CLAUDE.md</code> is controlled by <code>chat.useClaudeMdFile</code>, which is documented as default-on. Current official docs do not list <code>GEMINI.md</code> for VS Code. Root <code>.github/copilot-instructions.md</code> loads as Copilot's native repo instructions.</li>
           <li><strong>Path-scoped <code>*.instructions.md</code>:</strong> merges with repo-wide. <code>excludeAgent</code> frontmatter can opt out per surface (<code>code-review</code>, <code>cloud-agent</code>).</li>
           <li><strong>Settings:</strong> VS Code workspace &gt; user (standard VS Code precedence).</li>
           <li><strong>MCP same-name conflicts:</strong> undocumented across <code>.vscode/mcp.json</code>, user, and <code>.github/copilot-mcp.json</code>.</li>
@@ -1740,7 +1740,7 @@
         <ul>
           <li><strong>Settings (high → low):</strong> CLI flags and <code>--config</code> overrides &gt; profile values &gt; trusted project <code>.codex/config.toml</code> files from project root down to cwd (closest wins) &gt; <code>~/.codex/config.toml</code> &gt; system config &gt; built-in defaults.</li>
           <li><strong>AGENTS.md:</strong> global guidance loads first, then project files from root down to cwd. Files closer to cwd appear later in the combined prompt and override earlier guidance. <code>AGENTS.override.md</code> beats regular files in the same directory.</li>
-          <li><strong>Hooks:</strong> <code>~/.codex/hooks.json</code> and project <code>.codex/hooks.json</code> are both loaded when <code>codex_hooks = true</code>. Higher-precedence config layers do not replace lower-precedence hooks; all matching hooks run.</li>
+          <li><strong>Hooks:</strong> hooks are enabled by default, use the canonical <code>[features].hooks</code> key, and can come from <code>hooks.json</code> or inline <code>[hooks]</code> tables in active config layers. Higher-precedence config layers do not replace lower-precedence hooks; all matching hooks run. Project-local hooks require the project <code>.codex/</code> layer to be trusted.</li>
           <li><strong>MCP per-tool approval:</strong> <code>default_tools_approval_mode</code> on the server, with <code>[mcp_servers.NAME.tools.X]</code> overrides per tool — explicit override.</li>
           <li><strong>CA certs:</strong> <code>CODEX_CA_CERTIFICATE</code> &gt; <code>SSL_CERT_FILE</code> &gt; system roots.</li>
         </ul>
@@ -1771,9 +1771,9 @@
       </div>
 
       <div class="prec-card">
-        <h4>Windsurf <span class="prec-confidence">documented</span></h4>
+        <h4>Devin Desktop <span class="prec-confidence">documented</span></h4>
         <ul>
-          <li><strong>Rules:</strong> System (enterprise) + Workspace + Global all <em>merge</em> — system rules add context, do not override user-defined rules.</li>
+          <li><strong>Rules:</strong> System (enterprise) + Workspace + Global all <em>merge</em> — system rules add context, do not override user-defined rules. Workspace rules prefer <code>.devin/rules/</code>, with <code>.windsurf/rules/</code> kept as legacy fallback.</li>
           <li><strong>Workspace activation modes:</strong> <code>always_on</code>, <code>model_decision</code>, <code>glob</code>, <code>manual</code> (frontmatter <code>trigger</code>).</li>
           <li><strong>Limits:</strong> global rules 6k chars (single file); workspace rules 12k chars per file.</li>
           <li><strong>Discovery:</strong> walks up to git root; multi-folder workspaces deduplicate.</li>
@@ -1798,7 +1798,7 @@
   </div>
 
   <footer>
-    Researched May 2026. Verify against current docs before committing to a config architecture.<br>
+    Researched June 2026. Verify against current docs before committing to a config architecture.<br>
     <span style="margin-top:4px;display:inline-block">Created by <a href="https://codylindley.com" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">Cody Lindley</a></span>
   </footer>
 </div>
@@ -1944,13 +1944,13 @@
     'always-on': {
       badge: 'guide',
       title: 'Repo-wide instructions',
-      desc: 'Repo-wide instruction files load at the start of a session and apply to the whole codebase. Use them for the baseline contract: stack, architecture, naming rules, forbidden patterns, and team conventions.<br><br>These files are <strong>context, not enforcement</strong>. The model reads them and tries to follow them, so concrete rules work better than vague preferences. Keep them short and move file- or framework-specific rules into path-scoped instructions.<br><br><strong>Portability:</strong> <code>AGENTS.md</code> is the closest thing to a shared standard. Copilot, Codex CLI, OpenCode, Cursor, Amp, and Windsurf read it natively; Gemini CLI can opt in. Claude Code uses <code>CLAUDE.md</code> natively, but that file can import a shared <code>AGENTS.md</code> base.<br><br>Different tools use different names — instructions, memory, rules, context file — but the job is the same: put durable repo guidance into the model before it acts.',
+      desc: 'Repo-wide instruction files load at the start of a session and apply to the whole codebase. Use them for the baseline contract: stack, architecture, naming rules, forbidden patterns, and team conventions.<br><br>These files are <strong>context, not enforcement</strong>. The model reads them and tries to follow them, so concrete rules work better than vague preferences. Keep them short and move file- or framework-specific rules into path-scoped instructions.<br><br><strong>Portability:</strong> <code>AGENTS.md</code> is the closest thing to a shared standard. Copilot, Codex CLI, OpenCode, Cursor, Amp, and Devin Desktop read it natively; Gemini CLI can opt in. Claude Code uses <code>CLAUDE.md</code> natively, but that file can import a shared <code>AGENTS.md</code> base.<br><br>Different tools use different names — instructions, memory, rules, context file — but the job is the same: put durable repo guidance into the model before it acts.',
       example: '<code>AGENTS.md</code><br><br><code># Acme Platform<br><br>SaaS billing platform. React 19 + TypeScript frontend, Go backend,<br>PostgreSQL 16, deployed on AWS ECS behind CloudFront.<br><br>Monorepo: frontend/, backend/, infra/, shared/types/.<br><br>Backend is a Go module at go.acme.dev/platform. HTTP handlers in<br>backend/api/, business logic in backend/domain/, DB queries in<br>backend/store/. Never put business logic in handlers.<br><br>Frontend uses Next.js App Router. Pages in app/, shared components<br>in components/ui/. State management via Zustand — no Redux.<br><br>Never modify anything in infra/ without explicit approval.<br>Never write raw SQL — use the query builder in backend/store/db.go.<br>Never commit .env files or hardcoded credentials.<br>Never import from frontend/ in backend/ or vice versa — shared<br>types go in shared/types/.</code>'
     },
     'path-scoped': {
       badge: 'guide',
       title: 'Path-scoped instructions / rules',
-      desc: 'Path-scoped instructions apply only when the agent is working on matching files. They keep always-on context smaller and put framework, directory, or language rules closer to the code they govern.<br><br>Each tool uses its own format:<br>• <strong>Copilot</strong> — <code>.github/instructions/*.instructions.md</code> with <code>applyTo</code><br>• <strong>Claude Code</strong> — <code>.claude/rules/*.md</code> with <code>paths</code><br>• <strong>Cursor</strong> — <code>.cursor/rules/*.mdc</code> with always, glob, model-decision, or manual activation<br>• <strong>Windsurf</strong> — <code>.windsurf/rules/*.md</code> with the same four activation modes<br><br>Use these for rules like React component style, API directory ownership, migration conventions, or Python formatting. There is no shared scoped-rule standard, so portable projects duplicate the same rule in each tool-specific format.',
+      desc: 'Path-scoped instructions apply only when the agent is working on matching files. They keep always-on context smaller and put framework, directory, or language rules closer to the code they govern.<br><br>Each tool uses its own format:<br>• <strong>Copilot</strong> — <code>.github/instructions/*.instructions.md</code> with <code>applyTo</code><br>• <strong>Claude Code</strong> — <code>.claude/rules/*.md</code> with <code>paths</code><br>• <strong>Cursor</strong> — <code>.cursor/rules/*.mdc</code> with always, glob, model-decision, or manual activation<br>• <strong>Devin Desktop</strong> — <code>.devin/rules/*.md</code> preferred, with legacy <code>.windsurf/rules/*.md</code> fallback and the same four activation modes<br><br>Use these for rules like React component style, API directory ownership, migration conventions, or Python formatting. There is no shared scoped-rule standard, so portable projects duplicate the same rule in each tool-specific format.',
       example: '<code>.github/instructions/react.instructions.md</code> (Copilot format):<br><br><code>---<br>applyTo: "src/components/**/*.tsx"<br>---<br>This directory contains shared UI components.<br><br>Functional components only — no class components.<br>Props interface goes directly above the component, named<br>[ComponentName]Props. Export components as named exports, not default.<br><br>Styles use CSS modules. The .module.css file lives next to the<br>component file with the same base name.<br><br>Every component must have a corresponding .test.tsx file<br>in the same directory. Use React Testing Library, not Enzyme.</code><br><br>Claude Code equivalent at <code>.claude/rules/react.md</code> — same content, different frontmatter:<br><br><code>---<br>paths:<br>&nbsp;&nbsp;- "src/components/**/*.tsx"<br>---</code><br><br>Cursor equivalent at <code>.cursor/rules/react.mdc</code>:<br><br><code>---<br>globs: ["src/components/**/*.tsx"]<br>---</code>'
     },
     'custom-agents': {
@@ -2019,13 +2019,13 @@
     'hooks': {
       badge: 'sensor',
       title: 'Automation (lifecycle hooks)',
-      desc: 'Hooks are automation that runs at defined points in the agent loop: before a tool call, after an edit, when a prompt is submitted, when a session starts or stops, and similar lifecycle events. They are useful because they run outside the model: a script can lint, log, block, rewrite input, or add context deterministically.<br><br>Hook systems differ by tool. Claude Code has the broadest event and handler surface. Copilot documents hooks for CLI and cloud workflows, with VS Code support in Preview. Codex hooks are opt-in and load from user and project scopes. Gemini CLI uses <code>.gemini/settings.json</code>. Cursor uses <code>.cursor/hooks.json</code> and can read Claude-format hooks. Windsurf merges system, user, and workspace hooks.<br><br>Use hooks for guardrails and feedback loops: format after edits, block dangerous shell commands, capture audit logs, validate generated files, or inject context from a deterministic check.',
+      desc: 'Hooks are automation that runs at defined points in the agent loop: before a tool call, after an edit, when a prompt is submitted, when a session starts or stops, and similar lifecycle events. They are useful because they run outside the model: a script can lint, log, block, rewrite input, or add context deterministically.<br><br>Hook systems differ by tool. Claude Code has the broadest event and handler surface. Copilot documents hooks for CLI and cloud workflows, with VS Code support in Preview. Codex hooks are enabled by default and load from active config layers. Gemini CLI uses <code>.gemini/settings.json</code>. Cursor uses <code>.cursor/hooks.json</code> and can read Claude-format hooks. Devin Desktop merges system, user, and workspace hooks.<br><br>Use hooks for guardrails and feedback loops: format after edits, block dangerous shell commands, capture audit logs, validate generated files, or inject context from a deterministic check.',
       example: 'A <code>PostToolUse</code> hook in <code>.claude/settings.json</code> that auto-lints every file the agent writes or edits:<br><br><code>{<br>&nbsp;&nbsp;"hooks": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"PostToolUse": [{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"matcher": "Edit|Write",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"hooks": [{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "command",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "eslint --fix $(jq -r \'.tool_input.file_path\')"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}]<br>&nbsp;&nbsp;&nbsp;&nbsp;}]<br>&nbsp;&nbsp;}<br>}</code><br><br>Or a <code>PreToolUse</code> hook that blocks destructive shell commands:<br><br><code>{<br>&nbsp;&nbsp;"hooks": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"PreToolUse": [{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"matcher": "Bash",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"hooks": [{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "command",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": ".claude/hooks/block-rm.sh"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}]<br>&nbsp;&nbsp;&nbsp;&nbsp;}]<br>&nbsp;&nbsp;}<br>}</code><br><br>The script reads JSON from stdin, checks the command, and <code>exit 2</code> blocks it — <code>exit 0</code> allows it. No prompt needed, no model compliance risk.'
     },
     'mcp': {
       badge: 'guide',
       title: 'MCP server configuration',
-      desc: 'MCP configuration connects an agent to external tools through the <strong><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Model Context Protocol</a></strong>. Servers can expose tools, read-only resources, reusable prompts, and interactive apps.<br><br>The idea is shared, but the config files are not: Copilot uses <code>.vscode/mcp.json</code>, Claude Code uses <code>.mcp.json</code>, OpenCode uses <code>opencode.json</code>, Codex uses <code>.codex/config.toml</code>, Gemini CLI uses <code>.gemini/settings.json</code>, Cursor uses <code>.cursor/mcp.json</code>, Windsurf uses user-local <code>~/.codeium/windsurf/mcp_config.json</code>, and Amp uses <code>.amp/settings.json</code>. Transports include <code>stdio</code>, HTTP, SSE or streamable HTTP, and sometimes WebSocket, depending on the tool.<br><br>Treat MCP as part of the tool surface. Review which servers are shared, which are user-local, what transport they use, and whether the tool prompts for trust or supports policy controls. Claude Code can also scope MCP servers to a specific agent.',
+      desc: 'MCP configuration connects an agent to external tools through the <strong><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Model Context Protocol</a></strong>. Servers can expose tools, read-only resources, reusable prompts, and interactive apps.<br><br>The idea is shared, but the config files are not: Copilot uses <code>.vscode/mcp.json</code>, Claude Code uses <code>.mcp.json</code>, OpenCode uses <code>opencode.json</code>, Codex uses <code>.codex/config.toml</code>, Gemini CLI uses <code>.gemini/settings.json</code>, Cursor uses <code>.cursor/mcp.json</code>, Devin Desktop uses user-local <code>~/.codeium/windsurf/mcp_config.json</code>, and Amp uses <code>.amp/settings.json</code>. Transports include <code>stdio</code>, HTTP, SSE or streamable HTTP, and sometimes WebSocket, depending on the tool.<br><br>Treat MCP as part of the tool surface. Review which servers are shared, which are user-local, what transport they use, and whether the tool prompts for trust or supports policy controls. Claude Code can also scope MCP servers to a specific agent.',
       example: 'A <code>.vscode/mcp.json</code> (Copilot) with a remote GitHub server and a local Playwright server:<br><br><code>{<br>&nbsp;&nbsp;"servers": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"github": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "http",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url": "https://api.githubcopilot.com/mcp"<br>&nbsp;&nbsp;&nbsp;&nbsp;},<br>&nbsp;&nbsp;&nbsp;&nbsp;"playwright": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "stdio",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "npx",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["-y", "@playwright/mcp@latest"]<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>}</code><br><br>Or a Claude Code agent with an MCP server scoped to just that agent (at <code>.claude/agents/browser-tester.md</code>):<br><br><code>---<br>name: browser-tester<br>description: Tests features in a real browser<br>mcpServers:<br>&nbsp;&nbsp;- playwright:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: stdio<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command: npx<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args: ["-y", "@playwright/mcp@latest"]<br>---<br><br>Use Playwright tools to navigate, screenshot, and interact with pages.</code><br><br>The Playwright server connects only when this agent is active — the main conversation never sees its tools.'
     },
     'permissions': {
