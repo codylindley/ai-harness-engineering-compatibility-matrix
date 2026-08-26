@@ -419,14 +419,6 @@
   tbody td.cop-l { border-left: 2px solid var(--border) }
   tbody td.cop-r { border-right: 2px solid var(--border) }
 
-  /* The table is parsed before the script that runs applyToggles(), so any column
-     that starts toggled off would flash visible on first paint. This hides those
-     columns up front; applyToggles() drops [data-init] and takes over from there.
-     Keep the nth-child list in sync with the .tog buttons that lack `on`.
-     Column N is nth-child(N + 1) — the first cell is the config-file label. */
-  #matrix[data-init] thead th:nth-child(8),
-  #matrix[data-init] tbody td:nth-child(8) { display: none }
-
   tbody td {
     padding: 10px 8px;
     text-align: center;
@@ -1365,7 +1357,7 @@
 <main class="wrap" id="main-content">
   <header>
     <div class="header-top">
-    <time class="date" datetime="2026-08-23">Verified Aug 23, 2026</time>
+    <time class="date" datetime="2026-08-26">Verified Aug 26, 2026</time>
     <div class="header-actions">
       <a class="github-link" href="https://github.com/codylindley/ai-harness-engineering-compatibility-matrix" target="_blank" rel="noopener" aria-label="View on GitHub">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
@@ -1390,7 +1382,6 @@
       <span class="legend-item" role="listitem"><span class="legend-mark oi" aria-hidden="true">&#189;</span>Partial</span>
       <span class="legend-item" role="listitem"><span class="legend-mark no" aria-hidden="true">&mdash;</span>None</span>
     </div>
-
     <div class="toolbar-actions">
       <details class="toolbar-disclosure guide-disclosure">
         <summary>
@@ -1421,10 +1412,11 @@
             <div class="row-labels">
               <h3>Row labels</h3>
               <p><span class="cat-type guide">Guide</span> steers before action. <span class="cat-type sensor">Sensor</span> observes, blocks, or corrects after.</p>
-              <p>Rows are team-shared unless marked <span class="scope-pill user">user-local</span> or <span class="scope-pill both">both</span>.</p>
+              <p>Controls may be <strong>computational</strong> (script-judged) or <strong>inferential</strong> (model-judged).</p>
+              <p>Rows are team-shared unless marked <span class="scope-pill user">user-local</span> or <span class="scope-pill both">both</span>. Org-managed settings sit above both and cannot be overridden.</p>
             </div>
           </div>
-          <div class="reading-attribution">“Harness engineering” coined by <a href="https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness" target="_blank" rel="noopener">Mitchell Hashimoto</a>. Guide / Sensor taxonomy from <a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener">Birgitta Böckeler / Thoughtworks</a>.</div>
+          <div class="reading-attribution">“Harness engineering” coined by <a href="https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness" target="_blank" rel="noopener">Mitchell Hashimoto</a> (Feb 2026). Guide / Sensor taxonomy from <a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener">Birgitta Böckeler / Thoughtworks</a> (Apr 2026).</div>
         </div>
       </details>
 
@@ -1432,7 +1424,7 @@
         <summary>
           <svg class="summary-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="1.5"/><path d="M7.7 4v12M12.3 4v12"/></svg>
           <span>Surfaces</span>
-          <span class="summary-count" id="visibleCount">6 of 7</span>
+          <span class="summary-count" id="visibleCount">7 of 7</span>
           <span class="summary-chevron" aria-hidden="true"></span>
         </summary>
         <div class="toolbar-panel surface-panel">
@@ -1450,7 +1442,7 @@
             <button class="tog on" data-col="4" aria-pressed="true">Copilot · Cloud</button>
             <button class="tog on" data-col="5" aria-pressed="true">Claude Code · Local</button>
             <button class="tog on" data-col="6" aria-pressed="true">OpenAI Codex · Local</button>
-            <button class="tog" data-col="7" aria-pressed="false">Cursor</button>
+            <button class="tog on" data-col="7" aria-pressed="true">Cursor</button>
           </div>
         </div>
       </details>
@@ -1501,7 +1493,20 @@
             <td><span class="cell n">—</span></td>
           </tr>
 
-          <tr class="info-row" id="claude-md"><td colspan="8"><div class="info-content"><strong>Claude Code's native repo instruction file.</strong> Desktop and CLI share the same hierarchical loading from root and subdirectories. If a repo also has <code>AGENTS.md</code>, import it with <code>@AGENTS.md</code> and keep Claude-specific additions here. GitHub Copilot VS Code reads <code>CLAUDE.md</code> as an always-on compatibility instruction; the Copilot app and CLI treat a root-level file as fallback guidance, and the cloud agent reads it directly.</div></td></tr>
+          <tr class="info-row" id="claude-md"><td colspan="8"><div class="info-content"><strong>Claude Code's native repo instruction file.</strong> Desktop and CLI share the same hierarchical loading from root and subdirectories. Claude Code reads <code>CLAUDE.md</code>, not <code>AGENTS.md</code>, so import the shared base with <code>@AGENTS.md</code> and keep Claude-specific additions here. GitHub Copilot reads <code>CLAUDE.md</code> as a cross-tool compatibility instruction file — treated as a peer of <code>AGENTS.md</code> rather than a lower-priority fallback. VS Code also searches <code>.claude/CLAUDE.md</code>, <code>~/.claude/CLAUDE.md</code>, and <code>CLAUDE.local.md</code>. One exception: Copilot code review reads <code>AGENTS.md</code> only.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">GEMINI.md</span><span class="file-loc">root of repo</span></span><button class="info-btn" data-info="gemini-md">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell f">Fallback</span></td>
+            <td class="cop-r"><span class="cell f">Fallback</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+
+          <tr class="info-row" id="gemini-md"><td colspan="8"><div class="info-content"><strong>Gemini's instruction file, read by Copilot as a third compatibility format.</strong> GitHub's custom-instruction support matrix now lists <code>GEMINI.md</code> alongside <code>AGENTS.md</code> and <code>CLAUDE.md</code> for Copilot CLI and the cloud agent. Copilot code review does not read it. Included here because it shows Copilot converging on "read whatever instruction file the repo already has" rather than requiring its own.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">copilot-instructions.md</span><span class="file-loc">.github/</span></span><button class="info-btn" data-info="copilot-instr">i</button></div></td>
@@ -1572,7 +1577,7 @@
           <tr class="cat"><td colspan="8"><button class="cat-trigger" type="button" aria-haspopup="dialog" data-cat-modal="custom-agents"><span class="cat-label">Custom / sub agents (persona + tool restrictions)</span><span class="cat-type guide" title="Guide: steers the agent before it acts">guide</span><span class="cat-mark" aria-hidden="true"></span></button></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">*.agent.md</span><span class="file-loc">.github/agents/</span></span><button class="info-btn" data-info="copilot-agents">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">AGENT-NAME.md</span><span class="file-loc">.github/agents/</span></span><button class="info-btn" data-info="copilot-agents">i</button></div></td>
             <td class="cop-l"><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
             <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
             <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
@@ -1582,7 +1587,7 @@
             <td><span class="cell n">—</span></td>
           </tr>
 
-          <tr class="info-row" id="copilot-agents"><td colspan="8"><div class="info-content"><strong>Specialized Copilot personas invoked by name.</strong> Each file defines a role, tool access, model choice, and behavioral boundary. Invoke with <code>@agent-name</code>. The recommended suffix is <code>.agent.md</code>, although VS Code detects any Markdown file in <code>.github/agents/</code>.</div></td></tr>
+          <tr class="info-row" id="copilot-agents"><td colspan="8"><div class="info-content"><strong>Specialized Copilot personas selected by name.</strong> Each file defines a role, tool access, model choice, and behavioral boundary, with optional <code>mcp-servers</code> frontmatter. Invoke by choosing the agent from the dropdown in your IDE, on GitHub, or in Copilot CLI — or type <code>/agent</code> in the Copilot app. Repository agents live in <code>.github/agents/</code>; organization and enterprise agents live at <code>/agents/AGENT-NAME.md</code> in a <code>.github</code> or <code>.github-private</code> repository.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/agents/*.md</span><span class="file-loc">Claude subagents</span></span><button class="info-btn" data-info="claude-agents">i</button></div></td>
@@ -1592,10 +1597,10 @@
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
             <td><span class="cell n">—</span></td>
-            <td><span class="cell n">—</span></td>
+            <td><span class="cell f">Fallback</span></td>
           </tr>
 
-          <tr class="info-row" id="claude-agents"><td colspan="8"><div class="info-content"><strong>Claude Code's subagent system.</strong> These agents run with isolated context and explicit tools across the desktop app, CLI, and editor integrations. Built-ins include <code>Explore</code> for read-only research and <code>Plan</code> for planning without file edits. GitHub Copilot in VS Code also reads Claude-format agent files as a compatibility location.</div></td></tr>
+          <tr class="info-row" id="claude-agents"><td colspan="8"><div class="info-content"><strong>Claude Code's subagent system.</strong> These agents run with isolated context and explicit tools across the desktop app, CLI, and editor integrations. Frontmatter covers <code>tools</code>, <code>disallowedTools</code>, <code>model</code>, <code>permissionMode</code>, <code>maxTurns</code>, <code>skills</code>, <code>mcpServers</code>, <code>hooks</code>, <code>memory</code>, and <code>isolation: worktree</code>. Built-ins include <code>Explore</code> for read-only research and <code>Plan</code> for planning without file edits. Both GitHub Copilot in VS Code and Cursor read Claude-format agent files as a compatibility location.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.codex/agents/*.toml</span><span class="file-loc">project-scoped custom agents</span></span><button class="info-btn" data-info="codex-agents">i</button></div></td>
@@ -1605,23 +1610,23 @@
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
-            <td><span class="cell n">—</span></td>
+            <td><span class="cell f">Fallback</span></td>
           </tr>
 
-          <tr class="info-row" id="codex-agents"><td colspan="8"><div class="info-content"><strong>OpenAI Codex custom agents.</strong> Standalone TOML files in <code>.codex/agents/</code> or <code>~/.codex/agents/</code> define names, descriptions, developer instructions, models, reasoning effort, sandboxing, skills, and MCP servers. Global subagent defaults still live under <code>[agents]</code> in <code>config.toml</code>. The ChatGPT desktop app, CLI, and IDE extension all surface subagent activity.</div></td></tr>
+          <tr class="info-row" id="codex-agents"><td colspan="8"><div class="info-content"><strong>OpenAI Codex custom agents.</strong> Standalone TOML files in <code>.codex/agents/</code> or <code>~/.codex/agents/</code> define <code>name</code>, <code>description</code>, and <code>developer_instructions</code>, plus optional model, reasoning effort, sandboxing, skills, and MCP servers. Built-ins are <code>default</code>, <code>worker</code>, and <code>explorer</code>. Cursor reads the <code>.codex/agents/</code> directory as a compatibility location, though it expects Markdown rather than TOML. Codex's own docs note the format "may evolve as authoring and sharing mature," so treat it as less settled than the Markdown agent formats.</div></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">.cursor/modes.json</span><span class="file-loc">persistent custom modes</span></span><button class="info-btn" data-info="cursor-modes">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.cursor/agents/*.md</span><span class="file-loc">Cursor subagents</span></span><button class="info-btn" data-info="cursor-agents">i</button></div></td>
             <td class="cop-l"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td class="cop-r"><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
             <td><span class="cell n">—</span></td>
-            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">modes</span></span></td>
+            <td><span class="cell-wrap"><span class="cell y">Yes</span><span class="cell-sub">hard</span></span></td>
           </tr>
 
-          <tr class="info-row" id="cursor-modes"><td colspan="8"><div class="info-content"><strong>Cursor Custom Modes.</strong> A mode pins a skill as persistent session context. Cursor still has no official file-per-subagent format like Claude or Copilot; <code>.cursor/modes.json</code> is the native persistent-persona surface.</div></td></tr>
+          <tr class="info-row" id="cursor-agents"><td colspan="8"><div class="info-content"><strong>Cursor's subagent format.</strong> Markdown files with YAML frontmatter: <code>name</code>, <code>description</code>, <code>model</code> (defaults to <code>inherit</code>), <code>readonly</code>, and <code>is_background</code>. Project agents live in <code>.cursor/agents/</code> and user agents in <code>~/.cursor/agents/</code>; Cursor also reads <code>.claude/agents/</code> and <code>.codex/agents/</code> for compatibility, with <code>.cursor/</code> winning name conflicts and project beating user scope. Built-ins are <code>Explore</code>, <code>Bash</code>, and <code>Browser</code>. Separately, Cursor's Custom Modes are not a config file — any skill can be pinned as a mode with Option/Alt+Enter, styled by optional <code>icon</code> and <code>color</code> frontmatter.</div></td></tr>
 
           <tr class="cat"><td colspan="8"><button class="cat-trigger" type="button" aria-haspopup="dialog" data-cat-modal="skills"><span class="cat-label">Skills (bundled capability folders with SKILL.md)</span><span class="cat-type guide" title="Guide: steers the agent before it acts">guide</span><span class="cat-mark" aria-hidden="true"></span></button></td></tr>
 
@@ -1705,22 +1710,10 @@
 
           <tr class="info-row" id="claude-cmds"><td colspan="8"><div class="info-content"><strong>Claude Code's legacy slash-command path.</strong> Custom commands have merged into skills: <code>.claude/commands/deploy.md</code> and <code>.claude/skills/deploy/SKILL.md</code> both create <code>/deploy</code>. Existing command files still work, but skills are canonical for new workflows and add supporting files, invocation controls, and auto-invocation.</div></td></tr>
 
-          <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">~/.codex/prompts/*.md <span class="scope-pill user" title="User-local only — does not travel with the repo">user-local</span></span><span class="file-loc">deprecated custom prompts</span></span><button class="info-btn" data-info="codex-prompts">i</button></div></td>
-            <td class="cop-l"><span class="cell n">—</span></td>
-            <td><span class="cell n">—</span></td>
-            <td><span class="cell n">—</span></td>
-            <td class="cop-r"><span class="cell n">—</span></td>
-            <td><span class="cell n">—</span></td>
-            <td><span class="cell-wrap"><span class="cell o">partial</span><span class="cell-sub">surface-specific</span></span></td>
-            <td><span class="cell n">—</span></td>
-          </tr>
-          <tr class="info-row" id="codex-prompts"><td colspan="8"><div class="info-content"><strong>Deprecated Codex custom prompts.</strong> Markdown files become <code>/prompts:name</code> commands. The dedicated prompt documentation covers CLI and IDE loading, while the ChatGPT desktop slash-command reference also lists custom prompts in its composer. They are user-local and not repository-shared; use <code>.agents/skills/</code> for new portable workflows.</div></td></tr>
-
           <tr class="cat"><td colspan="8"><button class="cat-trigger" type="button" aria-haspopup="dialog" data-cat-modal="hooks"><span class="cat-label">Automation (lifecycle hooks)</span><span class="cat-type sensor" title="Sensor: observes, blocks, or corrects after action">sensor</span><span class="cat-mark" aria-hidden="true"></span></button></td></tr>
 
           <tr>
-            <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/hooks/</span><span class="file-loc">hooks.json</span></span><button class="info-btn" data-info="gh-hooks">i</button></div></td>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.github/hooks/*.json</span><span class="file-loc">any .json filename</span></span><button class="info-btn" data-info="gh-hooks">i</button></div></td>
             <td class="cop-l"><span class="cell o">opt-in</span></td>
             <td><span class="cell y">Yes</span></td>
             <td><span class="cell y">Yes</span></td>
@@ -1730,7 +1723,7 @@
             <td><span class="cell n">—</span></td>
           </tr>
 
-          <tr class="info-row" id="gh-hooks"><td colspan="8"><div class="info-content"><strong>GitHub Copilot lifecycle hooks.</strong> Hooks run automation at agent events: format after edits, validate branch names, enforce lint, or deny and modify tool calls. They are native in the Copilot app, CLI, and cloud agent. VS Code support remains in Preview, can read Claude-format <code>.claude/settings.json</code> hooks, and supports <code>chat.hookFilesLocations</code>.</div></td></tr>
+          <tr class="info-row" id="gh-hooks"><td colspan="8"><div class="info-content"><strong>GitHub Copilot lifecycle hooks.</strong> Any <code>.json</code> file in <code>.github/hooks/</code> is read — the filename is free-form. Events are <code>sessionStart</code>, <code>sessionEnd</code>, <code>userPromptSubmitted</code>, <code>preToolUse</code>, <code>postToolUse</code>, <code>agentStop</code>, <code>subagentStop</code>, and <code>errorOccurred</code>; <code>preToolUse</code> can approve or deny a tool call. Handlers can be shell commands or HTTP endpoints. Hooks are GA in the Copilot app, CLI, and cloud agent. VS Code support remains in Preview, can read Claude-format <code>.claude/settings.json</code> hooks, and supports <code>chat.hookFilesLocations</code>.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude/settings.json</span><span class="file-loc">hooks key</span></span><button class="info-btn" data-info="claude-hooks">i</button></div></td>
@@ -1743,7 +1736,7 @@
             <td><span class="cell n">—</span></td>
           </tr>
 
-          <tr class="info-row" id="claude-hooks"><td colspan="8"><div class="info-content"><strong>Claude Code's hook system — the broadest event surface here.</strong> Handlers can run shell commands, HTTP endpoints, MCP tools, prompts, or agents. Events cover setup, sessions, prompt submission and expansion, tool use and batches, permissions, subagents and tasks, compaction, worktrees, config and instruction loading, file and directory changes, MCP elicitation, notifications, display, and stop/failure. GitHub Copilot in VS Code can read Claude-format hooks in Preview.</div></td></tr>
+          <tr class="info-row" id="claude-hooks"><td colspan="8"><div class="info-content"><strong>Claude Code's hook system — the broadest event surface here, at roughly 28 documented events.</strong> Handlers can run shell commands, HTTP endpoints, MCP tools, prompts, or agents. Events cover setup, sessions, prompt submission and expansion, tool use and batches, permission requests and denials, subagents and tasks, compaction, worktrees, config and instruction loading, file and directory changes, MCP elicitation, notifications, display, and stop/failure. The <code>prompt</code> and <code>agent</code> handler types make this the clearest example of an <em>inferential</em> sensor — a model, not a script, deciding whether the agent went wrong. GitHub Copilot in VS Code can read Claude-format hooks in Preview.</div></td></tr>
 
           <tr>
             <td><div class="name-cell"><span class="name-text"><span class="file-path">.codex/hooks.json <span class="scope-pill both" title="Loaded from both ~/.codex/ (user) and .codex/ (project)">both</span></span><span class="file-loc">repo or ~/.codex/</span></span><button class="info-btn" data-info="codex-hooks">i</button></div></td>
@@ -1865,18 +1858,61 @@
 
           <tr class="info-row" id="os-sandbox"><td colspan="8"><div class="info-content"><strong>OS-level isolation goes beyond permission prompts.</strong> The Copilot app and CLI share the public-preview MXC sandbox; the cloud agent runs in an isolated hosted environment. Claude Code uses Seatbelt on macOS and Bubblewrap on Linux/WSL2. OpenAI Codex uses platform-native enforcement in the ChatGPT desktop app, CLI, and IDE extension. Cursor uses Seatbelt, Landlock, and WSL2.</div></td></tr>
 
+          <tr class="cat"><td colspan="8"><button class="cat-trigger" type="button" aria-haspopup="dialog" data-cat-modal="packaging"><span class="cat-label">Packaging &amp; environment (plugins, provisioning)</span><span class="cat-type guide" title="Guide: steers the agent before it acts">guide</span><span class="cat-mark" aria-hidden="true"></span></button></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">plugin.json</span><span class="file-loc">Copilot plugin manifest</span></span><button class="info-btn" data-info="copilot-plugins">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td class="cop-r"><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+
+          <tr class="info-row" id="copilot-plugins"><td colspan="8"><div class="info-content"><strong>A Copilot plugin bundles a whole harness into one installable unit.</strong> The plugin directory carries a <code>plugin.json</code> manifest plus <code>agents/</code>, <code>skills/</code>, <code>hooks.json</code>, <code>.mcp.json</code>, and <code>lsp.json</code>. Enable plugins declaratively with the <code>enabledPlugins</code> field in the committed <code>.github/copilot/settings.json</code>, or per-user in <code>~/.copilot/settings.json</code>. This is the layer that turns individual harness files into something a team can install and version as a package.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">.claude-plugin/plugin.json</span><span class="file-loc">Claude plugin manifest</span></span><button class="info-btn" data-info="claude-plugins">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell n">—</span></td>
+            <td><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+
+          <tr class="info-row" id="claude-plugins"><td colspan="8"><div class="info-content"><strong>Claude Code's plugin and marketplace system.</strong> A plugin root holds <code>.claude-plugin/plugin.json</code> alongside <code>skills/</code>, <code>agents/</code>, <code>hooks/</code>, <code>output-styles/</code>, and <code>.mcp.json</code>. Settings keys include <code>enabledPlugins</code>, <code>pluginConfigs</code>, and <code>extraKnownMarketplaces</code>. Note the trust boundary: plugin subagents cannot use <code>hooks</code>, <code>mcpServers</code>, or <code>permissionMode</code> frontmatter — those fields are ignored, so installing a plugin cannot silently widen your permissions.</div></td></tr>
+
+          <tr>
+            <td><div class="name-cell"><span class="name-text"><span class="file-path">copilot-setup-steps.yml</span><span class="file-loc">.github/workflows/</span></span><button class="info-btn" data-info="setup-steps">i</button></div></td>
+            <td class="cop-l"><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td class="cop-r"><span class="cell y">Yes</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+            <td><span class="cell n">—</span></td>
+          </tr>
+
+          <tr class="info-row" id="setup-steps"><td colspan="8"><div class="info-content"><strong>Provisioning for the Copilot cloud agent's ephemeral environment.</strong> A standard GitHub Actions workflow containing a single job named <code>copilot-setup-steps</code>, run before the agent starts: preinstall toolchains and dependencies, pick the runner, and start services. <code>copilot-code-review.yml</code> does the same for code review. It answers a question no instruction file can — <em>what environment does the agent actually run in</em> — and it is committed and reviewable like any other harness file.</div></td></tr>
+
         </tbody>
       </table>
   </div>
 
   <div class="insight">
     <h2 class="insight-title">Key takeaways</h2>
-    <p><code>AGENTS.md</code> is the portable instruction baseline for GitHub Copilot, OpenAI Codex, and Cursor. Claude Code uses <code>CLAUDE.md</code>, which can import that shared base.</p>
+    <p><code>AGENTS.md</code> is the portable instruction baseline for GitHub Copilot, OpenAI Codex, and Cursor. Claude Code still reads <code>CLAUDE.md</code> rather than <code>AGENTS.md</code>, but can import that shared base with <code>@AGENTS.md</code>.</p>
     <p><code>.agents/skills/</code> is the broadest shared skill path across the selected products; GitHub Copilot, OpenAI Codex, and Cursor read it natively.</p>
+    <p><strong>Vendors are increasingly reading each other's files.</strong> Copilot reads <code>CLAUDE.md</code>, <code>GEMINI.md</code>, <code>.claude/rules/</code>, <code>.claude/skills/</code>, and <code>.claude/settings.json</code> hooks. Cursor reads <code>.claude/agents/</code>, <code>.codex/agents/</code>, <code>.claude/skills/</code>, and <code>.codex/skills/</code>. Compatibility reads, not standards, are doing most of the portability work right now.</p>
     <p>Surface splitting is useful only when the harness changes. GitHub Copilot stays split because VS Code, the app, CLI, and cloud agent have distinct configuration paths; Claude Code and OpenAI Codex local clients share their core layers.</p>
-    <p>Claude Code has the richest hook system, while GitHub Copilot, OpenAI Codex, and Cursor each expose native lifecycle hooks with different schemas.</p>
+    <p>Claude Code has the richest hook system at roughly 28 events, while GitHub Copilot, OpenAI Codex, and Cursor each expose native lifecycle hooks with different schemas. Claude Code's <code>prompt</code>/<code>agent</code> handlers and Cursor's prompt hooks are the first widely available <em>inferential</em> sensors — a model, rather than a script, judging the agent's work.</p>
     <p>MCP remains fragmented, but <code>.mcp.json</code> is now shared by the GitHub Copilot app, GitHub Copilot CLI, and Claude Code, while <code>.github/mcp.json</code> provides a committed Copilot-specific path.</p>
     <p>OS-enforced isolation is now standard for local agents — Claude Code, OpenAI Codex, and Cursor all ship it. The GitHub Copilot app and CLI keep it in opt-in preview, and Copilot in VS Code has none.</p>
+    <p><strong>The unit of configuration is shifting from the file to the bundle.</strong> Plugins now package agents, skills, hooks, and MCP servers together, and an org-managed settings tier overrides everything a repo declares. A matrix of individual files no longer captures the whole harness on its own.</p>
   </div>
 
   <div class="precedence">
@@ -1898,6 +1934,7 @@
           <li><strong>Settings:</strong> VS Code workspace &gt; user (standard VS Code precedence).</li>
           <li><strong>CLI MCP:</strong> closer <code>.mcp.json</code> files beat broader files; <code>.mcp.json</code> beats <code>.github/mcp.json</code> in the same directory, and project definitions beat user config.</li>
           <li><strong>Local sandbox:</strong> the app and CLI use MXC sandboxing in public preview, off by default, with enterprise enforcement available.</li>
+          <li><strong>Org-managed:</strong> <code>copilot/managed-settings.json</code> in a <code>.github-private</code> repo (or an MDM policy path) overrides everything below it, including <code>permissions.disableBypassPermissionsMode</code> and <code>sandbox.enabled</code>. Managed sandbox restrictions combine with user settings in the most restrictive direction.</li>
         </ul>
       </div>
 
@@ -1934,7 +1971,8 @@
           <li><strong>AGENTS.md:</strong> nested files combine with parent-dir; deeper (more specific) instructions take precedence.</li>
           <li><strong>Team Rule enforcement:</strong> admin can mark a Team Rule "Enforce" so users cannot disable it.</li>
           <li><strong>Hooks:</strong> project <code>.cursor/hooks.json</code> and user <code>~/.cursor/hooks.json</code> both load; enterprise team and system tiers can also distribute hooks.</li>
-          <li><strong>Custom Modes:</strong> <code>.cursor/modes.json</code> pins a skill as persistent session context.</li>
+          <li><strong>Custom Modes:</strong> not a config file — any skill can be pinned as a persistent mode with Option/Alt+Enter.</li>
+          <li><strong>Subagents:</strong> <code>.cursor/agents/</code> beats <code>.claude/agents/</code> and <code>.codex/agents/</code> on name conflicts; project scope beats user scope.</li>
           <li><strong>User Rules scope:</strong> Agent (Chat) only. Not applied to Inline Edit (Cmd/Ctrl+K) or Cursor Tab.</li>
           <li><strong>MCP:</strong> project, user, and team-distributed tiers are available; same-name conflict behavior remains undocumented.</li>
         </ul>
@@ -1945,19 +1983,23 @@
 
   <section class="sources" aria-labelledby="sourcesTitle">
     <h2 class="section-heading" id="sourcesTitle">Sources &amp; methodology</h2>
-    <p class="sources-intro">Every support state was re-checked against primary product documentation and official repositories on August 23, 2026. “Fallback” includes compatibility discovery or guided import; “partial” covers preview, EAP, disabled-by-default, or surface-specific behavior.</p>
+    <p class="sources-intro">Every support state was re-checked against primary product documentation and official repositories on August 26, 2026. “Fallback” includes compatibility discovery or guided import; “partial” covers preview, EAP, disabled-by-default, or surface-specific behavior.</p>
     <div class="source-grid">
       <details><summary>GitHub Copilot</summary><ul>
+        <li><a href="https://docs.github.com/en/copilot/reference/customization-cheat-sheet" target="_blank" rel="noopener">Customization cheat sheet</a></li>
         <li><a href="https://docs.github.com/en/copilot/reference/custom-instructions-support" target="_blank" rel="noopener">Custom instruction support</a></li>
         <li><a href="https://docs.github.com/en/copilot/reference/github-copilot-app-reference/repository-configuration" target="_blank" rel="noopener">GitHub Copilot app repository configuration</a></li>
+        <li><a href="https://docs.github.com/en/copilot/concepts/agents/about-plugins" target="_blank" rel="noopener">Plugins</a></li>
         <li><a href="https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers" target="_blank" rel="noopener">Copilot CLI and repository MCP configuration</a></li>
         <li><a href="https://docs.github.com/en/copilot/concepts/about-cloud-and-local-sandboxes" target="_blank" rel="noopener">Cloud and local sandboxes</a></li>
       </ul></details>
       <details><summary>Claude Code</summary><ul>
         <li><a href="https://code.claude.com/docs/en/settings" target="_blank" rel="noopener">Shared local-client settings</a></li>
-        <li><a href="https://code.claude.com/docs/en/desktop" target="_blank" rel="noopener">Claude Code Desktop</a></li>
+        <li><a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">Memory, CLAUDE.md, and rules</a></li>
+        <li><a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">Subagents</a></li>
         <li><a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Skills and commands</a></li>
         <li><a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener">Hooks reference</a></li>
+        <li><a href="https://code.claude.com/docs/en/plugins" target="_blank" rel="noopener">Plugins and marketplaces</a></li>
       </ul></details>
       <details><summary>OpenAI Codex</summary><ul>
         <li><a href="https://developers.openai.com/codex/guides/agents-md" target="_blank" rel="noopener">AGENTS.md guide</a></li>
@@ -1968,14 +2010,21 @@
       </ul></details>
       <details><summary>Cursor</summary><ul>
         <li><a href="https://cursor.com/docs/context/rules" target="_blank" rel="noopener">Rules</a></li>
+        <li><a href="https://cursor.com/docs/subagents" target="_blank" rel="noopener">Subagents</a></li>
         <li><a href="https://cursor.com/docs/skills" target="_blank" rel="noopener">Skills</a></li>
+        <li><a href="https://cursor.com/docs/agent/prompting" target="_blank" rel="noopener">Custom Modes</a></li>
         <li><a href="https://cursor.com/docs/hooks" target="_blank" rel="noopener">Hooks</a></li>
+      </ul></details>
+      <details><summary>Cross-tool standards</summary><ul>
+        <li><a href="https://agentskills.io/" target="_blank" rel="noopener">Agent Skills specification</a></li>
+        <li><a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener">Böckeler — Harness engineering for coding agent users</a></li>
+        <li><a href="https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness" target="_blank" rel="noopener">Hashimoto — Engineer the harness</a></li>
       </ul></details>
     </div>
   </section>
 
   <footer>
-    Research verified August 23, 2026. Preview and EAP features can change quickly.<br>
+    Research verified August 26, 2026. Preview and EAP features can change quickly.<br>
     <span style="margin-top:4px;display:inline-block">Created by <a href="https://codylindley.com" target="_blank" rel="noopener">Cody Lindley</a></span>
   </footer>
 </main>
@@ -2210,18 +2259,18 @@
       tabs: [
         {
           label: 'Overview',
-          desc: 'Custom agents are specialized personas with their own instructions, tool access, and sometimes model settings. The important difference from prompts and skills is <strong>isolation</strong>: an agent can run with a smaller, safer tool set and its own context.<br><br><strong>Formats:</strong><br>• <strong>GitHub Copilot and Claude Code</strong> use Markdown definitions in product-specific folders<br>• <strong>OpenAI Codex</strong> uses standalone TOML agent files plus <code>[agents]</code> defaults in <code>config.toml</code><br>• <strong>Cursor</strong> pins skills as persistent Custom Modes<br><br>Good uses: read-only reviewers, test writers, migration helpers, planners, or any task where the agent should have a narrower role and fewer tools. Some implementations also support handoffs, memory, background execution, scoped MCP servers, and hooks.',
-          example: '<code>.github/agents/reviewer.agent.md</code><br><br><code>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']<br>---<br><br>You are a security-focused code reviewer. Never modify files.<br>Flag SQL injection, XSS, and auth bypass risks.<br>Cite the line number. Classify each finding as<br>Critical, Warning, or Suggestion.</code>'
+          desc: 'Custom agents are specialized personas with their own instructions, tool access, and sometimes model settings. The important difference from prompts and skills is <strong>isolation</strong>: an agent can run with a smaller, safer tool set and its own context.<br><br><strong>Formats:</strong><br>• <strong>GitHub Copilot and Claude Code</strong> use Markdown definitions in product-specific folders<br>• <strong>OpenAI Codex</strong> uses standalone TOML agent files plus <code>[agents]</code> defaults in <code>config.toml</code><br>• <strong>Cursor</strong> uses Markdown definitions in <code>.cursor/agents/</code> and also reads <code>.claude/agents/</code> and <code>.codex/agents/</code><br><br>Good uses: read-only reviewers, test writers, migration helpers, planners, or any task where the agent should have a narrower role and fewer tools. Some implementations also support handoffs, memory, background execution, scoped MCP servers, and hooks.',
+          example: '<code>.github/agents/reviewer.md</code><br><br><code>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']<br>---<br><br>You are a security-focused code reviewer. Never modify files.<br>Flag SQL injection, XSS, and auth bypass risks.<br>Cite the line number. Classify each finding as<br>Critical, Warning, or Suggestion.</code>'
         },
         {
           label: 'Custom / sub agents vs. agent skills',
           desc: 'Agents and skills both specialize behavior, but they specialize different things.<br><br><strong>Agents</strong> change who is acting: a new persona, prompt, tool boundary, and context. Use one when you need isolation or least-privilege tool access.<br><br><strong>Skills</strong> change what the current agent knows: a package of instructions, references, scripts, and templates loaded when relevant. Use one when the same agent needs domain knowledge or a repeatable workflow.<br><br><strong>Quick test:</strong> if the task needs a different identity or tool boundary, use an agent. If it needs reusable knowledge or bundled assets, use a skill.',
-          example: 'An <strong>agent</strong> — restricted persona, isolated context:<br><br><code># .github/agents/reviewer.agent.md<br>---<br>description: Read-only code reviewer<br>tools: [\'codebase\', \'search\']  # no edit tools<br>---<br>Review code for bugs and security issues. Never modify files.</code><br><br>A <strong>skill</strong> — knowledge package, same context:<br><br><code># .github/skills/db-migrate/SKILL.md<br>---<br>name: db-migrate<br>description: Database migration workflow<br>---<br>Step 1: Check current schema version...<br>Step 2: Generate migration file...<br>Step 3: Run scripts/validate_migration.py...</code><br><br>The agent <em>becomes</em> a reviewer. The skill <em>teaches</em> the current agent how to do migrations.'
+          example: 'An <strong>agent</strong> — restricted persona, isolated context:<br><br><code># .github/agents/reviewer.md<br>---<br>description: Read-only code reviewer<br>tools: [\'codebase\', \'search\']  # no edit tools<br>---<br>Review code for bugs and security issues. Never modify files.</code><br><br>A <strong>skill</strong> — knowledge package, same context:<br><br><code># .github/skills/db-migrate/SKILL.md<br>---<br>name: db-migrate<br>description: Database migration workflow<br>---<br>Step 1: Check current schema version...<br>Step 2: Generate migration file...<br>Step 3: Run scripts/validate_migration.py...</code><br><br>The agent <em>becomes</em> a reviewer. The skill <em>teaches</em> the current agent how to do migrations.'
         },
         {
           label: 'Custom / sub agents vs. prompt files / slash commands',
           desc: 'Agents and prompt files can both be invoked on demand, but they run differently.<br><br><strong>Prompt files</strong> inject a saved prompt into the current conversation. The active agent, context, and tools stay the same.<br><br><strong>Agents</strong> run as a specialist with separate instructions, an isolated context, and explicit tool access. They can report back after doing the work.<br><br>Use a prompt file for simple repeatable tasks like <code>/security-review</code>. Use an agent when the task needs restricted tools, a separate persona, or a multi-step handoff.',
-          example: 'A <strong>prompt file</strong> — template in current context:<br><br><code># .github/prompts/security-review.prompt.md<br>---<br>description: Review code for security vulnerabilities<br>---<br>Review the current file for OWASP Top 10 vulnerabilities.<br>For each finding, cite the line and suggest a fix.</code><br><br>An <strong>agent</strong> — isolated persona with restricted tools:<br><br><code># .github/agents/security-reviewer.agent.md<br>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']  # read-only, no edit tools<br>---<br>You are a security auditor. Review code for vulnerabilities.<br>Never modify files. Report findings with severity and line numbers.</code><br><br>The prompt file runs your security review <em>as you</em> with all your tools. The agent runs it <em>as a restricted specialist</em> that can\'t accidentally edit anything.'
+          example: 'A <strong>prompt file</strong> — template in current context:<br><br><code># .github/prompts/security-review.prompt.md<br>---<br>description: Review code for security vulnerabilities<br>---<br>Review the current file for OWASP Top 10 vulnerabilities.<br>For each finding, cite the line and suggest a fix.</code><br><br>An <strong>agent</strong> — isolated persona with restricted tools:<br><br><code># .github/agents/security-reviewer.md<br>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']  # read-only, no edit tools<br>---<br>You are a security auditor. Review code for vulnerabilities.<br>Never modify files. Report findings with severity and line numbers.</code><br><br>The prompt file runs your security review <em>as you</em> with all your tools. The agent runs it <em>as a restricted specialist</em> that can\'t accidentally edit anything.'
         }
       ]
     },
@@ -2237,7 +2286,7 @@
         {
           label: 'Skills vs. custom / sub agents',
           desc: 'Skills and agents are complementary.<br><br><strong>Skills</strong> add knowledge to the current agent. They do not create a new persona or tool boundary.<br><br><strong>Agents</strong> create a separate worker with its own identity, context, and tool access.<br><br>Use a skill when the active agent should stay in control but needs a playbook, reference files, or scripts. Use an agent when the work should happen in a separate role with different permissions.',
-          example: 'A <strong>skill</strong> — knowledge package, same context:<br><br><code># .github/skills/db-migrate/SKILL.md<br>---<br>name: db-migrate<br>description: Database migration workflow<br>---<br>Step 1: Check current schema version...<br>Step 2: Generate migration file...<br>Step 3: Run scripts/validate_migration.py...</code><br><br>An <strong>agent</strong> — restricted persona, isolated context:<br><br><code># .github/agents/reviewer.agent.md<br>---<br>description: Read-only code reviewer<br>tools: [\'codebase\', \'search\']  # no edit tools<br>---<br>Review code for bugs and security issues. Never modify files.</code><br><br>The skill <em>teaches</em> the current agent how to do migrations. The agent <em>becomes</em> a reviewer.'
+          example: 'A <strong>skill</strong> — knowledge package, same context:<br><br><code># .github/skills/db-migrate/SKILL.md<br>---<br>name: db-migrate<br>description: Database migration workflow<br>---<br>Step 1: Check current schema version...<br>Step 2: Generate migration file...<br>Step 3: Run scripts/validate_migration.py...</code><br><br>An <strong>agent</strong> — restricted persona, isolated context:<br><br><code># .github/agents/reviewer.md<br>---<br>description: Read-only code reviewer<br>tools: [\'codebase\', \'search\']  # no edit tools<br>---<br>Review code for bugs and security issues. Never modify files.</code><br><br>The skill <em>teaches</em> the current agent how to do migrations. The agent <em>becomes</em> a reviewer.'
         },
         {
           label: 'Skills vs. prompt files / slash commands',
@@ -2252,13 +2301,13 @@
       tabs: [
         {
           label: 'Overview',
-          desc: 'Prompt files and slash commands are saved prompts you can run on demand. They are lightweight: they add instructions to the current conversation, but they do not create a new agent or isolate tools.<br><br>GitHub Copilot prompt files run only in the VS Code extension host. Claude Code still reads <code>.claude/commands/</code>, but has merged that mechanism into skills and recommends skills for new workflows. OpenAI Codex custom prompts are deprecated, user-local, and surface-specific; skills are the portable replacement.<br><br>Use prompt files for small repeatable tasks such as reviews, test generation, changelog drafting, or PR prep. Use a skill when the workflow needs supporting files, validation, or automatic invocation.',
+          desc: 'Prompt files and slash commands are saved prompts you can run on demand. They are lightweight: they add instructions to the current conversation, but they do not create a new agent or isolate tools.<br><br>GitHub Copilot prompt files run only in the VS Code extension host. Claude Code still reads <code>.claude/commands/</code>, but has merged that mechanism into skills and recommends skills for new workflows. OpenAI Codex no longer documents a custom-prompt file at all — skills, invoked with <code>$skill-name</code> in the TUI or <code>@skill-name</code> in the desktop app, are the replacement.<br><br>Use prompt files for small repeatable tasks such as reviews, test generation, changelog drafting, or PR prep. Use a skill when the workflow needs supporting files, validation, or automatic invocation.',
           example: 'A <code>.github/prompts/security-review.prompt.md</code> invoked with <code>/security-review</code>:<br><br><code>---<br>description: Run a security review on the current file<br>agent: agent<br>tools: [\'codebase\', \'search\']<br>model: GPT-5 (copilot)<br>---<br><br>Review the code in the current editor for security vulnerabilities.<br>Check for the OWASP Top 10: SQL injection, XSS, broken auth,<br>sensitive data exposure, and insecure deserialization.<br><br>For each finding, provide:<br>- Severity (Critical / High / Medium / Low)<br>- The vulnerable line(s)<br>- A concrete fix with code</code><br><br>Or the Claude Code equivalent at <code>.claude/commands/security-review.md</code>:<br><br><code>Review the code for security vulnerabilities. Focus on: $ARGUMENTS<br><br>Check for OWASP Top 10 risks. For each finding, cite the file<br>and line number, classify severity, and provide a fix.</code>'
         },
         {
           label: 'Prompt files vs. custom / sub agents',
           desc: 'Prompt files reuse instructions inside the current session. Agents create a separate specialist.<br><br>Choose a prompt when the current agent can do the work with its normal tools. Choose an agent when the work needs a different role, narrower tool access, or isolated context.<br><br>In short: a prompt says "do this." An agent says "be this specialist and do this."',
-          example: 'A <strong>prompt file</strong> — template in current context:<br><br><code># .github/prompts/security-review.prompt.md<br>---<br>description: Review code for security vulnerabilities<br>---<br>Review the current file for OWASP Top 10 vulnerabilities.<br>For each finding, cite the line and suggest a fix.</code><br><br>An <strong>agent</strong> — isolated persona with restricted tools:<br><br><code># .github/agents/security-reviewer.agent.md<br>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']  # read-only, no edit tools<br>---<br>You are a security auditor. Review code for vulnerabilities.<br>Never modify files. Report findings with severity and line numbers.</code><br><br>The prompt file runs your review <em>as you</em> with all your tools. The agent runs it <em>as a restricted specialist</em> that can\'t edit anything.'
+          example: 'A <strong>prompt file</strong> — template in current context:<br><br><code># .github/prompts/security-review.prompt.md<br>---<br>description: Review code for security vulnerabilities<br>---<br>Review the current file for OWASP Top 10 vulnerabilities.<br>For each finding, cite the line and suggest a fix.</code><br><br>An <strong>agent</strong> — isolated persona with restricted tools:<br><br><code># .github/agents/security-reviewer.md<br>---<br>description: Security-focused code reviewer<br>tools: [\'codebase\', \'search\']  # read-only, no edit tools<br>---<br>You are a security auditor. Review code for vulnerabilities.<br>Never modify files. Report findings with severity and line numbers.</code><br><br>The prompt file runs your review <em>as you</em> with all your tools. The agent runs it <em>as a restricted specialist</em> that can\'t edit anything.'
         },
         {
           label: 'Prompt files vs. skills',
@@ -2284,6 +2333,12 @@
       title: 'Permissions / sandboxing',
       desc: 'Permissions and sandboxes are the enforcement layer. Permissions decide whether a tool call can run. Sandboxes limit what the process can touch after it runs.<br><br><strong>Permission rules</strong> usually match tools, commands, paths, domains, or MCP calls. OpenAI Codex separates approval policy from named permission profiles, while Claude Code layers desktop controls over shared settings files.<br><br><strong>OS-level sandboxes</strong> are stronger because the operating system enforces filesystem and network limits. The GitHub Copilot app and CLI offer an opt-in local sandbox; Claude Code, OpenAI Codex, and Cursor provide local OS isolation, and the Copilot cloud agent runs in a hosted isolated environment.<br><br><strong>Bypass modes</strong> disable guardrails and should be treated as privileged. Enterprise controls can lock down bypasses, sandbox floors, and approval settings.',
       example: 'A Claude Code <code>.claude/settings.json</code> with a tight permission policy:<br><br><code>{<br>&nbsp;&nbsp;"permissions": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"defaultMode": "default",<br>&nbsp;&nbsp;&nbsp;&nbsp;"allow": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Bash(git diff:*)",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Bash(npm test:*)",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Read(./src/**)"<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"deny": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Bash(git push:*)",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Read(./.env*)"<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"ask": ["Bash(git commit:*)"]<br>&nbsp;&nbsp;}<br>}</code><br><br>Or a Codex <code>~/.codex/config.toml</code>:<br><br><code>approval_policy = "on-request"<br>sandbox_mode = "workspace-write"<br><br>[sandbox_workspace_write]<br>writable_roots = ["~/projects/acme"]<br>network_access = false</code><br><br>The sandbox uses Seatbelt on macOS, Bubblewrap on Linux/WSL2, and a native Windows backend.'
+    },
+    'packaging': {
+      badge: 'guide',
+      title: 'Packaging & environment',
+      desc: 'The newest layer of the harness is not a single file — it is the <strong>bundle</strong>. Plugins package agents, skills, hooks, and MCP servers into one installable, versionable unit, and provisioning files describe the environment the agent runs inside.<br><br><strong>Plugins</strong> — GitHub Copilot uses a <code>plugin.json</code> manifest with <code>agents/</code>, <code>skills/</code>, <code>hooks.json</code>, <code>.mcp.json</code>, and <code>lsp.json</code>, enabled through <code>enabledPlugins</code> in a committed <code>.github/copilot/settings.json</code>. Claude Code uses <code>.claude-plugin/plugin.json</code> plus official, community, and private marketplaces.<br><br><strong>Provisioning</strong> — <code>.github/workflows/copilot-setup-steps.yml</code> configures the Copilot cloud agent\u2019s ephemeral environment before the agent starts.<br><br>Watch the <strong>trust boundary</strong> here. A plugin can carry hooks and MCP servers, which is exactly the capability you would want an attacker not to have. Claude Code deliberately ignores <code>hooks</code>, <code>mcpServers</code>, and <code>permissionMode</code> on plugin subagents for this reason.',
+      example: 'A Copilot plugin directory:<br><br><code>my-plugin/<br>&nbsp;&nbsp;plugin.json<br>&nbsp;&nbsp;agents/reviewer.md<br>&nbsp;&nbsp;skills/db-migrate/SKILL.md<br>&nbsp;&nbsp;hooks.json<br>&nbsp;&nbsp;.mcp.json<br>&nbsp;&nbsp;lsp.json</code><br><br>Enabled from a committed repo settings file:<br><br><code>// .github/copilot/settings.json<br>{<br>&nbsp;&nbsp;"enabledPlugins": ["my-plugin"]<br>}</code><br><br>And provisioning the cloud agent\u2019s environment:<br><br><code># .github/workflows/copilot-setup-steps.yml<br>jobs:<br>&nbsp;&nbsp;copilot-setup-steps:<br>&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>&nbsp;&nbsp;&nbsp;&nbsp;steps:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v4<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/setup-node@v4<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with: { node-version: 22 }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- run: npm ci</code>'
     }
   };
 
