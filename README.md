@@ -18,35 +18,38 @@ This matrix focuses on harness files you can version, review, and refactor: `AGE
 
 ## What's In The Matrix
 
-The table maps config files across eight harness categories. GitHub Copilot is split into VS Code, desktop app, CLI, and cloud-agent surfaces because those environments expose materially different configuration paths. Claude Code and OpenAI Codex each use one **local surfaces** column because their desktop, CLI, and editor clients share the same core configuration layers. Cursor remains combined across editor and CLI, for seven product/surface columns.
+The table maps config files across nine harness categories. GitHub Copilot is split into VS Code, desktop app, CLI, and cloud-agent surfaces because those environments expose materially different configuration paths. Claude Code and OpenAI Codex each use one **local surfaces** column because their desktop, CLI, and editor clients share the same core configuration layers. Cursor remains combined across editor and CLI, for seven product/surface columns.
 
 This follows the product/surface framing of [Slash Command Atlas](https://codylindley.github.io/slash-command-atlas/) without copying its granularity wholesale: slash-command menus diverge by interface more often than harness configuration does.
 
 | Category | Type | Examples |
 |---|---|---|
-| **Repo-wide instructions** | Guide | `AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`, `github-app.yml` |
+| **Repo-wide instructions** | Guide | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `copilot-instructions.md`, `github-app.yml` |
 | **Path-scoped instructions / rules** | Guide | `*.instructions.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc` |
-| **Custom / sub agents** | Guide | Markdown agent profiles, Codex TOML agents, Cursor modes |
+| **Custom / sub agents** | Guide | Markdown agent profiles for Copilot, Claude Code, and Cursor; Codex TOML agents |
 | **Skills** | Guide | Tool-native `SKILL.md` folders and the shared `.agents/skills/` path |
-| **Prompt files / slash commands** | Guide | `*.prompt.md`, Claude command files, deprecated Codex custom prompts |
+| **Prompt files / slash commands** | Guide | `*.prompt.md`, Claude command files |
 | **Automation (lifecycle hooks)** | Sensor | GitHub Copilot, Claude Code, OpenAI Codex, and Cursor hook systems |
 | **MCP server configuration** | Guide | Project and user MCP files for the four product families |
 | **Permissions / sandboxing** | Sensor | Permission policies, approval modes, and OS-enforced sandboxes |
+| **Packaging & environment** | Guide | Plugin manifests, marketplaces, and cloud-agent provisioning |
 
 Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/partial**, or **Not supported**.
 
-**Trust boundary:** rows are committed, team-shared, and version-controlled unless flagged otherwise. `user-local` means per-user and not carried with the repo. `both` means the tool loads project and user scopes at the same time.
+**Trust boundary:** rows are committed, team-shared, and version-controlled unless flagged otherwise. `user-local` means per-user and not carried with the repo. `both` means the tool loads project and user scopes at the same time. Above all of these sits an org-managed tier — `managed-settings.json`, Codex `requirements.toml`, enforced Cursor Team Rules — that users cannot override.
 
 **Precedence & conflicts:** the page includes per-tool load order, settings layering, and merge-vs-override behavior so you can see what wins when files collide.
 
 ## Key takeaways
 
-- `AGENTS.md` is the portable instruction baseline for GitHub Copilot, OpenAI Codex, and Cursor. Claude Code uses `CLAUDE.md`, which can import the shared base.
-- `.agents/skills/` is the broadest shared skill path across the selected products.
+- `AGENTS.md` is the portable instruction baseline for GitHub Copilot, OpenAI Codex, and Cursor. Claude Code still reads `CLAUDE.md` rather than `AGENTS.md`, but can import the shared base with `@AGENTS.md`.
+- `.agents/skills/` is the broadest shared skill path across the selected products, and follows the open [Agent Skills](https://agentskills.io/) specification.
+- Vendors increasingly read each other's files. Copilot reads `CLAUDE.md`, `GEMINI.md`, `.claude/rules/`, and `.claude/skills/`; Cursor reads `.claude/agents/`, `.codex/agents/`, `.claude/skills/`, and `.codex/skills/`. Compatibility reads, not standards, do most of the portability work today.
 - Surface splitting is useful only when the harness changes. GitHub Copilot stays split; Claude Code and OpenAI Codex local clients stay aggregated.
-- Claude Code has the richest hook system. GitHub Copilot, OpenAI Codex, and Cursor also provide native lifecycle hooks.
+- Claude Code has the richest hook system at roughly 28 events. Its `prompt`/`agent` handlers and Cursor's prompt hooks are the first widely available *inferential* sensors — a model, not a script, judging the agent's work.
 - `.mcp.json` is shared by the GitHub Copilot app, GitHub Copilot CLI, and Claude Code, while `.github/mcp.json`, `.codex/config.toml`, and `.cursor/mcp.json` remain product-specific.
 - Every local coding-agent family shown here provides OS-enforced isolation; the GitHub Copilot app and CLI sandbox is still opt-in preview.
+- The unit of configuration is shifting from the file to the bundle: plugins package agents, skills, hooks, and MCP servers together, and an org-managed tier overrides whatever a repo declares.
 
 ## When Multiple Instruction Files Coexist
 
@@ -65,7 +68,7 @@ The practical rule: keep repo-wide files short, use scoped rules for specifics, 
 ## Features
 
 - Light/dark mode with manual toggle (defaults to `prefers-color-scheme`)
-- Accessible column filters for focused comparisons — Cursor starts hidden; toggle it on to add the `.cursor/*` rows
+- Accessible column filters for focused comparisons — all seven surfaces are shown by default
 - Expandable, keyboard-operable row details
 - Category dialogs with focus management, examples, and comparison tabs — open one by clicking any category heading row
 - Sticky config labels inside the horizontally scrollable mobile table
@@ -75,4 +78,4 @@ The practical rule: keep repo-wide files short, use scoped rules for specifics, 
 
 ## Last updated
 
-August 23, 2026
+August 26, 2026
