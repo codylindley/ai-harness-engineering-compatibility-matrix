@@ -18,7 +18,7 @@ This matrix focuses on harness files you can version, review, and refactor: `AGE
 
 ## What's In The Matrix
 
-The table maps config files across nine harness categories. GitHub Copilot is split into VS Code, desktop app, CLI, and cloud-agent surfaces because those environments expose materially different configuration paths. Claude Code and OpenAI Codex each use one **local surfaces** column because their desktop, CLI, and editor clients share the same core configuration layers. Cursor remains combined across editor and CLI, for seven product/surface columns.
+The table maps config files across nine harness categories. GitHub Copilot is split into the VS Code **Copilot harness**, desktop app, CLI, and cloud-agent surfaces because those environments expose materially different configuration paths. Claude Code and OpenAI Codex each use one **local surfaces** column because their desktop, CLI, and editor clients share the same core configuration layers. Cursor remains combined across its editor and CLI. Claude Code, Codex, and Cursor cloud runtimes are outside those local columns unless a note explicitly calls them out.
 
 This follows the product/surface framing of [Slash Command Atlas](https://codylindley.github.io/slash-command-atlas/) without copying its granularity wholesale: slash-command menus diverge by interface more often than harness configuration does.
 
@@ -28,7 +28,7 @@ This follows the product/surface framing of [Slash Command Atlas](https://codyli
 | **Path-scoped instructions / rules** | Guide | `*.instructions.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc` |
 | **Custom / sub agents** | Guide | Markdown agent profiles for Copilot, Claude Code, and Cursor; Codex TOML agents |
 | **Skills** | Guide | Tool-native `SKILL.md` folders and the shared `.agents/skills/` path |
-| **Prompt files / slash commands** | Guide | `*.prompt.md`, Claude command files |
+| **Prompt files / legacy commands** | Guide | Claude command files; VS Code Local prompt files are outside the Copilot-harness column |
 | **Automation (lifecycle hooks)** | Sensor | GitHub Copilot, Claude Code, OpenAI Codex, and Cursor hook systems |
 | **MCP server configuration** | Guide | Project and user MCP files for the four product families |
 | **Permissions / sandboxing** | Sensor | Permission policies, approval modes, and OS-enforced sandboxes |
@@ -42,14 +42,15 @@ Each cell indicates support level: **Native**, **Fallback/compat**, **Opt-in/par
 
 ## Key takeaways
 
-- `AGENTS.md` is the portable instruction baseline for GitHub Copilot, OpenAI Codex, and Cursor. Claude Code still reads `CLAUDE.md` rather than `AGENTS.md`, but can import the shared base with `@AGENTS.md`.
-- `.agents/skills/` is the broadest shared skill path across the selected products, and follows the open [Agent Skills](https://agentskills.io/) specification.
-- Vendors increasingly read each other's files. Copilot reads `CLAUDE.md`, `GEMINI.md`, `.claude/rules/`, and `.claude/skills/`; Cursor reads `.claude/agents/`, `.codex/agents/`, `.claude/skills/`, and `.codex/skills/`. Compatibility reads, not standards, do most of the portability work today.
-- Surface splitting is useful only when the harness changes. GitHub Copilot stays split; Claude Code and OpenAI Codex local clients stay aggregated.
-- Claude Code has the richest hook system at roughly 28 events. Its `prompt`/`agent` handlers and Cursor's prompt hooks are the first widely available *inferential* sensors — a model, not a script, judging the agent's work.
-- `.mcp.json` is shared by the GitHub Copilot app, GitHub Copilot CLI, and Claude Code, while `.github/mcp.json`, `.codex/config.toml`, and `.cursor/mcp.json` remain product-specific.
-- Every local coding-agent family shown here provides OS-enforced isolation; the GitHub Copilot app and CLI sandbox is still opt-in preview.
-- The unit of configuration is shifting from the file to the bundle: plugins package agents, skills, hooks, and MCP servers together, and an org-managed tier overrides whatever a repo declares.
+- `AGENTS.md` is now the portable instruction baseline across all four product families. GitHub Copilot, OpenAI Codex, and Cursor read it directly. Claude Code v2.1.277+ reads it when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` exists in or above the working directory, and can be configured to load both formats.
+- `.agents/skills/` is the broadest shared skill path across the selected products: GitHub Copilot, OpenAI Codex, and Cursor read it. Claude Code uses `.claude/skills/`, but its skills follow the same open [Agent Skills](https://agentskills.io/) format.
+- Root `plugin.json` with the Agent Plugins schema is the portable bundle baseline for GitHub Copilot, OpenAI Codex, and Cursor. The standard packages skills and `mcp.json`; vendor-only agents, hooks, rules, and UI extensions stay in vendor namespaces or vendor manifests. Copilot also accepts a legacy schema-less `plugin.json`, and Cursor uses its own plugin-root placeholder inside portable MCP configuration.
+- Compatibility still matters, but a shared directory is not automatically a shared file format. Copilot CLI reads Claude rules and agents, Cursor imports Claude hooks and Claude/Codex agent or skill locations, and Codex agent TOML remains different from Cursor-compatible Markdown.
+- Surface splitting is useful only when the harness changes. GitHub Copilot stays split, and the VS Code column means the Copilot harness rather than every harness VS Code can host. Claude Code and OpenAI Codex local clients stay aggregated.
+- Claude Code has the richest hook system at roughly 33 documented events. Its `prompt`/`agent` handlers and Cursor's prompt hooks are inferential sensors; current Codex hooks execute commands or MCP tools instead.
+- `.mcp.json` is shared by the VS Code Copilot harness, GitHub Copilot app, GitHub Copilot CLI, and Claude Code. VS Code can also forward eligible servers from `.vscode/mcp.json`; `.github/mcp.json`, `.codex/config.toml`, and `.cursor/mcp.json` remain product-specific.
+- Every local coding-agent family shown here provides OS-enforced isolation. GitHub Copilot local sandboxing is now generally available in the app, CLI, and VS Code Agent Host sessions.
+- An org-managed tier still overrides repository and user configuration. Bundles make that governance more important because a plugin can carry executable hooks and MCP servers alongside guidance.
 
 ## When Multiple Instruction Files Coexist
 
@@ -57,8 +58,8 @@ Most repos will have more than one instruction file, such as `AGENTS.md` plus `c
 
 | Scenario | Behavior |
 |---|---|
-| `AGENTS.md` + `copilot-instructions.md` | Copilot loads both additively — no override, no conflict. Use `copilot-instructions.md` for Copilot-specific additions. |
-| `AGENTS.md` + `CLAUDE.md` (same repo) | Copilot reads both. Claude Code reads only `CLAUDE.md`; use `@AGENTS.md` inside it to import shared rules. |
+| `AGENTS.md` + `copilot-instructions.md` | Copilot combines both when they apply, but does not define a general precedence order. Keep shared rules in `AGENTS.md` and Copilot-specific additions in `copilot-instructions.md`. |
+| `AGENTS.md` + `CLAUDE.md` (same repo) | Claude Code reads only `CLAUDE.md` by default, can be configured to load both, or can import `AGENTS.md` with `@AGENTS.md`. Copilot CLI and cloud agent load both; the VS Code Copilot harness loads `AGENTS.md`, while VS Code's Claude or Local harness handles `CLAUDE.md`. |
 | `CLAUDE.md` in root + subdirectory | Claude Code merges hierarchically — subdirectory rules layer on top of root rules for files in that directory. |
 | Multiple `.cursor/rules/*.mdc` files | All matching rules are merged. `alwaysApply` rules load every session; glob/model/manual rules are additive when triggered. |
 | Path-scoped rules + repo-wide instructions | Usually additive in tools that support both, but tool-specific precedence still matters. Check the matrix notes before assuming both files load. |
@@ -78,4 +79,4 @@ The practical rule: keep repo-wide files short, use scoped rules for specifics, 
 
 ## Last updated
 
-August 26, 2026
+November 5, 2026
